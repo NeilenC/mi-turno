@@ -17,9 +17,16 @@ const BookingSchema = new Schema ( {
     email: {
         type: String,
         required: true
+    },
+    number:{
+        type: String
     }
   
 }) 
+
+BookingSchema.pre("save", async function () {
+    //aca se crea el numero de la reserva 
+})
 
 const Booking = models.Booking || model("Bookings", BookingSchema)
 

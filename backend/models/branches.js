@@ -22,10 +22,11 @@ const Branch = new Schema ({
     },
     closingH: {
         type: String
-    },
-    operator: {
-        type: String
     }
+    // ,
+    // operator: {
+    //     type: String
+    // }
 
 })
 
