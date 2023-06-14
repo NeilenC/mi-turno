@@ -26,6 +26,12 @@ const UserSchema = new Schema ( {
       required: true,
         unique: true
     },
+    bookings: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Booking'
+      }
+    ],
     isAdmin: {
       type: Boolean
   } ,

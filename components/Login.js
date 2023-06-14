@@ -76,7 +76,7 @@ const Login = () => {
             Atras
           </Box>
           </Box>
-     <Box sx={{paddingBottom:5, textAlign:"center", fontWeight:"bold", fontSize:"20px"}} >
+     <Box sx={{paddingBottom:5, textAlign:"center", fontWeight:"bold", fontSize:"20px", borderRadius:"10px"}} >
        Iniciar sesión
      </Box>
             <form onSubmit={handleSubmit}>
@@ -108,7 +108,7 @@ const Login = () => {
         <Box  sx={{paddingBottom:3, paddingTop:3}}>
             <Button 
             type= "submit"
-            sx={{ color: "white", bgcolor: "#A442F1", padding: "12px 24px" , "&:hover": { color: "#A442F1"}}} fullWidth >Ingresar</Button>
+            sx={{ color: "white", bgcolor: "#A442F1", padding: "12px 24px" , "&:hover": { color: "#A442F1"}, borderRadius:"10px" }} fullWidth >Ingresar</Button>
         </Box>
           <Box sx={{paddingBottom:3}} >
             <Divider />
@@ -116,7 +116,7 @@ const Login = () => {
         <Box>
           <Link href="/register">
             <Button
-            sx={{color: "#A442F1", bgcolor: "rgba(164, 66, 241, 0.6)", padding: "12px 24px"  }} fullWidth > No tienes cuenta? Regístrate</Button>
+            sx={{color: "#A442F1", bgcolor: "rgba(164, 66, 241, 0.6)", padding: "12px 24px" , borderRadius:"10px" }} fullWidth > No tienes cuenta? Regístrate</Button>
             </Link>
         </Box>
             </form>

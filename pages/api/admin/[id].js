@@ -5,13 +5,30 @@ import Branches from "../../../backend/models/branches"
 export default async function handler(req,res) {
     await connectMongoDb()
 
-      const {id} = req.params._id
-      console.log(id)
-      const {updates} = req.body
+    if(req.method === "PUT") {
+      const {id} = req.query
+      console.log("ID", id)
+
       try{
-        const updatedBranch = await Branches.findByIdAndUpdate(id, updates)
+        const updatedBranch = await Branches.findByIdAndUpdate(id,{$set:req.body},{new:true})
+        console.log(updatedBranch)
         res.status(201).send(updatedBranch)
+
       } catch(e) {
         throw e
       }
+    }
+
+    if(req.method === "DELETE") {
+      const {id} = req.query
+
+      try{
+        const deletedBranch = await Branches.findOneAndDelete(id)
+        res.send(deletedBranch)
+
+      } catch (e) {
+        throw(e)
+      }
+
+    }
 }
