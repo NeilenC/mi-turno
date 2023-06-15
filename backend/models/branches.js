@@ -1,4 +1,5 @@
 import { Schema, model, models} from 'mongoose';
+// import moment from "moment"
 
 
 const Branch = new Schema ({
@@ -8,6 +9,10 @@ const Branch = new Schema ({
         unique: true
     },
     email: {
+        type: String,
+        required: true
+    },
+    direction: {
         type: String,
         required: true
     },
@@ -24,10 +29,20 @@ const Branch = new Schema ({
     closingH: {
         type: String
     }
-    // ,
-    // operator: {
-    //     type: String
-    // }
+    // openingH: {
+    //     type: String,
+    //     set: function (value) {
+    //       // Establecer el formato deseado al valor del campo openingH utilizando Moment.js
+    //       return moment(value, 'HH:mm').format('HH:mm');
+    //     }
+    //   },
+    //   closingH: {
+    //     type: String,
+    //     set: function (value) {
+    //       // Establecer el formato deseado al valor del campo closingH utilizando Moment.js
+    //       return moment(value, 'HH:mm').format('HH:mm');
+    //     }
+    //   }
 
 })
 

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, FormGroup, IconButton, Input, InputAdornment, Link, OutlinedInput, TextField } from '@mui/material'
+import { Box, Button, Divider, FormGroup,InputLabel, IconButton, Input, InputAdornment, Link, OutlinedInput, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import axios from "axios"
 import {useRouter} from "next/navigation"
@@ -38,8 +38,9 @@ const Login = () => {
           DNI: response.data.user.DNI,
           isAdmin: response.data.user.isAdmin
         })
-        // console.log(response.data.user)
+        console.log(response.data.user)
        localStorage.setItem("token",JSON.stringify(response.data.token))
+       localStorage.setItem("id",JSON.stringify(response.data.user._id) )
        alert("LOGIN EXITOSO")
        router.push(`/users/reserva/${response.data.user._id}`)
       })
@@ -62,14 +63,14 @@ const Login = () => {
         position: "absolute",
         borderRadius: "12px",
         boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-        width: "580px",
-        height:"444px",
-        left: "calc(50% - 580px/2)",
+        width: "700px",
+        height:"560px",
+        left: "calc(50% - 700px/2)",
         top: "160px",
         padding: "40px 32px 32px",
         bgcolor:"#FFFFFF",
-    
     }}>
+
        <Box sx={{ml:1, color:"#A442F1" , display:"flex", mr:4, fontWeight:"bold" , fontSize:"16px  "}}>
            <AiOutlineArrowLeft />
           <Box sx={{ ml:1}}>
@@ -80,6 +81,8 @@ const Login = () => {
        Iniciar sesión
      </Box>
             <form onSubmit={handleSubmit}>
+            <InputLabel>Nombre</InputLabel>
+
                 <TextField 
                 name="email" 
                 fullWidth
@@ -87,6 +90,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                  sx={{paddingBottom:3}}/>
 
+            <InputLabel>Contraseña</InputLabel>
               <OutlinedInput
               fullWidth
                 id="standard-adornment-password"
@@ -104,7 +108,7 @@ const Login = () => {
               </InputAdornment>
             }
           />
-
+        <Box sx={{textAlign:"center", color:"#A442F3", fontWeight:"bold", p:2}}>¿Olvidaste tu contraseña?</Box>
         <Box  sx={{paddingBottom:3, paddingTop:3}}>
             <Button 
             type= "submit"

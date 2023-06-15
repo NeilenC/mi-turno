@@ -1,15 +1,17 @@
 import { Box, Button, FormControl, Grid, Input, InputLabel, TextField } from '@mui/material'
 import axios from 'axios'
+import moment from "moment"
 import React, { useEffect, useState } from 'react'
 
 const Createbranch = () => {
-  // const [newBranch, setNewBranch] = useState([])
   const [name, setName] = useState("")
   const [phtoneNumber, setPhoneNumber] = useState(0)
   const [email, setEmail] = useState("")
   const [openingH, setOpeningH] = useState("")
   const [closingH, setClosingH] = useState("")
   const [maxCap, setMaxCap] = useState(0)
+  const [direction, setDirection] = useState("")
+
 
 async function handlerNewBranch (e) {
   e.preventDefault()
@@ -19,6 +21,7 @@ async function handlerNewBranch (e) {
       email: email,
       phoneNumber: phtoneNumber,
       maxCap: maxCap,
+      direction: direction,
       openingH: openingH,
       closingH: closingH
     })
@@ -59,17 +62,28 @@ async function handlerNewBranch (e) {
       }}
         >
       <Box sx={{fontSize:"20px", fontWeight:"bold", pt:2, pb:3}}>Crear una nueva sucursal</Box>
-      <Grid xs={12} item sx={{pt:2,pb:2}}>
-        <InputLabel>Nombre</InputLabel>
+      <Grid container spacing={2} sx={{pb:2}}> 
+      <Grid xs={12} sm={6} item sx={{pt:2,pb:2}}>
+       <InputLabel>Nombre</InputLabel>
         <TextField
-        name="email"
-        type="email"
-        variant="outlined"
-        fullWidth
-        value={name}
-        onChange={(e)=> {setName(e.target.value)}}
+          id="outlined-multiline-flexible" 
+          multiline
+          fullWidth
+          value={name}
+          onChange={(e) => {setName(e.target.value)}}
           />  
-      </Grid>
+        </Grid> 
+      <Grid xs={12} sm={6} item sx={{pt:2,pb:2}}>
+       <InputLabel>Dirección</InputLabel>
+        <TextField
+          id="outlined-multiline-flexible" 
+          multiline
+          fullWidth
+          value={direction}
+          onChange={(e) => {setDirection(e.target.value)}}
+          />  
+         </Grid> 
+        </Grid>
       <Grid xs={12} item sx={{pt:2,pb:2}}>
         <InputLabel>Email</InputLabel>
         <TextField

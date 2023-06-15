@@ -1,4 +1,4 @@
-import { Box, Button, Divider, FormControl, Grid, IconButton, InputAdornment, Link, OutlinedInput, TextField } from '@mui/material'
+import { Box, Button, Divider, FormControl, Grid, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from '@mui/icons-material/Visibility';
@@ -54,7 +54,7 @@ const Register = () => {
         boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
         maxWidth: "750px",
         height: "900",
-         left: "calc(50% - 580px/2)",
+         left: "calc(50% - 750px/2)",
         top: "160px",
         padding: "40px 32px 32px",
         bgcolor:"#FFFFFF",
@@ -75,15 +75,16 @@ const Register = () => {
         p: "32px",
         gap:"20px"
       }}>
-        <form 
+        <Box 
+        component="form"
+        autoComplete='off'
         onSubmit = {handleSubmit}>
       <Grid sx={{pb:2}}>
         <Grid container spacing={1} sx={{pb:2}}> 
               <Grid xs={12} sm={6} item sx={{}}>
+                <InputLabel>Nombre</InputLabel>
                 <TextField
-                  label="Nombre"
                   name="name"
-                  placeholder="Ingrese su Nombre"
                   variant="outlined"
                   fullWidth
                   required
@@ -91,11 +92,11 @@ const Register = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item>
+            <Grid xs={12} sm={6} item>
+              <InputLabel>Apellido</InputLabel>
                 <TextField
-                  label="Apellido"
                   name="lastname"
-                  placeholder="Ingrese su Apellido"
+                 
                   variant="outlined"
                   fullWidth
                   value={lastname} // agregar el valor del estado
@@ -103,11 +104,10 @@ const Register = () => {
                   />
               </Grid>
               <Grid xs={12} item>
+              <InputLabel>Email</InputLabel>
                 <TextField
-                  label="Email"
                   name="email"
                   type="email"
-                  placeholder="Ingrese su Email"
                   variant="outlined"
                   required
                   fullWidth
@@ -116,11 +116,10 @@ const Register = () => {
                   />
               </Grid> 
               <Grid xs={12} item>
+              <InputLabel>DNI</InputLabel>
                 <TextField
-                  label="DNI"
                   name="DNI"
                   type="DNI"
-                  placeholder="Ingrese su DNI"
                   variant="outlined"
                   required
                   fullWidth
@@ -129,11 +128,11 @@ const Register = () => {
                   />
               </Grid>
            <Grid xs={12} sm={6} item>
+           <InputLabel>Constraseña</InputLabel>
               <OutlinedInput
                 fullWidth
                 value={password} // agregar el valor del estado
-                name="contraseña"
-                placeholder="Ingrese su Contraseña"
+                name="contraseña"     
                 id="standard-adornment-password"
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => setPassword(e.target.value)}
@@ -156,7 +155,7 @@ const Register = () => {
             {/* <OutlinedInput
                fullWidth
                name="contraseña"
-               placeholder="Repita su Contraseña"
+              "
                value={password} // agregar el valor del estado
                onChange={(e) => setPassword(e.target.value)}
                 id="standard-adornment-password"
@@ -176,7 +175,7 @@ const Register = () => {
           /> */}
               </Grid>
               </Grid>
-          <Box sx={{bgcolor:"#f5f5f5f5" , pt:2}} >
+          <Box sx={{bgcolor:"#ECECEC" , pt:2}} >
             <Box  sx={{ml:3}}>
              La contraseña debe contener:
             <Divider sx={{width: "400px"}} />
@@ -216,7 +215,7 @@ const Register = () => {
              </Grid>
             </Grid>
 
-           </form>
+           </Box>
       
       </Box>
     </Box>

@@ -1,8 +1,8 @@
-import {configureStore} from "redux"
-
+import {configureStore} from "@reduxjs/toolkit"
+import userInfo from "./userInfo"
 const store = configureStore({
     reducer: {
-
+        userInfo: userInfo
     }
 })
 

@@ -17,6 +17,7 @@ export default async function handler (req,res) {
             email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             maxCap: req.body.maxCap,
+            direction: req.body.direction,
             openingH: req.body.openingH,
             closingH: req.body.closingH
         })
