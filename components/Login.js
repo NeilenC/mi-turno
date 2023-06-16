@@ -15,8 +15,8 @@ const Login = () => {
   const [dataUser, setDataUser ] = useState({})
   const router = useRouter()
   // const dispatch = useDispatch()
-
-  console.log("DATOS", dataUser)
+  // console.log("PASSS", typeof(password))
+  // console.log("DATOS", dataUser)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -40,7 +40,7 @@ const Login = () => {
         })
         console.log(response.data.user)
        localStorage.setItem("token",JSON.stringify(response.data.token))
-       localStorage.setItem("id",JSON.stringify(response.data.user._id) )
+       localStorage.setItem("id",JSON.stringify(response.data.user._id))
        alert("LOGIN EXITOSO")
        router.push(`/users/reserva/${response.data.user._id}`)
       })
@@ -70,6 +70,8 @@ const Login = () => {
         padding: "40px 32px 32px",
         bgcolor:"#FFFFFF",
     }}>
+
+     
 
        <Box sx={{ml:1, color:"#A442F1" , display:"flex", mr:4, fontWeight:"bold" , fontSize:"16px  "}}>
            <AiOutlineArrowLeft />

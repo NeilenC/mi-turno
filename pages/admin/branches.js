@@ -1,10 +1,11 @@
-import { Box } from '@mui/material'
-import axios from 'axios'
+import { Box, Button, InputLabel } from '@mui/material'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 const Branches = () => {
 const [branches, setBranches] = useState([])
-
+const router = useRouter()
 
 useEffect(() => {
   const handlerBranches = async () => {
@@ -29,13 +30,47 @@ console.log(branches, "BRANCHES")
 
 
   return (
-    <Box>
-        <Box>
-        Sucursales 
+    <Box sx={{pt:"150px"}}>
+     <Box sx={{fontWeight:"bold", fontSize:"24px", pb:3 , pl:"152px"}} > Sucursales </Box> 
+      <Box sx={{display:"flex"}}>
+      
+        <Box sx={{width:"85%", m:"auto"}}> 
+        {branches.map((branch) => (
+        <Box key={branch._id} sx={{p:1}}>
+          <Box sx={{border:"1px solid #F0F0F0", p:"24px", borderRadius:"12px" , display:"flex", direction:"row", alignItems:"center", fontSize:"14px", justifyContent:"space-between"}}>
+            <Box>
+            <InputLabel>Nombre</InputLabel>
+             {branch.name}
+            </Box>
+            <Box>
+             <InputLabel>Dirección</InputLabel>
+             <Box>{branch.direction}</Box>
+            </Box>
 
-        </Box>
+            <Box>
+             <InputLabel>Teléfono</InputLabel>
+             <Box>{branch.phoneNumber}</Box>
+            </Box>
 
-        
+            <Box>
+             <InputLabel>Capacidad máxima</InputLabel>
+             <Box>{branch.maxCap}</Box>
+            </Box>
+
+            <Box>
+             <InputLabel>Horario</InputLabel>
+             <Box>{branch.openingH} - {branch.closingH} HS</Box>
+            </Box>
+            <Button sx={{p:"12px 24px", bgcolor:"#F5F5F5", color: "#A442F1", fontWeight:"bold"}}>
+              <Link href={`/admin/editBranch/${branch._id}`}>
+                  Editar
+              </Link>
+            </Button>
+           </Box>
+          </Box>
+         ))}
+        </Box>  
+      </Box>
     </Box>
   )
 }

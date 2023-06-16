@@ -46,7 +46,7 @@ const Branch = new Schema ({
 
 })
 
-const Branches = models.User || model("branch", Branch )
+const Branches = models.Branches || model("Branches", Branch )
 
 // // export { mongoose, Schema }
 export default Branches

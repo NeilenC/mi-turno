@@ -26,6 +26,7 @@ async function handlerNewBranch (e) {
       closingH: closingH
     })
     if(response.status === 200) {
+      console.log(response, "RESPONSE")
       alert("SE CREO UNA NUEVA BRANCHHHASDKJSDÑKSJDFKSD")
     }
     
@@ -34,7 +35,6 @@ async function handlerNewBranch (e) {
    }
   }
 
-  // console.log("NEEEEWWWW", newBranch)
 
 
   return (

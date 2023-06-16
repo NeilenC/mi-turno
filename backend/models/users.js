@@ -44,29 +44,31 @@ const UserSchema = new Schema ( {
 }
  )
 
-  UserSchema.pre("save", async function (next) {
-     try {
-     const salt = await bcrypt.genSalt(10)
-     const hashedPassword = await bcrypt.hash(this.password, salt)
-     this.password = hashedPassword
-     next()
-     
-     } catch(e) {
-         next(e)
-     }
-  })
+ UserSchema.pre("save", async function (next) {
+  try {
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(this.password, salt)
+  this.password = hashedPassword
+  next()
 
-
-  UserSchema.methods.validatePassword = async function (password) {
-    try{
-
-      return await bcrypt.compare(password, this.password)
-    } catch(e){
-
-      throw e
-    }
+  } catch(e) {
+      next(e)
   }
+})
 
+
+UserSchema.methods.validatePassword = async function (password) {
+  console.log("CONTRASEÑA INGRESADA", password)
+  console.log("THIS PASSWORD", this.password)
+  try {
+    const isMatch = await bcrypt.compare(password, this.password);
+    // console.log("COMPARADA", isMatch);
+    return isMatch
+  } catch (e) {
+    console.log("ERROR CATCH", e)
+    throw e;
+  }
+};
 
 
    const User = models.User || model('User', UserSchema);
