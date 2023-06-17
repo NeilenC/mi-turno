@@ -7,7 +7,6 @@
 // const routes = require("./routes")
 // const cors = require("cors")
 
-
 // const app = express()
 // app.use(cors())
 
@@ -20,8 +19,5 @@
 // connectDB()
 
 export default function handler(req, res) {
-  
-  res.status(200).json({ name: 'John Doe' })
+  res.status(200).json({ name: 'John Doe' });
 }
-
-

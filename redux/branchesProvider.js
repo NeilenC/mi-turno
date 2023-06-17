@@ -1,15 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react'
-import {useDispatch} from "react-redux";
-import {setUserInfo} from "./userInfo"
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from './userInfo';
 
-const branchesProvider = ({children}) => {
- 
- 
+const branchesProvider = ({ children }) => {
+  return <div>{children}</div>;
+};
 
-
-  return (
-    <div>{children}</div>
-  )
-}
-
-export default branchesProvider
+export default branchesProvider;

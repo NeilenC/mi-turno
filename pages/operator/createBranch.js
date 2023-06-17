@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const createBranch = () => {
-  return (
-    <div>createBranch</div>
-  )
-}
+  return <div>createBranch</div>;
+};
 
-export default createBranch
+export default createBranch;

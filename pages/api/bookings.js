@@ -1,4 +1,4 @@
 //GET all bookings
-//GET booking 
+//GET booking
 //UPDATE booking
 //DELETE booking

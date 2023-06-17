@@ -1,43 +1,37 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Grid, InputLabel, TextField } from '@mui/material';
 import axios from 'axios';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-const Createbranch = () => {
+const CreateOperator = () => {
   const [name, setName] = useState('');
-  const [phtoneNumber, setPhoneNumber] = useState(0);
+  const [DNI, setDNI] = useState(0);
   const [email, setEmail] = useState('');
-  const [openingH, setOpeningH] = useState('');
-  const [closingH, setClosingH] = useState('');
-  const [maxCap, setMaxCap] = useState(0);
-  const [direction, setDirection] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
+  const [branch, setBranch] = useState('');
 
-  async function handlerNewBranch(e) {
+  async function handleNewOperator(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/branches', {
-        name: name,
-        email: email,
-        phoneNumber: phtoneNumber,
-        maxCap: maxCap,
-        direction: direction,
-        openingH: openingH,
-        closingH: closingH,
-      });
-      if (response.status === 200) {
-        console.log(response, 'RESPONSE');
-        alert('SE CREO UNA NUEVA BRANCHHHASDKJSDÑKSJDFKSD');
+      const response = await axios.post(
+        'http://localhost:3000/api/admin/createOp',
+        {
+          name: name,
+          lastname: lastName,
+          email: email,
+          DNI: DNI,
+          password: password,
+          branch: branch,
+          isOp: true,
+        }
+      );
+      if (password === verifyPassword && response.status === 200) {
+        alert('CREASTE UN NUEVO OPERADOR');
       }
     } catch (e) {
-      console.log('HUBO UN PROBLEMAAAA ');
+      console.log(e);
+      alert('NO SE CREO');
     }
   }
 
@@ -45,7 +39,7 @@ const Createbranch = () => {
     <Box sx={{ height: '100vh', bgcolor: '#ECECEC' }}>
       <Grid container>
         <Box
-          onSubmit={handlerNewBranch}
+          onSubmit={handleNewOperator}
           component="form"
           noValidate
           autoComplete="off"
@@ -66,7 +60,7 @@ const Createbranch = () => {
             }}
           >
             <Box sx={{ fontSize: '20px', fontWeight: 'bold', pt: 2, pb: 3 }}>
-              Crear una nueva sucursal
+              Crear nuevo operador
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
@@ -82,19 +76,19 @@ const Createbranch = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Dirección</InputLabel>
+                <InputLabel>Apellido</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth
-                  value={direction}
+                  value={lastName}
                   onChange={(e) => {
-                    setDirection(e.target.value);
+                    setLastName(e.target.value);
                   }}
                 />
               </Grid>
             </Grid>
-            <Grid xs={12} item sx={{ pt: 2, pb: 2 }}>
+            <Grid xs={12} item sx={{ pb: 2 }}>
               <InputLabel>Email</InputLabel>
               <TextField
                 id="outlined-multiline-flexible"
@@ -108,58 +102,60 @@ const Createbranch = () => {
             </Grid>
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Teléfono</InputLabel>
+                <InputLabel>DNI</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth
-                  value={phtoneNumber}
+                  value={DNI}
                   onChange={(e) => {
-                    setPhoneNumber(e.target.value);
+                    setDNI(e.target.value);
                   }}
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Capacidad máxima</InputLabel>
+                <InputLabel>Sucursal</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth
+                  value={branch}
                   onChange={(e) => {
-                    setMaxCap(e.target.value);
+                    setBranch(e.target.value);
                   }}
                 />
               </Grid>
             </Grid>
+
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Horario de apertura</InputLabel>
+                <InputLabel>Contraseña</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth
-                  value={openingH}
+                  value={password}
                   onChange={(e) => {
-                    setOpeningH(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Horario de cierre</InputLabel>
+                <InputLabel>Repetir contraseña</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth
-                  value={closingH}
+                  value={verifyPassword}
                   onChange={(e) => {
-                    setClosingH(e.target.value);
+                    setVerifyPassword(e.target.value);
                   }}
                 />
               </Grid>
             </Grid>
             <Button
               fullWidth
-              onClick={handlerNewBranch}
+              onClick={handleNewOperator}
               sx={{
                 bgcolor: '#A442F1',
                 color: '#ffffff',
@@ -177,4 +173,4 @@ const Createbranch = () => {
   );
 };
 
-export default Createbranch;
+export default CreateOperator;

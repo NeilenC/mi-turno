@@ -1,39 +1,39 @@
-import { connectMongoDb } from "../../../lib/mongodb"
-import User from "../../../backend/models/users"
-import  isAuth  from "../../../backend/middlewares/auth"
-import { createToken } from "../../../backend/services";
-
+import { connectMongoDb } from '../../../lib/mongodb';
+import User from '../../../backend/models/users';
+import isAuth from '../../../backend/middlewares/auth';
+import { createToken } from '../../../backend/services';
 
 async function handler(req, res) {
+  try {
+    await connectMongoDb();
+console.log("REQ:BODYEMAIL", req.body)
+    const user = await User.findOne({ email: req.body.email });
+    console.log('ENCUENTRA EL USUARIO POR MAIL', user);
 
-    try {
-      await connectMongoDb();
-      
-      const user = await User.findOne({ email: req.body.email });
-      console.log( "ENCUENTRA EL USUARIO POR MAIL", user)
-      const isMatch = await user.validatePassword(req.body.password)
-     
-      if (user && isMatch) {
-        const token = createToken(user);
-        return res.status(200).send({user, token}); 
-      } 
+    
+    const isMatch = await user.validatePassword(req.body.password, 8);
+    console.log("COMPARADA", isMatch);
 
-       res.status(401).send({ auth: false, message: "Credenciales inválidas" });
-      
-    } catch (error) {
-      console.log("Error en el login", error);
-      res.status(500).send({ message: "Error en el servidor", token: null });
+    if (user && isMatch) {
+      const token = createToken(user);
+      return res.status(200).send({ user, token });
     }
+
+    res.status(401).send({ auth: false, message: 'Credenciales inválidas' });
+  } catch (error) {
+    console.log('Error en el login', error);
+    res.status(500).send({ message: 'Error en el servidor', token: null });
   }
+}
 
 // Envuelve la función handler en una función intermedia para aplicar el middleware
 const protectedHandler = (req, res) => {
-   handler (req, res, () => {
-    isAuth  (req, res);
-    });
-  };
+  handler(req, res, () => {
+    isAuth(req, res);
+  });
+};
 
-  export default protectedHandler;
+export default protectedHandler;
 
 // Importa los módulos necesarios
 // import { connectMongoDb } from "../../../lib/mongodb";
@@ -57,10 +57,10 @@ const protectedHandler = (req, res) => {
 
 //     if (isMatch) {
 //       const token = createToken(user);
-//       return res.status(200).send({user, token,  message: "Login exitoso"}); 
-     
+//       return res.status(200).send({user, token,  message: "Login exitoso"});
+
 //     } else {
-     
+
 //       return res.status(401).send({ message: "Credenciales inválidas" });
 //     }
 //   } catch (error) {

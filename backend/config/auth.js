@@ -9,7 +9,7 @@
 //     })
 
 //     user.save((err) => {
-       
+
 //      if(err) res.status(500).send({message:"error al crear usuario"})
 //      return res.status(200).send({token: service.createToken(user)})
 //     })

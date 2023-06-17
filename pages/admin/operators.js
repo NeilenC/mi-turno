@@ -1,39 +1,39 @@
-import { Box, Button, InputLabel } from '@mui/material';
+import { Box, Button, InputLabel, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-const Branches = () => {
-  const [branches, setBranches] = useState([]);
-  const router = useRouter();
+const Operators = () => {
+  const [operators, setOperators] = useState([]);
 
   useEffect(() => {
-    const handlerBranches = async () => {
+    const handlerOperators = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/branches');
+        const response = await fetch('http://localhost:3000/api/admin/findOp');
         if (response.ok) {
-          const branches = await response.json();
-          setBranches(branches);
+          const operators = await response.json();
+          setOperators(operators);
         } else {
-          throw new Error('Error al obtener los datos de las sucursales');
+          throw new Error('Error al obtener los datos de los operadores');
         }
       } catch (e) {
         console.error(e);
       }
     };
-    handlerBranches();
+    handlerOperators();
   }, []);
+
+  console.log('OPERATORSSSS', operators);
 
   return (
     <Box sx={{ pt: '150px' }}>
       <Box sx={{ fontWeight: 'bold', fontSize: '24px', pb: 3, pl: '152px' }}>
         {' '}
-        Sucursales{' '}
+        Operadores{' '}
       </Box>
       <Box sx={{ display: 'flex' }}>
         <Box sx={{ width: '85%', m: 'auto' }}>
-          {branches.map((branch) => (
-            <Box key={branch._id} sx={{ p: 1 }}>
+          {operators.map((operator) => (
+            <Box key={operator._id} sx={{ p: 1 }}>
               <Box
                 sx={{
                   border: '1px solid #F0F0F0',
@@ -48,29 +48,24 @@ const Branches = () => {
               >
                 <Box>
                   <InputLabel>Nombre</InputLabel>
-                  {branch.name}
-                </Box>
-                <Box>
-                  <InputLabel>Dirección</InputLabel>
-                  <Box>{branch.direction}</Box>
+                  {operator.name} {operator.lastName}
                 </Box>
 
                 <Box>
-                  <InputLabel>Teléfono</InputLabel>
-                  <Box>{branch.phoneNumber}</Box>
+                  <InputLabel>Email</InputLabel>
+                  <Box>{operator.email}</Box>
                 </Box>
 
                 <Box>
-                  <InputLabel>Capacidad máxima</InputLabel>
-                  <Box>{branch.maxCap}</Box>
+                  <InputLabel>Sucursal</InputLabel>
+                  <Box>{operator.branch}</Box>
                 </Box>
 
                 <Box>
-                  <InputLabel>Horario</InputLabel>
-                  <Box>
-                    {branch.openingH} - {branch.closingH} HS
-                  </Box>
+                  <InputLabel>Contraseña</InputLabel>
+                  <Typography variant="body1">**************</Typography>
                 </Box>
+
                 <Button
                   sx={{
                     p: '12px 24px',
@@ -79,7 +74,9 @@ const Branches = () => {
                     fontWeight: 'bold',
                   }}
                 >
-                  <Link href={`/admin/editBranch/${branch._id}`}>Editar</Link>
+                  <Link href={`/admin/editOperators/${operator._id}`}>
+                    Editar
+                  </Link>
                 </Button>
               </Box>
             </Box>
@@ -90,4 +87,4 @@ const Branches = () => {
   );
 };
 
-export default Branches;
+export default Operators;
