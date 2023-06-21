@@ -51,8 +51,8 @@ const Login = () => {
           isAdmin: response.data.user.isAdmin,
         });
         console.log(response.data.user);
-        localStorage.setItem('token', JSON.stringify(response.data.token));
-        localStorage.setItem('id', JSON.stringify(response.data.user._id));
+        // localStorage.setItem('token', JSON.stringify(response.data.token));
+        // localStorage.setItem('id', JSON.stringify(response.data.user._id));
         alert('LOGIN EXITOSO');
         router.push(`/users/reserva/${response.data.user._id}`);
       })
@@ -118,8 +118,9 @@ const Login = () => {
         </Box>
         <Box
         component="form"
+        autoComplete='off'
         onSubmit={handleSubmit}>
-          <InputLabel>Nombre</InputLabel>
+          <InputLabel>Email</InputLabel>
 
           <TextField
             name="email"
@@ -130,7 +131,7 @@ const Login = () => {
             sx={{ paddingBottom: 3 }}
           />
 
-          <InputLabel>Contraseña</InputLabel>
+           <InputLabel>Contraseña</InputLabel>
           <OutlinedInput
             fullWidth
             id="standard-adornment-password"

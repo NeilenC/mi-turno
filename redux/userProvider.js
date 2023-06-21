@@ -7,7 +7,7 @@ const UserProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setId(localStorage.getItem('id'));
+    // setId(localStorage.getItem('id'));
   }, []);
 
   const getUser = useCallback(async () => {
