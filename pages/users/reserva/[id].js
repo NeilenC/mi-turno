@@ -1,44 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Autocomplete,
   Box,
   Button,
   Grid,
   InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 // import dayjs from 'dayjs';
-// import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import useBranchData from '../../../Hooks/useBranchData';
 
 const steps = ['Elegí tu sucursal', 'Selleccioná el día', 'Completá los datos'];
 
-const opciones = [
-  { name: 'neilen' },
-  { name: 'neilen' },
-  { name: 'neilen' },
-  { name: 'neilen' },
-  { name: 'neilen' },
-  { name: 'neilen' },
-];
 
-const horarios = [{ horario: '19:00' }];
+const Reserva = () => {
+  const [selectedBranch, setSelectedBranch] = useState('');
+  const [activeStep, setActiveStep] = useState([]);
+  useBranchData();
+  const branches = useSelector((state) => state.branches);
 
-const Reserva = ({ opciones, horarios }) => {
+  const handleBranchSelect = (event) => {
+    const selectedBranch = event.target.value;
+    setSelectedBranch(selectedBranch);
+    setActiveStep([0]);
+  };
+
+  const getStepColor = (stepIndex) => {
+    if (stepIndex === 0 && selectedBranch) {
+      return 'red'; // Cambiar a color azul de Material-UI que desees
+    }
+    return undefined; // Mantener el color por defecto
+  };
+
   return (
     <Box sx={{ display: 'flex', bgcolor: '#ECECEC', height: '100vh' }}>
-      <Box
-        sx={{ height: '580px', width: '1300px', m: 'auto', display: 'flex' }}
-      >
-        <Grid
-          container
-          sx={{ width: '1300px', height: '550px', display: 'flex', m: 'auto' }}
-        >
+      <Box sx={{ height: '580px', width: '1300px', m: 'auto', display: 'flex' }}>
+        <Grid container sx={{ width: '1300px', height: '550px', display: 'flex', m: 'auto' }}>
           <Box
             sx={{
               width: '65%',
@@ -51,31 +57,34 @@ const Reserva = ({ opciones, horarios }) => {
               Reserva <br />
               <small>Seleccioná la opción x</small>
             </Box>
-            <Stepper activeStep={1} alternativeLabel sx={{ m: 'auto', pt: 5 }}>
-              {steps.map((label) => (
-                <Step key={label}>
+            <Stepper activeStep={activeStep} alternativeLabel sx={{ m: 'auto', pt: 5 }}>
+              {steps.map((label, index) => (
+                <Step key={label} completed={index < activeStep} color={getStepColor(index)}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               ))}
             </Stepper>
             {/* PASO 1 */}
-            <InputLabel sx={{ m: 1, ml: 4 }}>
-              Sucursal
-              <Autocomplete
-                id="branch"
-                options={opciones}
-                sx={{ width: '90%' }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </InputLabel>
-            {/* FIN PASO 1  */}
+            <InputLabel sx={{ m: 1, ml: 4 }}>Sucursal</InputLabel>
+            <Select
+              sx={{ width: '85%', ml: 4 }}
+              value={selectedBranch}
+              onChange={handleBranchSelect}
+            >
+              {branches.map((branch) => (
+                <MenuItem key={branch._id} value={branch.name}>
+                  {branch.name}
+                </MenuItem>
+              ))}
+            </Select>
+            {/* FIN PASO 1 */}
 
             {/* INICIO PASO 2  */}
             <InputLabel sx={{ m: 1, ml: 4 }}>
               Horario
               <Autocomplete
                 id="branch"
-                options={horarios}
+                // options={horarios}
                 sx={{ width: '90%' }}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -118,7 +127,7 @@ const Reserva = ({ opciones, horarios }) => {
               Email
               <Autocomplete
                 id="branch"
-                options={horarios}
+                // options={horarios}
                 sx={{ width: '90%' }}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -128,7 +137,7 @@ const Reserva = ({ opciones, horarios }) => {
               teléfono
               <Autocomplete
                 id="branch"
-                options={horarios}
+                // options={horarios}
                 sx={{ width: '90%' }}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -151,13 +160,18 @@ const Reserva = ({ opciones, horarios }) => {
               sx={{
                 bgcolor: '#FFFFFF',
                 ml: 5,
-                width: '220%',
-                height: '80%',
+                width: '150%',
+                height: '50%',
                 borderRadius: '10px',
               }}
             >
-              CALENDARIO VA ACA
+            <Box sx = {{justifyContent:"center", pt:2}}>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar />
+              </LocalizationProvider>
             </Box>
+           </Box>
           </Box>
         </Grid>
       </Box>

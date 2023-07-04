@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUserInfo } from './userInfo';
+import { setUserInfo } from '../redux/userInfo';
 
-const UserProvider = ({ children }) => {
+export default function useUserData ()  {
   const [id, setId] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // setId(localStorage.getItem('id'));
+    setId(localStorage.getItem('id'));
   }, []);
 
   const getUser = useCallback(async () => {
@@ -39,7 +39,5 @@ const UserProvider = ({ children }) => {
     }
   }, [id, getUser]);
 
-  return <div>{children}</div>;
 };
 
-export default UserProvider;

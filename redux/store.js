@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userInfo from './userInfo';
+import setBranches from './branchesInfo';
 const store = configureStore({
   reducer: {
-    userInfo: userInfo,
+    user: userInfo,
+    branches: setBranches
   },
 });
 

@@ -13,21 +13,19 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { setUserInfo } from "../redux/userInfo"
 import { useRouter } from 'next/navigation';
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [dataUser, setDataUser] = useState({});
   const router = useRouter();
-  // const dispatch = useDispatch()
-  // console.log("PASSS", typeof(password))
-  // console.log("DATOS", dataUser)
+  const dispatch = useDispatch()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -43,18 +41,19 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
-        setDataUser({
-          email: response.data.user.email,
-          name: response.data.user.name,
-          id: response.data.user._id,
-          DNI: response.data.user.DNI,
-          isAdmin: response.data.user.isAdmin,
-        });
-        console.log(response.data.user);
-        // localStorage.setItem('token', JSON.stringify(response.data.token));
-        // localStorage.setItem('id', JSON.stringify(response.data.user._id));
-        alert('LOGIN EXITOSO');
-        router.push(`/users/reserva/${response.data.user._id}`);
+        if(response.status === 200 ) {
+          dispatch(setUserInfo({
+            email: response.data.user.email,
+            name: response.data.user.name,
+            id: response.data.user._id,
+            DNI: response.data.user.DNI,
+            isAdmin: response.data.user.isAdmin,
+          }));
+          localStorage.setItem('token', JSON.stringify(response.data.token));
+          localStorage.setItem('id', JSON.stringify(response.data.user._id));
+          alert('LOGIN EXITOSO');
+          router.push(`/users/reserva/${response.data.user._id}`);
+        }
       })
       .catch((e) => {
         alert('NO SE PUDO LOGUEAR');
