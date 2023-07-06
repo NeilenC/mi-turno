@@ -25,7 +25,6 @@ const EditOperators = () => {
         //     branch: branch
         //   }
       );
-      console.log(response.data, 'DATA OPERADAORS');
       alert('Se actualizaron los datos del operador');
     } catch (e) {
       alert('No se pudo actualizar datos de operador');

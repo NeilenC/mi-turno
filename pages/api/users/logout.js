@@ -11,7 +11,6 @@ async function logoutHandler(req, res) {
 
     res.status(200).send({ message: 'Logout exitoso' });
   } catch (error) {
-    console.log('Error en el logout', error);
     res.status(500).send({ message: 'Error en el servidor' });
   }
 }

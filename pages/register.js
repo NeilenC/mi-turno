@@ -44,17 +44,13 @@ const Register = () => {
         DNI: DNI,
       })
       .then((res) => {
-        console.log('RESDATA', res.data);
         alert('BIENBENIDO! ACABAS DE REGISTRARTE');
         router.push('/');
       })
       .catch((error) => {
-        console.log('HUBO UN ERROR', error);
         alert('HUBO UN ERROR');
       });
   };
-
-  console.log("email", email)
 
   return (
     <Box

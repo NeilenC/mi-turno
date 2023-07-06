@@ -62,21 +62,16 @@ UserSchema.pre('save', async function() {
   this.salt = salt
 
   return this.hash(this.password, salt).then(hash => {
-    console.log('CONTRASENASS COMPARADAS', this.password)
     this.password = hash
   })
 })
 UserSchema.methods.hash = async function (password, salt) {
-    console.log(' this paswword PAAAA PAM PAM', password, salt)
     return bcrypt.hash(password, salt);
 }
 
 UserSchema.methods.validatePassword = async function (password) {
-  console.log('CONTRASEÑA INGRESADA', password);
-  console.log('THIS PASSWORD', this.password);
   
     const hash = await this.hash(password, this.salt);
-    console.log("dos hashes", hash, this.password);
     return this.password === hash;
 };
 

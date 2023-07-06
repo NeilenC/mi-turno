@@ -6,13 +6,10 @@ import { createToken } from '../../../backend/services';
 async function handler(req, res) {
   try {
     await connectMongoDb();
-console.log("REQ:BODYEMAIL", req.body)
     const user = await User.findOne({ email: req.body.email });
-    console.log('ENCUENTRA EL USUARIO POR MAIL', user);
 
     
     const isMatch = await user.validatePassword(req.body.password, 8);
-    console.log("COMPARADA", isMatch);
 
     if (user && isMatch) {
       const token = createToken(user);
@@ -21,7 +18,6 @@ console.log("REQ:BODYEMAIL", req.body)
 
     res.status(401).send({ auth: false, message: 'Credenciales inválidas' });
   } catch (error) {
-    console.log('Error en el login', error);
     res.status(500).send({ message: 'Error en el servidor', token: null });
   }
 }

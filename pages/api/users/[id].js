@@ -3,9 +3,7 @@ import User from '../../../backend/models/users';
 
 export default async function handler(req, res) {
   await connectMongoDb();
-  console.log(' REQ METHODS', req.method)
   const { id } = req.query;
-console.log(' IDS', id)
   try {
     const updatedUser = await User.findByIdAndUpdate(
       id,

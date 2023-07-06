@@ -12,12 +12,10 @@ export default function isAuth(req, res, next) {
 
   decodeToken(token)
     .then((response) => {
-      console.log('THEN', response);
       req.user = response;
       next();
     })
     .catch((response) => {
-      console.log('CATCH', response);
       res.status(response.status);
     });
 }

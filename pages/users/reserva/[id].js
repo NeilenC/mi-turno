@@ -18,44 +18,47 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import useBranchData from '../../../Hooks/useBranchData';
+import useUserData from '../../../Hooks/useUserData';
 
 const steps = ['Elegí tu sucursal', 'Selleccioná el día', 'Completá los datos'];
 
 
 const Reserva = () => {
-  const [selectedBranch, setSelectedBranch] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState(null);
   const [activeStep, setActiveStep] = useState([]);
   useBranchData();
+  useUserData();
   const branches = useSelector((state) => state.branches);
+  const user = useSelector((state) => state.user);
 
-  const handleBranchSelect = (event) => {
-    const selectedBranch = event.target.value;
-    setSelectedBranch(selectedBranch);
-    setActiveStep([0]);
+  const handleBranchSelect = (e) => {
+    setActiveStep(0);
   };
 
   const getStepColor = (stepIndex) => {
     if (stepIndex === 0 && selectedBranch) {
-      return 'red'; // Cambiar a color azul de Material-UI que desees
+      return 'primary'; // Cambiar a color azul de Material-UI que desees
     }
     return undefined; // Mantener el color por defecto
   };
 
+console.log("SELECTED", selectedBranch)
+
   return (
     <Box sx={{ display: 'flex', bgcolor: '#ECECEC', height: '100vh' }}>
-      <Box sx={{ height: '580px', width: '1300px', m: 'auto', display: 'flex' }}>
+      <Box sx={{ height: '580px', width: '90%', m: 'auto', display: 'flex',pb:"35%" }}>
         <Grid container sx={{ width: '1300px', height: '550px', display: 'flex', m: 'auto' }}>
           <Box
             sx={{
               width: '65%',
               bgcolor: '#FFFFFF',
-              height: '130%',
-              borderRadius: '10px',
+              height: '138%',
+              borderRadius: '10px'
             }}
           >
             <Box sx={{ pl: 5, pt: 5, fontSize: '23px', fontWeight: 'bold' }}>
               Reserva <br />
-              <small>Seleccioná la opción x</small>
+              <small>Seleccioná las opciones disponibles</small>
             </Box>
             <Stepper activeStep={activeStep} alternativeLabel sx={{ m: 'auto', pt: 5 }}>
               {steps.map((label, index) => (
@@ -69,14 +72,15 @@ const Reserva = () => {
             <Select
               sx={{ width: '85%', ml: 4 }}
               value={selectedBranch}
-              onChange={handleBranchSelect}
+              onChange={(event) => {setSelectedBranch(event.target.value), handleBranchSelect()}}
             >
               {branches.map((branch) => (
-                <MenuItem key={branch._id} value={branch.name}>
+                <MenuItem key={branch._id} value={branch}>
                   {branch.name}
                 </MenuItem>
               ))}
             </Select>
+
             {/* FIN PASO 1 */}
 
             {/* INICIO PASO 2  */}

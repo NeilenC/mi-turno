@@ -30,7 +30,6 @@ const CreateOperator = () => {
         alert('CREASTE UN NUEVO OPERADOR');
       }
     } catch (e) {
-      console.log(e);
       alert('NO SE CREO');
     }
   }

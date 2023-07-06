@@ -1,41 +1,12 @@
 import { Box, Button, InputLabel } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { setBranches } from '../../redux/branchesInfo';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useBranchData from '../../Hooks/useBranchData';
+import { useSelector } from 'react-redux';
 
 const Branches = () => {
-  const [branches, setBranches] = useState([]);
-  const router = useRouter();
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const handlerBranches = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/branches');
-        if (response.status === 200) {
-          const branches = await response.json();
-          setBranches(branches);
-          // dispatch(setBranches({
-          //   email: branches.email,
-          //   name: branches.name,
-          //   direction: branches.direction,
-          //   phoneNumber: branches.phoneNumber,
-          //   maxCap: branches.maxCap,
-          //   id: branches.id,
-          //   openingH: branches.openingH,
-          //   closingH: branches.closingH,
-          // }))
-        } else {
-          throw new Error('Error al obtener los datos de las sucursales');
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    handlerBranches();
-  }, [dispatch]);
+  useBranchData();
+  const branches = useSelector((state) => state.branches);
 
   return (
     <Box sx={{ pt: '150px' }}>

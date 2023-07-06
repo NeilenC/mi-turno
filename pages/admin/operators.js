@@ -22,7 +22,6 @@ const Operators = () => {
     handlerOperators();
   }, []);
 
-  console.log('OPERATORSSSS', operators);
 
   return (
     <Box sx={{ pt: '150px' }}>

@@ -26,8 +26,6 @@ export default async function handler(req, res) {
       { $push: { bookings: booking._id } },
       { new: true }
     );
-    console.log(user, 'USER');
-    console.log('BOOKING', booking);
     await booking.save();
     res.status(200).send({ booking, user });
   } catch (e) {

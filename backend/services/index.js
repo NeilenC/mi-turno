@@ -17,7 +17,6 @@ function decodeToken(token) {
     try {
       const payload = jwt.decode(token, config.secret);
 
-      console.log('PAYLOAAAAD', payload);
       if (payload.exp <= moment().unix()) {
         resolve({
           status: 401,
@@ -27,7 +26,6 @@ function decodeToken(token) {
 
       resolve(payload.sub);
     } catch (err) {
-      console.log('ESTOY EN CATCH DECODETOKEN', err);
       reject({
         status: 500,
         message: 'invalid token',

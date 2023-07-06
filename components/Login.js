@@ -25,7 +25,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const dispatch = useDispatch()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -41,14 +40,7 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
-        if(response.status === 200 ) {
-          dispatch(setUserInfo({
-            email: response.data.user.email,
-            name: response.data.user.name,
-            id: response.data.user._id,
-            DNI: response.data.user.DNI,
-            isAdmin: response.data.user.isAdmin,
-          }));
+        if (response.status === 200) {
           localStorage.setItem('token', JSON.stringify(response.data.token));
           localStorage.setItem('id', JSON.stringify(response.data.user._id));
           alert('LOGIN EXITOSO');
@@ -60,6 +52,7 @@ const Login = () => {
         console.log(e, 'ERRORRRR LOGIN');
       });
   };
+  
 
   return (
     <Box
