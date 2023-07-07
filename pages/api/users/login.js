@@ -1,14 +1,13 @@
-import { connectMongoDb } from '../../../lib/mongodb';
-import User from '../../../backend/models/users';
-import isAuth from '../../../backend/middlewares/auth';
-import { createToken } from '../../../backend/services';
+import { connectMongoDb } from "../../../lib/mongodb";
+import User from "../../../backend/models/users";
+import isAuth from "../../../backend/middlewares/auth";
+import { createToken } from "../../../backend/services";
 
 async function handler(req, res) {
   try {
     await connectMongoDb();
     const user = await User.findOne({ email: req.body.email });
 
-    
     const isMatch = await user.validatePassword(req.body.password, 8);
 
     if (user && isMatch) {
@@ -16,9 +15,9 @@ async function handler(req, res) {
       return res.status(200).send({ user, token });
     }
 
-    res.status(401).send({ auth: false, message: 'Credenciales inválidas' });
+    res.status(401).send({ auth: false, message: "Credenciales inválidas" });
   } catch (error) {
-    res.status(500).send({ message: 'Error en el servidor', token: null });
+    res.status(500).send({ message: "Error en el servidor", token: null });
   }
 }
 

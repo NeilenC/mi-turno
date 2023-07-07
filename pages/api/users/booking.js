@@ -1,7 +1,7 @@
-import { connectMongoDb } from '../../../lib/mongodb';
-import Branch from '../../../backend/models/branches';
-import User from '../../../backend/models/users';
-import Shift from '../../../backend/models/shift';
+import { connectMongoDb } from "../../../lib/mongodb";
+import Branch from "../../../backend/models/branches";
+import User from "../../../backend/models/users";
+import Shift from "../../../backend/models/shift";
 
 export default async function handler(req, res) {
   await connectMongoDb();

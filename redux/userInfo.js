@@ -1,12 +1,12 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createAction, createReducer } from "@reduxjs/toolkit";
 
-export const setUserInfo = createAction('SET_USERINFO');
+export const setUserInfo = createAction("SET_USERINFO");
 
 const initialState = {
-  id: '',
-  name: '',
-  lastName: '',
-  email: '',
+  id: "",
+  name: "",
+  lastname: "",
+  email: "",
   DNI: 0,
   phoneNumber: 0,
   bookings: [],
@@ -15,7 +15,7 @@ const initialState = {
 const reducer = createReducer(initialState, {
   [setUserInfo]: (state, action) => {
     const name = action.payload.name;
-    const lastName = action.payload.lastName;
+    const lastname = action.payload.lastname;
     const DNI = action.payload.DNI;
     const id = action.payload.id;
     const email = action.payload.email;
@@ -23,7 +23,7 @@ const reducer = createReducer(initialState, {
     const bookings = action.payload.bookings;
     return {
       name: name,
-      lastName: lastName,
+      lastname: lastname,
       email: email,
       phoneNumber: phoneNumber,
       DNI: DNI,

@@ -1,33 +1,33 @@
-import { Box, Button, InputLabel } from '@mui/material';
-import Link from 'next/link';
-import React from 'react';
-import useBranchData from '../../Hooks/useBranchData';
-import { useSelector } from 'react-redux';
+import { Box, Button, InputLabel } from "@mui/material";
+import Link from "next/link";
+import React from "react";
+import useBranchData from "../../Hooks/useBranchData";
+import { useSelector } from "react-redux";
 
 const Branches = () => {
   useBranchData();
   const branches = useSelector((state) => state.branches);
 
   return (
-    <Box sx={{ pt: '150px' }}>
-      <Box sx={{ fontWeight: 'bold', fontSize: '24px', pb: 3, pl: '152px' }}>
-        {' '}
-        Sucursales{' '}
+    <Box sx={{ pt: "150px" }}>
+      <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "152px" }}>
+        {" "}
+        Sucursales{" "}
       </Box>
-      <Box sx={{ display: 'flex' }}>
-        <Box sx={{ width: '85%', m: 'auto' }}>
+      <Box sx={{ display: "flex" }}>
+        <Box sx={{ width: "85%", m: "auto" }}>
           {branches.map((branch) => (
             <Box key={branch._id} sx={{ p: 1 }}>
               <Box
                 sx={{
-                  border: '1px solid #F0F0F0',
-                  p: '24px',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  direction: 'row',
-                  alignItems: 'center',
-                  fontSize: '14px',
-                  justifyContent: 'space-between',
+                  border: "1px solid #F0F0F0",
+                  p: "24px",
+                  borderRadius: "12px",
+                  display: "flex",
+                  direction: "row",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  justifyContent: "space-between",
                 }}
               >
                 <Box>
@@ -57,10 +57,10 @@ const Branches = () => {
                 </Box>
                 <Button
                   sx={{
-                    p: '12px 24px',
-                    bgcolor: '#F5F5F5',
-                    color: '#A442F1',
-                    fontWeight: 'bold',
+                    p: "12px 24px",
+                    bgcolor: "#F5F5F5",
+                    color: "#A442F1",
+                    fontWeight: "bold",
                   }}
                 >
                   <Link href={`/admin/editBranch/${branch._id}`}>Editar</Link>

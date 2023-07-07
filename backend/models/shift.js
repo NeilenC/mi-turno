@@ -1,24 +1,11 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from "mongoose";
 
 const ShiftSchema = new Schema({
   branchId: {
     type: String,
     required: true,
   },
-  branchName: {
-    type: String,
-    required: true,
-  },
-  phoneNumber: {
-    type: Number,
-  },
-  fullName: {
-    type: String,
-  },
-  email: {
-    type: String,
-  },
-  bookingNumber: {
+  fullname: {
     type: String,
   },
   date: {
@@ -27,13 +14,29 @@ const ShiftSchema = new Schema({
   shift: {
     type: String,
   },
-  available: {
-    type: Boolean,
-    default: true
-  }
+  // branchName: {
+  //   type: String,
+  //   required: true,
+  // },
+  email: {
+    type: String,
+  },
+  DNI: {
+    type: Number,
+  },
+  // bookingNumber: {
+  //   type: String,
+  // },
+  // phoneNumber: {
+  //   type: Number,
+  // },
+  // available: {
+  //   type: Boolean,
+  //   default: true
+  // }
 });
 
-ShiftSchema.pre('save', function () {
+ShiftSchema.pre("save", function () {
   //aca se crea el numero de la reserva
   if (!this.bookingNumber) {
     const randomBookingNumber = generateRandomBookingNumber();
@@ -42,8 +45,8 @@ ShiftSchema.pre('save', function () {
 });
 
 function generateRandomBookingNumber() {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let bookingNumber = '';
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let bookingNumber = "";
   for (let i = 0; i < 5; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     bookingNumber += characters.charAt(randomIndex);
@@ -51,6 +54,6 @@ function generateRandomBookingNumber() {
   return bookingNumber;
 }
 
-const Shift = models.Shift || model('Shift', ShiftSchema);
+const Shift = models.Shift || model("Shift", ShiftSchema);
 
 export default Shift;

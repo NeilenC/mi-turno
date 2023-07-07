@@ -1,5 +1,5 @@
-import { connectMongoDb } from '../../../lib/mongodb';
-import User from '../../../backend/models/users';
+import { connectMongoDb } from "../../../lib/mongodb";
+import User from "../../../backend/models/users";
 
 export default async function handler(req, res) {
   await connectMongoDb();

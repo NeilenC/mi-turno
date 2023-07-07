@@ -1,12 +1,12 @@
-import { connectMongoDb } from '../../../lib/mongodb';
-import Branches from '../../../backend/models/branches';
+import { connectMongoDb } from "../../../lib/mongodb";
+import Branches from "../../../backend/models/branches";
 
 export default async function handler(req, res) {
   await connectMongoDb();
 
-  if (req.method === 'PUT') {
+  if (req.method === "PUT") {
     const { id } = req.query;
-    
+
     try {
       const updatedBranch = await Branches.findByIdAndUpdate(
         id,
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
   }
 
-  if (req.method === 'DELETE') {
+  if (req.method === "DELETE") {
     const { id } = req.query;
 
     try {

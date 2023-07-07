@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Input, InputLabel, TextField } from '@mui/material';
-import axios from 'axios';
-import React from 'react';
+import { Box, Button, Grid, Input, InputLabel, TextField } from "@mui/material";
+import axios from "axios";
+import React from "react";
 
 const Profile = () => {
   async function handlerEdit() {
@@ -12,27 +12,27 @@ const Profile = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <Box
         sx={{
-          margin: 'auto',
-          justifyContent: ' center',
-          position: 'absolute',
-          borderRadius: '12px',
-          boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.12);',
-          width: '980px',
-          height: '544px',
-          left: 'calc(50% - 980px/2)',
-          top: '160px',
-          padding: '40px 32px 32px',
-          bgcolor: '#FFFFFF',
+          margin: "auto",
+          justifyContent: " center",
+          position: "absolute",
+          borderRadius: "12px",
+          boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+          width: "980px",
+          height: "544px",
+          left: "calc(50% - 980px/2)",
+          top: "160px",
+          padding: "40px 32px 32px",
+          bgcolor: "#FFFFFF",
         }}
       >
         <Box
           onSubmit={handlerEdit}
           component="form"
           noValidate
-          sx={{ fontSize: '20px', fontWeight: 'bold', p: 3 }}
+          sx={{ fontSize: "20px", fontWeight: "bold", p: 3 }}
         >
           Mis datos
         </Box>
@@ -69,7 +69,7 @@ const Profile = () => {
             // value={email} // agregar el valor del estado
             // onChange={(e) => setEmail(e.target.value)}
           />
-          <Box sx={{ color: '#A442F1', fontWeight: 'bold' }}>
+          <Box sx={{ color: "#A442F1", fontWeight: "bold" }}>
             Editar contraseña
           </Box>
         </Grid>
@@ -77,10 +77,10 @@ const Profile = () => {
           fullWidth
           onClick={handlerEdit}
           sx={{
-            bgcolor: '#A442F1',
-            color: '#ffffff',
+            bgcolor: "#A442F1",
+            color: "#ffffff",
             p: 2,
-            borderRadius: '10px',
+            borderRadius: "10px",
           }}
         >
           Aceptar

@@ -1,21 +1,21 @@
-import { Box, Button, Grid, InputLabel, TextField } from '@mui/material';
-import axios from 'axios';
-import React, { useState } from 'react';
+import { Box, Button, Grid, InputLabel, TextField } from "@mui/material";
+import axios from "axios";
+import React, { useState } from "react";
 
 const CreateOperator = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [DNI, setDNI] = useState(0);
-  const [email, setEmail] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [verifyPassword, setVerifyPassword] = useState('');
-  const [branch, setBranch] = useState('');
+  const [email, setEmail] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
+  const [branch, setBranch] = useState("");
 
   async function handleNewOperator(e) {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/admin/createOp',
+        "http://localhost:3000/api/admin/createOp",
         {
           name: name,
           lastname: lastName,
@@ -27,15 +27,15 @@ const CreateOperator = () => {
         }
       );
       if (password === verifyPassword && response.status === 200) {
-        alert('CREASTE UN NUEVO OPERADOR');
+        alert("CREASTE UN NUEVO OPERADOR");
       }
     } catch (e) {
-      alert('NO SE CREO');
+      alert("NO SE CREO");
     }
   }
 
   return (
-    <Box sx={{ height: '100vh', bgcolor: '#ECECEC' }}>
+    <Box sx={{ height: "100vh", bgcolor: "#ECECEC" }}>
       <Grid container>
         <Box
           onSubmit={handleNewOperator}
@@ -45,20 +45,20 @@ const CreateOperator = () => {
         >
           <Box
             sx={{
-              margin: 'auto',
-              justifyContent: ' center',
-              position: 'absolute',
-              borderRadius: '12px',
-              boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.12);',
-              width: '980px',
-              height: '644px',
-              left: 'calc(50% - 980px/2)',
-              top: '160px',
-              padding: '40px 32px 32px',
-              bgcolor: '#FFFFFF',
+              margin: "auto",
+              justifyContent: " center",
+              position: "absolute",
+              borderRadius: "12px",
+              boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+              width: "980px",
+              height: "644px",
+              left: "calc(50% - 980px/2)",
+              top: "160px",
+              padding: "40px 32px 32px",
+              bgcolor: "#FFFFFF",
             }}
           >
-            <Box sx={{ fontSize: '20px', fontWeight: 'bold', pt: 2, pb: 3 }}>
+            <Box sx={{ fontSize: "20px", fontWeight: "bold", pt: 2, pb: 3 }}>
               Crear nuevo operador
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
@@ -156,11 +156,11 @@ const CreateOperator = () => {
               fullWidth
               onClick={handleNewOperator}
               sx={{
-                bgcolor: '#A442F1',
-                color: '#ffffff',
+                bgcolor: "#A442F1",
+                color: "#ffffff",
                 p: 2,
-                borderRadius: '10px',
-                '&:hover': { bgcolor: 'rgba(164, 66, 241, 0.6)' },
+                borderRadius: "10px",
+                "&:hover": { bgcolor: "rgba(164, 66, 241, 0.6)" },
               }}
             >
               Crear

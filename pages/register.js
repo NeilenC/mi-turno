@@ -10,20 +10,20 @@ import {
   Link,
   OutlinedInput,
   TextField,
-} from '@mui/material';
-import React, { useState } from 'react';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+} from "@mui/material";
+import React, { useState } from "react";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [DNI, setDNI] = useState('');
+  const [name, setName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [DNI, setDNI] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
@@ -36,7 +36,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3000/api/users/register', {
+      .post("http://localhost:3000/api/users/register", {
         name: name,
         lastname: lastname,
         password: password,
@@ -44,59 +44,59 @@ const Register = () => {
         DNI: DNI,
       })
       .then((res) => {
-        alert('BIENBENIDO! ACABAS DE REGISTRARTE');
-        router.push('/');
+        alert("BIENBENIDO! ACABAS DE REGISTRARTE");
+        router.push("/");
       })
       .catch((error) => {
-        alert('HUBO UN ERROR');
+        alert("HUBO UN ERROR");
       });
   };
 
   return (
     <Box
       sx={{
-        height: '100vh',
-        display: 'flex',
+        height: "100vh",
+        display: "flex",
       }}
     >
       <Box
         sx={{
-          margin: 'auto',
-          justifyContent: ' center',
-          position: 'absolute',
-          borderRadius: '12px',
-          boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.12);',
-          maxWidth: '750px',
-          height: '900',
-          left: 'calc(50% - 750px/2)',
-          top: '160px',
-          padding: '40px 32px 32px',
-          bgcolor: '#FFFFFF',
+          margin: "auto",
+          justifyContent: " center",
+          position: "absolute",
+          borderRadius: "12px",
+          boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+          maxWidth: "750px",
+          height: "900",
+          left: "calc(50% - 750px/2)",
+          top: "160px",
+          padding: "40px 32px 32px",
+          bgcolor: "#FFFFFF",
         }}
       >
         <Box
           sx={{
             ml: 4,
-            color: '#A442F1',
-            display: 'flex',
+            color: "#A442F1",
+            display: "flex",
             mr: 4,
-            fontWeight: 'bold',
-            fontSize: '16px  ',
+            fontWeight: "bold",
+            fontSize: "16px  ",
           }}
         >
           <AiOutlineArrowLeft />
           <Box sx={{ ml: 1 }}>Atras</Box>
         </Box>
-        <Box sx={{ fontSize: '22px', fontWeight: 'bold', textAlign: 'center' }}>
+        <Box sx={{ fontSize: "22px", fontWeight: "bold", textAlign: "center" }}>
           Crear cuenta
         </Box>
 
         <Box
           sx={{
-            display: 'flex',
-            justifyConten: 'center',
-            p: '32px',
-            gap: '20px',
+            display: "flex",
+            justifyConten: "center",
+            p: "32px",
+            gap: "20px",
           }}
         >
           <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
@@ -154,7 +154,7 @@ const Register = () => {
                     value={password} // agregar el valor del estado
                     name="contraseña"
                     id="standard-adornment-password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     onChange={(e) => setPassword(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
@@ -193,17 +193,17 @@ const Register = () => {
           /> */}
                 </Grid>
               </Grid>
-              <Box sx={{ bgcolor: '#ECECEC', pt: 2 }}>
+              <Box sx={{ bgcolor: "#ECECEC", pt: 2 }}>
                 <Box sx={{ ml: 3 }}>
                   La contraseña debe contener:
-                  <Divider sx={{ width: '400px' }} />
+                  <Divider sx={{ width: "400px" }} />
                   <Grid
                     sm={10}
                     sx={{
                       pt: 2,
-                      display: 'flex',
-                      width: '516px',
-                      height: ' 104px',
+                      display: "flex",
+                      width: "516px",
+                      height: " 104px",
                     }}
                     item
                   >
@@ -220,9 +220,9 @@ const Register = () => {
               <Grid xs={12} item>
                 <Grid
                   sx={{
-                    color: '#A442F1',
-                    fontWeight: 'bold',
-                    textAlign: 'center',
+                    color: "#A442F1",
+                    fontWeight: "bold",
+                    textAlign: "center",
                     p: 2,
                   }}
                 >
@@ -232,15 +232,15 @@ const Register = () => {
                   <Button
                     type="submit"
                     sx={{
-                      color: 'white',
-                      bgcolor: '#A442F1',
-                      padding: '12px 24px',
-                      '&:hover': { color: '#A442F1' },
+                      color: "white",
+                      bgcolor: "#A442F1",
+                      padding: "12px 24px",
+                      "&:hover": { color: "#A442F1" },
                     }}
                     fullWidth
                   >
-                    {' '}
-                    Registrarme{' '}
+                    {" "}
+                    Registrarme{" "}
                   </Button>
                 </Box>
                 <Box sx={{ p: 3 }}>
@@ -250,14 +250,14 @@ const Register = () => {
                   <Box>
                     <Button
                       sx={{
-                        color: '#A442F1',
-                        bgcolor: 'rgba(164, 66, 241, 0.1)',
-                        padding: '12px 24px',
+                        color: "#A442F1",
+                        bgcolor: "rgba(164, 66, 241, 0.1)",
+                        padding: "12px 24px",
                       }}
                       fullWidth
                     >
-                      {' '}
-                      Ya tenes cuenta? Iniciar sesión{' '}
+                      {" "}
+                      Ya tenes cuenta? Iniciar sesión{" "}
                     </Button>
                   </Box>
                 </Link>

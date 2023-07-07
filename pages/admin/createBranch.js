@@ -6,24 +6,24 @@ import {
   Input,
   InputLabel,
   TextField,
-} from '@mui/material';
-import axios from 'axios';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+} from "@mui/material";
+import axios from "axios";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 
 const Createbranch = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [phtoneNumber, setPhoneNumber] = useState(0);
-  const [email, setEmail] = useState('');
-  const [openingH, setOpeningH] = useState('');
-  const [closingH, setClosingH] = useState('');
+  const [email, setEmail] = useState("");
+  const [openingH, setOpeningH] = useState("");
+  const [closingH, setClosingH] = useState("");
   const [maxCap, setMaxCap] = useState(0);
-  const [direction, setDirection] = useState('');
+  const [direction, setDirection] = useState("");
 
   async function handlerNewBranch(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/branches', {
+      const response = await axios.post("http://localhost:3000/api/branches", {
         name: name,
         email: email,
         phoneNumber: phtoneNumber,
@@ -33,15 +33,15 @@ const Createbranch = () => {
         closingH: closingH,
       });
       if (response.status === 200) {
-        alert('SE CREO UNA NUEVA BRANCHHHASDKJSDÑKSJDFKSD');
+        alert("SE CREO UNA NUEVA BRANCHHHASDKJSDÑKSJDFKSD");
       }
     } catch (e) {
-      console.log('HUBO UN PROBLEMAAAA ');
+      console.log("HUBO UN PROBLEMAAAA ");
     }
   }
 
   return (
-    <Box sx={{ height: '100vh', bgcolor: '#ECECEC' }}>
+    <Box sx={{ height: "100vh", bgcolor: "#ECECEC" }}>
       <Grid container>
         <Box
           onSubmit={handlerNewBranch}
@@ -51,20 +51,20 @@ const Createbranch = () => {
         >
           <Box
             sx={{
-              margin: 'auto',
-              justifyContent: ' center',
-              position: 'absolute',
-              borderRadius: '12px',
-              boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.12);',
-              width: '980px',
-              height: '644px',
-              left: 'calc(50% - 980px/2)',
-              top: '160px',
-              padding: '40px 32px 32px',
-              bgcolor: '#FFFFFF',
+              margin: "auto",
+              justifyContent: " center",
+              position: "absolute",
+              borderRadius: "12px",
+              boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+              width: "980px",
+              height: "644px",
+              left: "calc(50% - 980px/2)",
+              top: "160px",
+              padding: "40px 32px 32px",
+              bgcolor: "#FFFFFF",
             }}
           >
-            <Box sx={{ fontSize: '20px', fontWeight: 'bold', pt: 2, pb: 3 }}>
+            <Box sx={{ fontSize: "20px", fontWeight: "bold", pt: 2, pb: 3 }}>
               Crear una nueva sucursal
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
@@ -160,11 +160,11 @@ const Createbranch = () => {
               fullWidth
               onClick={handlerNewBranch}
               sx={{
-                bgcolor: '#A442F1',
-                color: '#ffffff',
+                bgcolor: "#A442F1",
+                color: "#ffffff",
                 p: 2,
-                borderRadius: '10px',
-                '&:hover': { bgcolor: 'rgba(164, 66, 241, 0.6)' },
+                borderRadius: "10px",
+                "&:hover": { bgcolor: "rgba(164, 66, 241, 0.6)" },
               }}
             >
               Crear

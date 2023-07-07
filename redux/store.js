@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userInfo from './userInfo';
-import setBranches from './branchesInfo';
+import { configureStore } from "@reduxjs/toolkit";
+import userInfo from "./userInfo";
+import setBranches from "./branchesInfo";
 const store = configureStore({
   reducer: {
     user: userInfo,
-    branches: setBranches
+    branches: setBranches,
   },
 });
 

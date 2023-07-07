@@ -10,20 +10,20 @@ import {
   Link,
   OutlinedInput,
   TextField,
-} from '@mui/material';
-import React, { useState } from 'react';
-import axios from 'axios';
-import { setUserInfo } from "../redux/userInfo"
-import { useRouter } from 'next/navigation';
+} from "@mui/material";
+import React, { useState } from "react";
+import axios from "axios";
+import { setUserInfo } from "../redux/userInfo";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { AiOutlineArrowLeft } from 'react-icons/ai';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -35,33 +35,32 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('http://localhost:3000/api/users/login', {
+      .post("http://localhost:3000/api/users/login", {
         email: email,
         password: password,
       })
       .then((response) => {
         if (response.status === 200) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
-          localStorage.setItem('id', JSON.stringify(response.data.user._id));
-          alert('LOGIN EXITOSO');
+          localStorage.setItem("token", JSON.stringify(response.data.token));
+          localStorage.setItem("id", JSON.stringify(response.data.user._id));
+          alert("LOGIN EXITOSO");
           router.push(`/users/reserva/${response.data.user._id}`);
         }
       })
       .catch((e) => {
-        alert('NO SE PUDO LOGUEAR');
-        console.log(e, 'ERRORRRR LOGIN');
+        alert("NO SE PUDO LOGUEAR");
+        console.log(e, "ERRORRRR LOGIN");
       });
   };
-  
 
   return (
     <Box
       sx={{
-        height: '100vh',
-        display: ' flex',
+        height: "100vh",
+        display: " flex",
       }}
     >
-                      {/* <TextField
+      {/* <TextField
             name="email"
             value={email}
             fullWidth
@@ -71,27 +70,27 @@ const Login = () => {
           /> */}
       <Box
         sx={{
-          margin: 'auto',
-          justifyContent: ' center',
-          position: 'absolute',
-          borderRadius: '12px',
-          boxShadow: '0px 0px 24px rgba(0, 0, 0, 0.12);',
-          width: '700px',
-          height: '560px',
-          left: 'calc(50% - 700px/2)',
-          top: '160px',
-          padding: '40px 32px 32px',
-          bgcolor: '#FFFFFF',
+          margin: "auto",
+          justifyContent: " center",
+          position: "absolute",
+          borderRadius: "12px",
+          boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+          width: "700px",
+          height: "560px",
+          left: "calc(50% - 700px/2)",
+          top: "160px",
+          padding: "40px 32px 32px",
+          bgcolor: "#FFFFFF",
         }}
       >
         <Box
           sx={{
             ml: 1,
-            color: '#A442F1',
-            display: 'flex',
+            color: "#A442F1",
+            display: "flex",
             mr: 4,
-            fontWeight: 'bold',
-            fontSize: '16px  ',
+            fontWeight: "bold",
+            fontSize: "16px  ",
           }}
         >
           <AiOutlineArrowLeft />
@@ -100,18 +99,15 @@ const Login = () => {
         <Box
           sx={{
             paddingBottom: 5,
-            textAlign: 'center',
-            fontWeight: 'bold',
-            fontSize: '20px',
-            borderRadius: '10px',
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: "20px",
+            borderRadius: "10px",
           }}
         >
           Iniciar sesión
         </Box>
-        <Box
-        component="form"
-        autoComplete='off'
-        onSubmit={handleSubmit}>
+        <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
           <InputLabel>Email</InputLabel>
 
           <TextField
@@ -123,11 +119,11 @@ const Login = () => {
             sx={{ paddingBottom: 3 }}
           />
 
-           <InputLabel>Contraseña</InputLabel>
+          <InputLabel>Contraseña</InputLabel>
           <OutlinedInput
             fullWidth
             id="standard-adornment-password"
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             endAdornment={
@@ -144,9 +140,9 @@ const Login = () => {
           />
           <Box
             sx={{
-              textAlign: 'center',
-              color: '#A442F3',
-              fontWeight: 'bold',
+              textAlign: "center",
+              color: "#A442F3",
+              fontWeight: "bold",
               p: 2,
             }}
           >
@@ -156,11 +152,11 @@ const Login = () => {
             <Button
               type="submit"
               sx={{
-                color: 'white',
-                bgcolor: '#A442F1',
-                padding: '12px 24px',
-                '&:hover': { color: '#A442F1' },
-                borderRadius: '10px',
+                color: "white",
+                bgcolor: "#A442F1",
+                padding: "12px 24px",
+                "&:hover": { color: "#A442F1" },
+                borderRadius: "10px",
               }}
               fullWidth
             >
@@ -174,14 +170,14 @@ const Login = () => {
             <Link href="/register">
               <Button
                 sx={{
-                  color: '#A442F1',
-                  bgcolor: 'rgba(164, 66, 241, 0.6)',
-                  padding: '12px 24px',
-                  borderRadius: '10px',
+                  color: "#A442F1",
+                  bgcolor: "rgba(164, 66, 241, 0.6)",
+                  padding: "12px 24px",
+                  borderRadius: "10px",
                 }}
                 fullWidth
               >
-                {' '}
+                {" "}
                 No tienes cuenta? Regístrate
               </Button>
             </Link>
