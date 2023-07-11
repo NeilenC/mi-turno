@@ -27,12 +27,14 @@ const UserSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
+    allowNull: true,
   },
   salt: {
     type: String,
   },
   isOp: {
     type: Boolean,
+    allowNull: true,
   },
   branchId: {
     type: String,

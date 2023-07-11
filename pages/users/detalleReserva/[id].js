@@ -43,8 +43,8 @@ const DetalleReserva = () => {
   };
 
   const handlerEdit = () => {
-    router.push(`/users/editarReserva/${id}`)
-  }
+    router.push(`/users/editarReserva/${id}`);
+  };
 
   const getBooking = async () => {
     try {
@@ -108,7 +108,9 @@ const DetalleReserva = () => {
               <Grid item sx={{}}>
                 <Box sx={{ display: "flex" }}>
                   <Box sx={{ width: "240px", p: 2 }}>
-                    <Button sx={{ p: 2 }} onClick={handlerEdit} >Editar reserva</Button>
+                    <Button sx={{ p: 2 }} onClick={handlerEdit}>
+                      Editar reserva
+                    </Button>
 
                     <Button sx={{ p: 2 }} onClick={handlerCancel}>
                       Cancelar reserva

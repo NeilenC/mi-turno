@@ -7,18 +7,13 @@ import { useSelector } from "react-redux";
 
 const VerReserva = () => {
   useUserData();
-  // const user = useSelector((state) => state.user);
   const [bookings, setBookings] = useState([]);
   const [id, setId] = useState("");
-  // const dispatch = useDispatch();
 
   useEffect(() => {
     setId(JSON.parse(localStorage.getItem("id")));
   }, []);
 
-  // console.log("USER", user)
-
-  // console.log(bookings)
   const getAllBookings = async () => {
     try {
       if (id) {

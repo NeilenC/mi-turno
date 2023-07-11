@@ -9,24 +9,28 @@ const initialState = {
   email: "",
   DNI: 0,
   phoneNumber: 0,
-  bookings: [],
+  isOp: false,
+  isAdmin: false,
+  branchId: null,
+  branchName: null
 };
 
 const reducer = createReducer(initialState, {
   [setUserInfo]: (state, action) => {
-    const name = action.payload.name;
-    const lastname = action.payload.lastname;
-    const DNI = action.payload.DNI;
-    const id = action.payload.id;
-    const email = action.payload.email;
-    const phoneNumber = action.payload.phoneNumber;
+    const { name, lastname, DNI, id, email, phoneNumber, isOp, isAdmin, branchId ,branchName} =
+      action.payload;
     return {
-      name: name,
-      lastname: lastname,
-      email: email,
-      phoneNumber: phoneNumber,
-      DNI: DNI,
-      id: id,
+      ...state,
+      name,
+      lastname,
+      email,
+      phoneNumber,
+      DNI,
+      id,
+      isOp,
+      isAdmin,
+      branchId,
+      branchName
     };
   },
 });

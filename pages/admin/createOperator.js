@@ -9,13 +9,11 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import useBranchData from "../../Hooks/useBranchData";
-import { setUserInfo } from "../../redux/userInfo";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import React, { useState } from "react";
 
 const CreateOperator = () => {
   useBranchData();
-  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [DNI, setDNI] = useState(0);
   const [email, setEmail] = useState("");
@@ -25,8 +23,6 @@ const CreateOperator = () => {
   const [branch, setBranch] = useState("");
   const branches = useSelector((state) => state.branches);
 
-  console.log("branches", branches);
-  console.log("branch seleccionada", branch._id);
 
   async function handleNewOperator(e) {
     e.preventDefault();

@@ -24,6 +24,11 @@ export default function useUserData() {
           lastname: data.lastname,
           email: data.email,
           DNI: data.DNI,
+          isOp: data.isOp,
+          isAdmin: data.isAdmin,
+          phoneNumber: data.phoneNumber,
+          branchId: data.branchId,
+          branchName: data.branchName
         })
       );
     } catch (e) {
