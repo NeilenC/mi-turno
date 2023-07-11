@@ -1,0 +1,18 @@
+import { connectMongoDb } from "../../../../lib/mongodb";
+import Shift from "../../../../backend/models/shift";
+// import User from "../../../../backend/models/users";
+
+export default async function handler(req, res) {
+  await connectMongoDb();
+  const { branchId } = req.query;
+  if (req.method === "GET") {
+    try {
+      const getShifts = await Shift.find(branchId);
+      console.log(getShifts);
+
+      res.status(201).send(getShifts);
+    } catch (e) {
+      throw e;
+    }
+  }
+}

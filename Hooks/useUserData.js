@@ -14,7 +14,7 @@ export default function useUserData() {
   const getUser = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/users/get-one/${id}`
+        `http://localhost:3000/api/users/findUser/${id}`
       );
       const data = await response.data;
       dispatch(

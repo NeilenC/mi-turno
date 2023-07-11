@@ -25,12 +25,6 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
-  bookings: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Booking",
-    },
-  ],
   isAdmin: {
     type: Boolean,
   },
@@ -40,8 +34,9 @@ const UserSchema = new Schema({
   isOp: {
     type: Boolean,
   },
-  branch: {
+  branchId: {
     type: String,
+    allowNull: true,
   },
 });
 
@@ -65,6 +60,17 @@ UserSchema.methods.validatePassword = async function (password) {
 
 UserSchema.virtual("fullname").get(function () {
   return `${this.name} ${this.lastname}`;
+});
+
+//Primera letra de nombre y apellido en mayúscula
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+UserSchema.pre("save", function (next) {
+  this.name = capitalizeFirstLetter(this.name);
+  this.lastname = capitalizeFirstLetter(this.lastname);
+  next();
 });
 
 const User = models.User || model("User", UserSchema);

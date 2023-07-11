@@ -20,7 +20,6 @@ const reducer = createReducer(initialState, {
     const id = action.payload.id;
     const email = action.payload.email;
     const phoneNumber = action.payload.phoneNumber;
-    const bookings = action.payload.bookings;
     return {
       name: name,
       lastname: lastname,
@@ -28,7 +27,6 @@ const reducer = createReducer(initialState, {
       phoneNumber: phoneNumber,
       DNI: DNI,
       id: id,
-      bookings: bookings,
     };
   },
 });

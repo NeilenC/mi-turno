@@ -4,36 +4,37 @@ const ShiftSchema = new Schema({
   branchId: {
     type: String,
     required: true,
+    allowNull: false,
   },
   fullname: {
     type: String,
   },
   date: {
     type: String,
+    allowNull: false,
   },
   shift: {
     type: String,
   },
-  // branchName: {
-  //   type: String,
-  //   required: true,
-  // },
+  userId: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
   },
   DNI: {
     type: Number,
   },
-  // bookingNumber: {
-  //   type: String,
-  // },
-  // phoneNumber: {
-  //   type: Number,
-  // },
-  // available: {
-  //   type: Boolean,
-  //   default: true
-  // }
+  bookingNumber: {
+    type: String,
+  },
+  branchName: {
+    type: String,
+  },
+  creatingDate: {
+    type: String,
+  },
 });
 
 ShiftSchema.pre("save", function () {
@@ -45,9 +46,9 @@ ShiftSchema.pre("save", function () {
 });
 
 function generateRandomBookingNumber() {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const characters = "0123456789";
   let bookingNumber = "";
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     const randomIndex = Math.floor(Math.random() * characters.length);
     bookingNumber += characters.charAt(randomIndex);
   }

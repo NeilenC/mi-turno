@@ -9,7 +9,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -18,6 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import useBranchData from "../../../Hooks/useBranchData";
+import { setUserInfo } from "../../../redux/userInfo";
 import useUserData from "../../../Hooks/useUserData";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -32,18 +33,19 @@ const Reserva = () => {
   const [shifts, setShifts] = useState([]);
   const [selectedShift, setSelectedShift] = useState("");
   const [activeStep, setActiveStep] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [newShift, setNewShift] = useState([]);
   const router = useRouter();
   const branches = useSelector((state) => state.branches);
   const user = useSelector((state) => state.user);
-  const now = dayjs().format("YYYY-MM-DD HH:mm:ss"); // 2023-07-06 19:27:56
-  const lastDayOfMonth = dayjs().endOf("month").format("YYYY-MM-DD"); // '2023-07-31'
+  const now = dayjs().format("DD/MM/YYYY HH:mm"); // 2023-07-06 19:27
 
   const handleBranchSelect = (e) => {
     setActiveStep(0);
   };
 
   const handleDateChange = (date) => {
-    setSelectedDay(date.format("YYYY-MM-DD"));
+    setSelectedDay(date.format("DD/MM/YYYY"));
     setActiveStep(1);
     if (selectedBranch) {
       getAvailableShift();
@@ -78,29 +80,36 @@ const Reserva = () => {
     }
   }, [selectedDay, selectedBranch]);
 
-  // console.log("turnoooos",shifts)
-  console.log("usuario", user);
-
   const createShift = async () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/shift/create",
         {
           branchId: selectedBranch._id,
+          branchName: selectedBranch.name,
           date: selectedDay,
           shift: selectedShift,
-          // fullname: user.fullname,
           fullname: `${user.name} ${user.lastname}`,
           email: user.email,
           DNI: user.DNI,
+          userId: user.id,
+          phoneNumber: phoneNumber,
+          creatingDate: now,
         }
       );
       const newShift = response.data;
+      setNewShift(newShift);
+      // dispatch(
+      //   setUserInfo({
+      //     phoneNumber: phoneNumber
+      //   })
+      // );
+      setActiveStep(2);
       alert("El turno se ha creado correctamente ");
+      router.push(`/users/detalleReserva/${newShift._id}`);
       setSelectedBranch(null);
       setSelectedDay(null);
       setSelectedShift("");
-      console.log("NUEVO", newShift);
       return newShift;
     } catch (e) {
       alert("No se ha logrado crear el turno");
@@ -113,6 +122,8 @@ const Reserva = () => {
       createShift();
     }
   }, []);
+
+  console.log("NUEVA RESERVA", newShift);
 
   return (
     // <>
@@ -229,7 +240,17 @@ const Reserva = () => {
               DNI
               <TextField id="branch" sx={{ width: "90%" }} value={user.DNI} />
             </InputLabel>
-
+            <InputLabel sx={{ m: 1, ml: 4 }}>
+              Teléfono
+              <TextField
+                id="branch"
+                sx={{ width: "90%" }}
+                value={user.phoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              />
+            </InputLabel>
             <Button
               sx={{
                 ml: "32px",

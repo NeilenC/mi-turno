@@ -11,11 +11,11 @@ export default async function handler(req, res) {
       name: req.body.name,
       lastname: req.body.lastname,
       email: req.body.email,
-      branch: req.body.branch,
+      branchId: req.body.branch,
       DNI: req.body.DNI,
     });
     console.log(updatedOperator);
-    await updatedOperator.save();
+    // await updatedOperator.save();
 
     res.status(201).send(updatedOperator);
   } catch (e) {
