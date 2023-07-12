@@ -6,8 +6,8 @@ import { Box, Button, InputLabel, Link } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const Shifts = () => {
-  useUserData()
-  const user = useSelector((state) => state.user)
+  useUserData();
+  const user = useSelector((state) => state.user);
   const router = useRouter();
   const [shifts, setShifts] = useState([]);
   const { id } = router.query;
@@ -36,7 +36,7 @@ const Shifts = () => {
     <Box sx={{ pt: "150px" }}>
       <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "112px" }}>
         {" "}
-       Reservas en tu sucursal de : {user.branchName}
+        Reservas en tu sucursal de : {user.branchName}
       </Box>
       <Box sx={{ display: "flex" }}>
         <Box sx={{ width: "85%", m: "auto" }}>
@@ -77,18 +77,19 @@ const Shifts = () => {
                   <InputLabel>E-mail</InputLabel>
                   <Box>{shift.email}</Box>
                 </Box>
-                 <Button
+                <Button
                   sx={{
                     p: "12px 24px",
                     bgcolor: "#F5F5F5",
                     color: "#A442F1",
                     fontWeight: "bold",
                   }}
-                  onClick={() => router.push(`/users/editarReserva/${shift._id}`)}
+                  onClick={() =>
+                    router.push(`/users/editarReserva/${shift._id}`)
+                  }
                 >
                   Editar
                 </Button>
-
               </Box>
             </Box>
           ))}

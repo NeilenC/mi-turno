@@ -23,7 +23,6 @@ const CreateOperator = () => {
   const [branch, setBranch] = useState("");
   const branches = useSelector((state) => state.branches);
 
-
   async function handleNewOperator(e) {
     e.preventDefault();
     try {
@@ -32,6 +31,7 @@ const CreateOperator = () => {
         {
           name: name,
           lastname: lastName,
+          fullname: fullname,
           email: email,
           DNI: DNI,
           password: password,

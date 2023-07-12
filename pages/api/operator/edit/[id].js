@@ -7,13 +7,17 @@ export default async function handler(req, res) {
   // const {update} = req.body
 
   try {
-    const updatedOperator = await User.findByIdAndUpdate(id, {
-      name: req.body.name,
-      lastname: req.body.lastname,
-      email: req.body.email,
-      branchId: req.body.branch,
-      DNI: req.body.DNI,
-    });
+    const updatedOperator = await User.findByIdAndUpdate(
+      { _id: id },
+      {
+        name: req.body.name,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        branchId: req.body.branchId,
+        branchName: req.body.branchName,
+        DNI: req.body.DNI,
+      }
+    );
     console.log(updatedOperator);
     // await updatedOperator.save();
 

@@ -28,7 +28,7 @@ export default function useUserData() {
           isAdmin: data.isAdmin,
           phoneNumber: data.phoneNumber,
           branchId: data.branchId,
-          branchName: data.branchName
+          branchName: data.branchName,
         })
       );
     } catch (e) {

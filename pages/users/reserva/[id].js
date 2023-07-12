@@ -124,7 +124,6 @@ const Reserva = () => {
 
   return (
     <>
-      <Navbar />
       <Box sx={{ display: "flex", bgcolor: "#FAFAFAFA", height: "100vh" }}>
         <Box
           sx={{

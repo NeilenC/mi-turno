@@ -1,11 +1,8 @@
-//GET all branches
-//GET branch
-//UPDATE branch
-//DELETE branch
 import { connectMongoDb } from "../../lib/mongodb";
 import Branches from "../../backend/models/branches.js";
 
 export default async function handler(req, res) {
+  const { id } = req.query;
   await connectMongoDb();
   //--------------------- CREATE BRANCH  ---------------------
   if (req.method === "POST") {
@@ -36,22 +33,4 @@ export default async function handler(req, res) {
       res.status(500).send("Error al obtener los datos de las sucursales");
     }
   }
-  //--------------------- MODIFICAR BRANCH  ---------------------
-
-  // if(req.method === "PUT") {
-  //   const {name} = req.body.phoneNumber
-  //   console.log(name)
-  //   const {updates} = req.body
-  //   try{
-  //     const updatedBranch = await Branches.findOneAndUpdate(name, updates)
-  //     res.status(201).send(updatedBranch)
-  //   } catch(e) {
-  //     throw e
-  //   }
-  // }
-  //--------------------- BORRAR BRANCH  ---------------------
-
-  //  if(req.method === "DELETE") {
-
-  //  }
 }

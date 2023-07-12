@@ -12,13 +12,23 @@ const initialState = {
   isOp: false,
   isAdmin: false,
   branchId: null,
-  branchName: null
+  branchName: null,
 };
 
 const reducer = createReducer(initialState, {
   [setUserInfo]: (state, action) => {
-    const { name, lastname, DNI, id, email, phoneNumber, isOp, isAdmin, branchId ,branchName} =
-      action.payload;
+    const {
+      name,
+      lastname,
+      DNI,
+      id,
+      email,
+      phoneNumber,
+      isOp,
+      isAdmin,
+      branchId,
+      branchName,
+    } = action.payload;
     return {
       ...state,
       name,
@@ -30,7 +40,7 @@ const reducer = createReducer(initialState, {
       isOp,
       isAdmin,
       branchId,
-      branchName
+      branchName,
     };
   },
 });

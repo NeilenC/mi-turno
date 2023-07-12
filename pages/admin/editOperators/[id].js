@@ -1,42 +1,63 @@
 import axios from "axios";
-import { Box, Button, Grid, InputLabel, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import useBranchData from "../../../Hooks/useBranchData";
+import useUserData from "../../../Hooks/useUserData";
+import { useRouter } from "next/router";
 
 const EditOperators = () => {
-  // const userInfo = useSelector(state => state.userInfo)
-  // const [updateOperator, setUpdateOperator] = useState("")
+  useBranchData();
+  useUserData();
+  const branches = useSelector((state) => state.branches);
+  // const user = useSelector((state)=> state.user)
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [branch, setBranch] = useState("");
-  // const [password, setPassword] = useState("")
+  const [selectedBranch, setSelectedBranch] = useState("");
+  const router = useRouter();
+  const { id } = router.query;
 
-  const id = "648c704de38b236e45f16803";
+  console.log("ID QUERY", id);
 
-  async function editOperators() {
+  const editOperators = async () => {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/api/operator/edit/${id}`
-        //    {
-        //     name: name,
-        //     lastName: lastName,
-        //     email: email,
-        //     branch: branch
-        //   }
+      const response = await fetch(
+        `http://localhost:3000/api/admin/operators/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            lastname: lastName,
+            branchId: selectedBranch._id,
+            branchName: selectedBranch.name,
+          }),
+        }
       );
-      alert("Se actualizaron los datos del operador");
-    } catch (e) {
-      alert("No se pudo actualizar datos de operador");
-      console.log("ERROR DEL CATCH", e);
+      const data = await response.json();
+      alert("Datos del operador actualizados");
+      router.push("/admin/operators");
+      return response.data;
+    } catch (error) {
+      console.error("Error al actualizar operador:", error);
     }
-  }
+  };
 
   useEffect(() => {
     editOperators();
   }, []);
 
-  console.log(name, lastName, email, branch);
+  console.log(name, lastName, email);
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -48,7 +69,7 @@ const EditOperators = () => {
           borderRadius: "12px",
           boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
           width: "980px",
-          height: "544px",
+          height: "700px",
           left: "calc(50% - 980px/2)",
           top: "160px",
           padding: "40px 32px 32px",
@@ -58,56 +79,61 @@ const EditOperators = () => {
         <Box
           component="form"
           noValidate
-          sx={{ fontSize: "20px", fontWeight: "bold", p: 3 }}
+          sx={{ fontSize: "20px", fontWeight: "bold", pb: 1 }}
         >
           Editar datos de operador
         </Box>
-        <Grid xs={12} item sx={{ pt: 2, pb: 2 }}>
+        <Grid xs={12} sm={6} item sx={{ pb: 1 }}>
           <InputLabel>Nombre</InputLabel>
           <TextField
             name="name"
             type="name"
             variant="outlined"
             fullWidth
-            value={name} // agregar el valor del estado
+            // value={name} // agregar el valor del estado
             onChange={(e) => setName(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pt: 2, pb: 2 }}>
+        <Grid xs={12} sm={6} item sx={{ pb: 1 }}>
           <InputLabel>Apellido</InputLabel>
           <TextField
             name="Apellido"
             type="Apellido"
             variant="outlined"
             fullWidth
-            value={lastName} // agregar el valor del estado
+            // value={lastName} // agregar el valor del estado
             onChange={(e) => setLastName(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pt: 2, pb: 2 }}>
+        <Grid xs={12} item sx={{ pb: 1 }}>
           <InputLabel>Email</InputLabel>
           <TextField
             name="Apellido"
             type="Apellido"
             variant="outlined"
             fullWidth
-            value={email} // agregar el valor del estado
+            // value={email} // agregar el valor del estado
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pt: 2, pb: 5 }}>
+        <Grid xs={12} item sx={{ pb: 1 }}>
           <InputLabel>Sucursal</InputLabel>
 
-          <TextField
-            name="branch"
-            type="branch"
-            variant="outlined"
-            fullWidth
-            value={branch} // agregar el valor del estado
-            onChange={(e) => setBranch(e.target.value)}
-          />
+          <Select
+            sx={{ width: "85%", ml: 4 }}
+            // value={selectedBranch}
+            onChange={(e) => {
+              setSelectedBranch(e.target.value);
+            }}
+          >
+            {branches.map((branch) => (
+              <MenuItem key={branch._id} value={branch}>
+                {branch.name}
+              </MenuItem>
+            ))}
+          </Select>
         </Grid>
-        <Grid xs={12} item sx={{ pt: 2, pb: 5 }}>
+        <Grid xs={12} item sx={{ pb: 5 }}>
           <InputLabel>Contraseña</InputLabel>
 
           <TextField

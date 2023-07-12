@@ -40,6 +40,14 @@ const UserSchema = new Schema({
     type: String,
     allowNull: true,
   },
+  phoneNumber: {
+    type: String,
+    allowNull: true,
+  },
+  branchName: {
+    type: String,
+    allowNull: true,
+  },
 });
 
 UserSchema.pre("save", async function () {

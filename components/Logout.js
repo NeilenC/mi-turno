@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/router";
+import useUserData from "../Hooks/useUserData";
+import { useSelector } from "react-redux";
 
 const Logout = () => {
+  useUserData();
+  const user = useSelector((state) => state.user);
   const router = useRouter();
   const [id, setId] = useState("");
   const [token, setToken] = useState("");
@@ -10,12 +14,14 @@ const Logout = () => {
   useEffect(() => {
     setId(localStorage.getItem("id"));
     setToken(localStorage.getItem("token"));
-  }, []);
+  }, [id, token]);
 
   const handleLogOut = async () => {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
-    router.push("/");
+    router.push("/").then(() => {
+      window.location.reload();
+    });
   };
 
   return (

@@ -1,7 +1,8 @@
-import { Box, Button, InputLabel } from "@mui/material";
+import { Box, Button, Grid, InputLabel } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 import useBranchData from "../../Hooks/useBranchData";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useSelector } from "react-redux";
 
 const Branches = () => {
@@ -9,66 +10,80 @@ const Branches = () => {
   const branches = useSelector((state) => state.branches);
 
   return (
-    <Box sx={{ pt: "150px" }}>
-      <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "152px" }}>
+    <Box sx={{ height: "100vh", pt: "80px", bgcolor: "#FAFAFAFA" }}>
+      <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "154px" }}>
         {" "}
         Sucursales{" "}
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ width: "85%", m: "auto" }}>
+        <Grid container spacing={2} sx={{ display: "flex" }}>
           {branches.map((branch) => (
-            <Box key={branch._id} sx={{ p: 1 }}>
+            <Grid item key={branch._id} xs={10} sx={{ m: "auto" }}>
               <Box
                 sx={{
-                  border: "1px solid #F0F0F0",
+                  border: "1.5px solid #F0F0F0",
                   p: "24px",
                   borderRadius: "12px",
                   display: "flex",
-                  direction: "row",
+                  direction: "column",
                   alignItems: "center",
                   fontSize: "14px",
-                  justifyContent: "space-between",
+                  // justifyContent: "space-between",
                 }}
               >
-                <Box>
+                <Grid item xs={6}>
                   <InputLabel>Nombre</InputLabel>
                   {branch.name}
-                </Box>
-                <Box>
+                </Grid>
+                <Grid item xs={6}>
+                  <InputLabel>Email</InputLabel>
+                  {branch.email}
+                </Grid>
+                <Grid item xs={6}>
                   <InputLabel>Dirección</InputLabel>
-                  <Box>{branch.direction}</Box>
-                </Box>
+                  <Grid>{branch.direction}</Grid>
+                </Grid>
 
-                <Box>
+                <Grid item xs={6}>
                   <InputLabel>Teléfono</InputLabel>
-                  <Box>{branch.phoneNumber}</Box>
-                </Box>
+                  <Grid>{branch.phoneNumber}</Grid>
+                </Grid>
 
-                <Box>
-                  <InputLabel>Capacidad máxima</InputLabel>
-                  <Box>{branch.maxCap}</Box>
-                </Box>
-
-                <Box>
+                <Grid item xs={6}>
                   <InputLabel>Horario</InputLabel>
-                  <Box>
+                  <Grid>
                     {branch.openingH} - {branch.closingH} HS
-                  </Box>
-                </Box>
-                <Button
-                  sx={{
-                    p: "12px 24px",
-                    bgcolor: "#F5F5F5",
-                    color: "#A442F1",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <Link href={`/admin/editBranch/${branch._id}`}>Editar</Link>
-                </Button>
+                  </Grid>
+                </Grid>
+                <Grid item xs={1}>
+                  <Button
+                    sx={{
+                      p: "12px 24px",
+                      bgcolor: "#F5F5F5",
+                      color: "#A442F1",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <Link href={`/admin/editBranch/${branch._id}`}>Editar</Link>
+                  </Button>
+                </Grid>
+                <Grid item xs={1}>
+                  <Button
+                    sx={{
+                      p: "10px 24px",
+                      // bgcolor: "#F5F5F5",
+                      color: "#e73c35",
+                      fontWeight: "bold",
+                    }}
+                    // onClick={()=> {router.push(`/admin/editOperators/${operator._id}`)}}
+                  >
+                    <DeleteForeverOutlinedIcon />
+                  </Button>
+                </Grid>
               </Box>
-            </Box>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Box>
     </Box>
   );

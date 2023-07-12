@@ -11,26 +11,37 @@ import {
   OutlinedInput,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { setUserInfo } from "../redux/userInfo";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import useUserData from "../Hooks/useUserData";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useSelector } from "react-redux";
 
 const Login = () => {
+  useUserData();
+  const user = useSelector((state) => state.user);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  console.log("USER EN LOGIN??", user);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      redirectToUserPage();
+    }
+  }, [isLoggedIn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,14 +54,26 @@ const Login = () => {
         if (response.status === 200) {
           localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
+
           alert("LOGIN EXITOSO");
-          router.push(`/users/reserva/${response.data.user._id}`);
+          setIsLoggedIn(true);
         }
       })
       .catch((e) => {
         alert("NO SE PUDO LOGUEAR");
-        console.log(e, "ERRORRRR LOGIN");
+        console.log(e);
       });
+  };
+
+  const redirectToUserPage = () => {
+    if (!user) {
+      return;
+    }
+    !user.isOp && !user.isAdmin
+      ? router.push(`/users/reserva/${user._id}`)
+      : null;
+    user.isOp ? router.push(`/verReservas/${user.branchId}`) : null;
+    user.isAdmin ? router.push(`/admin/branches`) : null;
   };
 
   return (
@@ -60,14 +83,6 @@ const Login = () => {
         display: " flex",
       }}
     >
-      {/* <TextField
-            name="email"
-            value={email}
-            fullWidth
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            sx={{ paddingBottom: 3 }}
-          /> */}
       <Box
         sx={{
           margin: "auto",
@@ -112,7 +127,7 @@ const Login = () => {
 
           <TextField
             name="email"
-            value={email}
+            // value={email}
             fullWidth
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
@@ -124,7 +139,7 @@ const Login = () => {
             fullWidth
             id="standard-adornment-password"
             type={showPassword ? "text" : "password"}
-            value={password}
+            // value={password}
             onChange={(e) => setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
@@ -159,6 +174,7 @@ const Login = () => {
                 borderRadius: "10px",
               }}
               fullWidth
+              onClick={redirectToUserPage}
             >
               Ingresar
             </Button>
