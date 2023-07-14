@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import BuildCircleOutlinedIcon from "@mui/icons-material/BuildCircleOutlined"; // tool
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined"; // cancel
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 
 const DetalleReserva = () => {
   useUserData();
@@ -81,20 +81,30 @@ const DetalleReserva = () => {
           }}
         >
           <Box sx={{ m: "auto" }}>
-          <Grid container direction="column" alignItems="center" justifyContent="center" sx={{ height: "100%" }}>
-  <CheckBoxOutlinedIcon sx={{ color: "#A442F1", fontSize: 58 }} />
-  <Typography variant="h4" sx={{ p: 1, pt:3 , color: "#A442F1", fontWeight:"bold"}}>
-    ¡Gracias por tu reserva!
-  </Typography>
-  <Typography variant="subtitle1" sx={{ pt: 2 }}>
-    Estaremos enviándote un correo electrónico de confirmación a {user.email} con todos los detalles de tu reservación.
-  </Typography>
-</Grid>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+              sx={{ height: "100%" }}
+            >
+              <CheckBoxOutlinedIcon sx={{ color: "#A442F1", fontSize: 58 }} />
+              <Typography
+                variant="h4"
+                sx={{ p: 1, pt: 3, color: "#A442F1", fontWeight: "bold" }}
+              >
+                ¡Gracias por tu reserva!
+              </Typography>
+              <Typography variant="subtitle1" sx={{ pt: 2 }}>
+                Estaremos enviándote un correo electrónico de confirmación a{" "}
+                {user.email} con todos los detalles de tu reservación.
+              </Typography>
+            </Grid>
           </Box>
         </Box>
       </Box>
       <Divider sx={{ p: 3, maxWidth: "85%", m: "auto" }}></Divider>
-      <Box sx={{ width: "90%", height: "20%", pt: "3%", m:"auto"}}>
+      <Box sx={{ width: "90%", height: "20%", pt: "3%", m: "auto" }}>
         {booking.map((reserva) => (
           <Grid
             sx={{
@@ -102,63 +112,63 @@ const DetalleReserva = () => {
               height: "100%",
               m: "auto",
               padding: "16px",
-              marginBottom: "16px"
+              marginBottom: "16px",
             }}
             key={reserva._id}
           >
-              <Grid container xs={12} >
-            <Grid item xs={9} >
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-    Código de la reserva
-    <Typography
-      component="span"
-      variant="inherit"
-      sx={{ color: "#A442F1", pl:1.2 }}
-    >
-       #{reserva.bookingNumber}
-    </Typography>
-  </Typography>
-      <Typography  sx={{ fontSize:"18px",marginTop: "8px" }}>
-        Realizada el día {reserva.creatingDate.slice(0, 10)} a las{" "}
-        {`${reserva.creatingDate.slice(11, 16)} hs`} para el día {reserva.date} a las { reserva.shift} hs
-      </Typography>
-
+            <Grid container xs={12}>
+              <Grid item xs={9}>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                  Código de la reserva
+                  <Typography
+                    component="span"
+                    variant="inherit"
+                    sx={{ color: "#A442F1", pl: 1.2 }}
+                  >
+                    #{reserva.bookingNumber}
+                  </Typography>
+                </Typography>
+                <Typography sx={{ fontSize: "18px", marginTop: "8px" }}>
+                  Realizada el día {reserva.creatingDate.slice(0, 10)} a las{" "}
+                  {`${reserva.creatingDate.slice(11, 16)} hs`} para el día{" "}
+                  {reserva.date} a las {reserva.shift} hs
+                </Typography>
               </Grid>
 
-                  <Box sx={{ width: "280px"}}>
-                  <Grid sx={{ pb: 1.5,  }}>
-  <Button
-    sx={{
-      p: 2,
-      color: "#A442F1",
-      bgcolor: "rgba(164, 66, 241, 0.1)",
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-    onClick={handlerEdit}
-  >
-    <BuildCircleOutlinedIcon />
-   Editar reserva
-  </Button>
-</Grid>
-<Grid>
-  <Button
-    sx={{
-      p: 2,
-      color: "#A442F1",
-      bgcolor: "rgba(164, 66, 241, 0.1)",
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-    onClick={handlerCancel}
-  >
-    <HighlightOffOutlinedIcon sx={{ color: "#e73c35" }} />
-    Cancelar reserva
-  </Button>
-</Grid>
-                  </Box>
+              <Box sx={{ width: "280px" }}>
+                <Grid sx={{ pb: 1.5 }}>
+                  <Button
+                    sx={{
+                      p: 2,
+                      color: "#A442F1",
+                      bgcolor: "rgba(164, 66, 241, 0.1)",
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={handlerEdit}
+                  >
+                    <BuildCircleOutlinedIcon />
+                    Editar reserva
+                  </Button>
+                </Grid>
+                <Grid>
+                  <Button
+                    sx={{
+                      p: 2,
+                      color: "#A442F1",
+                      bgcolor: "rgba(164, 66, 241, 0.1)",
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={handlerCancel}
+                  >
+                    <HighlightOffOutlinedIcon sx={{ color: "#e73c35" }} />
+                    Cancelar reserva
+                  </Button>
+                </Grid>
+              </Box>
             </Grid>
             <Grid container>
               <Grid item xs={12} sm={6} sx={{}}>

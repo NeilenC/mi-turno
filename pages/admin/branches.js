@@ -1,13 +1,56 @@
 import { Box, Button, Grid, InputLabel } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useBranchData from "../../Hooks/useBranchData";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Branches = () => {
   useBranchData();
   const branches = useSelector((state) => state.branches);
+  const [selectedBranch, setSelectedBranch] = useState([])
+
+  // const deleteBranch = async () => {
+  //   try {
+  //     const confirmed = window.confirm('¿Estás seguro de que deseas borrar la sucursal?');
+  //     if (confirmed) {
+  //       const remove = await axios.delete(`http://localhost:3000/api/admin/updateBranch/${selectedBranch._id}`);
+  //       // Realizar cualquier acción adicional después de eliminar la sucursal
+  //       window.location.reload()
+  //     }
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // };
+
+
+  const deleteBranch = async (id) => {
+    try {
+      const confirmed = window.confirm(
+        "¿Estás seguro de querer eliminar esta sucursal?"
+      );
+      if (confirmed) {
+        const response = await fetch(
+          `http://localhost:3000/api/admin/updateBranch/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+console.log("RESPONSE", response.ok, "ID", id)
+        if (response.ok) {
+          alert("Sucursal eliminada exitosamente");
+             window.location.reload()
+        } else {
+          alert("Error al eliminar la Sucursal");
+        }
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  };
+
+
 
   return (
     <Box sx={{ height: "100vh", pt: "80px", bgcolor: "#FAFAFAFA" }}>
@@ -16,7 +59,7 @@ const Branches = () => {
         Sucursales{" "}
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Grid container spacing={2} sx={{ display: "flex" }}>
+        <Grid container spacing={2} sx={{ display: "flex", pb:"40px" }}>
           {branches.map((branch) => (
             <Grid item key={branch._id} xs={10} sx={{ m: "auto" }}>
               <Box
@@ -28,7 +71,6 @@ const Branches = () => {
                   direction: "column",
                   alignItems: "center",
                   fontSize: "14px",
-                  // justifyContent: "space-between",
                 }}
               >
                 <Grid item xs={6}>
@@ -77,7 +119,8 @@ const Branches = () => {
                     }}
                     // onClick={()=> {router.push(`/admin/editOperators/${operator._id}`)}}
                   >
-                    <DeleteForeverOutlinedIcon />
+                  
+                  <DeleteForeverOutlinedIcon onClick={() => deleteBranch(branch._id)} />
                   </Button>
                 </Grid>
               </Box>

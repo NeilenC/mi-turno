@@ -9,9 +9,11 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const Createbranch = () => {
+  const router = useRouter()
   const [name, setName] = useState("");
   const [phtoneNumber, setPhoneNumber] = useState(0);
   const [email, setEmail] = useState("");
@@ -33,7 +35,8 @@ const Createbranch = () => {
         closingH: closingH,
       });
       if (response.status === 200) {
-        alert("SE CREO UNA NUEVA BRANCHHHASDKJSDÑKSJDFKSD");
+        alert("SE CREO UNA NUEVA BRANCH");
+        router.push("/admin/branches")
       }
     } catch (e) {
       console.log("HUBO UN PROBLEMAAAA ");
@@ -68,7 +71,7 @@ const Createbranch = () => {
               Crear una nueva sucursal
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
+              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
                 <InputLabel>Nombre</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
@@ -80,7 +83,7 @@ const Createbranch = () => {
                   }}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
+              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
                 <InputLabel>Dirección</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
@@ -93,7 +96,7 @@ const Createbranch = () => {
                 />
               </Grid>
             </Grid>
-            <Grid xs={12} item sx={{ pt: 2, pb: 2 }}>
+            <Grid xs={12} item sx={{ pt: 0, pb: 2 }}>
               <InputLabel>Email</InputLabel>
               <TextField
                 id="outlined-multiline-flexible"
@@ -106,7 +109,7 @@ const Createbranch = () => {
               />
             </Grid>
             <Grid container spacing={2} sx={{ pb: 2 }}>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
+              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
                 <InputLabel>Teléfono</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
@@ -118,7 +121,7 @@ const Createbranch = () => {
                   }}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
+              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
                 <InputLabel>Capacidad máxima</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"

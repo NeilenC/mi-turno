@@ -128,9 +128,9 @@ const CreateOperator = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel sx={{ m: 1, ml: 4 }}>Sucursal</InputLabel>
+                <InputLabel >Sucursal</InputLabel>
                 <Select
-                  sx={{ width: "85%", ml: 4 }}
+                  fullWidth
                   value={branch}
                   onChange={(e) => {
                     setBranch(e.target.value);

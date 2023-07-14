@@ -18,6 +18,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 
 const Edit = () => {
@@ -86,116 +87,118 @@ const Edit = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", bgcolor: "#ECECEC", height: "100vh" }}>
+    <Box sx={{ display: "flex", bgcolor: "#f5f5f5f5", height: "100vh" }}>
       <Box
         sx={{
-          height: "580px",
-          width: "90%",
+          height: "500px",
           m: "auto",
-          display: "flex",
-          pb: "35%",
+          pb: "43%",
         }}
       >
-        <Grid
-          container
-          sx={{ width: "1300px", height: "550px", display: "flex", m: "auto" }}
-        >
-          <Box
-            sx={{
-              width: "65%",
-              bgcolor: "#FFFFFF",
-              height: "138%",
-              borderRadius: "10px",
-            }}
-          >
-            <Box sx={{ pl: 5, pt: 5, fontSize: "23px", fontWeight: "bold" }}>
-              Editar reserva <br />
-              <small>Seleccioná las opciones disponibles</small>
-            </Box>
-            {/* PASO 1 */}
-            <InputLabel sx={{ m: 1, ml: 4 }}>Sucursal</InputLabel>
-            <Select
-              sx={{ width: "85%", ml: 4 }}
-              value={selectedBranch}
-              onChange={(e) => {
-                setSelectedBranch(e.target.value);
+        <Grid container xs={12} sx={{ width: "1250px", height: "550px" }}>
+          <Grid xs={6} sx={{}}>
+            <Grid
+              xs={12}
+              sx={{
+                p: "30px",
+                fontSize: "23px",
+                fontWeight: "bold",
+                bgcolor: "#FFFFFF",
+                height: "105%",
+                borderRadius: "12px",
+                width: "130%",
               }}
             >
-              {branches.map((branch) => (
-                <MenuItem key={branch._id} value={branch}>
-                  {branch.name}
-                </MenuItem>
-              ))}
-            </Select>
+              <Box sx={{ p: "30px" }}>
+                Editar reserva
+                <Typography variant={"body1"}>
+                  Seleccioná las opciones disponibles
+                </Typography>
+              </Box>
+              {/* PASO 1 */}
+              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Sucursal</InputLabel>
+              <Select
+                sx={{ width: "85%", ml: 4 }}
+                value={selectedBranch}
+                onChange={(e) => {
+                  setSelectedBranch(e.target.value);
+                }}
+              >
+                {branches.map((branch) => (
+                  <MenuItem key={branch._id} value={branch}>
+                    {branch.name}
+                  </MenuItem>
+                ))}
+              </Select>
 
-            {/* FIN PASO 1 */}
+              {/* FIN PASO 1 */}
 
-            {/* INICIO PASO 2  */}
-            <Select
-              sx={{ width: "85%", ml: 4 }}
-              value={newShift}
-              onChange={(e) => {
-                setNewShift(e.target.value);
-              }}
-            >
-              {shifts.map((turno, i = 0) => (
-                <MenuItem key={i + 1} value={turno}>
-                  {turno}
-                </MenuItem>
-              ))}
-            </Select>
+              {/* INICIO PASO 2  */}
+              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Horario</InputLabel>
 
-            <InputLabel sx={{ m: 1, ml: 4 }}>
-              Email
+              <Select
+                sx={{ width: "85%", ml: 4 }}
+                value={newShift}
+                onChange={(e) => {
+                  setNewShift(e.target.value);
+                }}
+              >
+                {shifts.map((turno, i = 0) => (
+                  <MenuItem key={i + 1} value={turno}>
+                    {turno}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Email</InputLabel>
+
               <TextField
                 id="branch"
-                sx={{ width: "90%" }}
+                sx={{ width: "85%", ml: 4 }}
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
               />
-            </InputLabel>
 
-            <InputLabel sx={{ m: 1, ml: 4 }}>
-              Teléfono
+              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Teléfono</InputLabel>
               <TextField
                 id="branch"
-                sx={{ width: "90%" }}
+                sx={{ width: "85%", ml: 4 }}
                 value={user.newPhoneNumber}
                 onChange={(e) => {
                   setNewPhoneNumber(e.target.value);
                 }}
               />
-            </InputLabel>
-            <Button
-              sx={{
-                ml: "32px",
-                pl: "16px",
-                p: 3,
-                bgcolor: "#A442F1",
-                color: "white",
-              }}
-              onClick={handlerUpdate}
-            >
-              Editar reserva
-            </Button>
-          </Box>
-          <Box>
-            <Box
+              <Button
+                sx={{
+                  ml: "32px",
+                  pl: "16px",
+                  mt: 3,
+                  p: 3,
+                  bgcolor: "#A442F1",
+                  color: "white",
+                }}
+                onClick={handlerUpdate}
+              >
+                Editar reserva
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid container xs={6} sx={{ pl: "10%" }}>
+            <Grid
               sx={{
                 bgcolor: "#FFFFFF",
-                ml: 5,
-                width: "150%",
-                height: "50%",
+                height: "60%",
                 borderRadius: "10px",
+                width: "95%",
               }}
             >
-              <Box sx={{ justifyContent: "center", pt: 2 }}>
+              <Box sx={{ pt: 1.5 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DateCalendar date={newDate} onChange={handleDateChange} />
                 </LocalizationProvider>
               </Box>
-            </Box>
-          </Box>
+            </Grid>
+          </Grid>
         </Grid>
       </Box>
     </Box>

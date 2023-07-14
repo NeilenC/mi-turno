@@ -1,7 +1,12 @@
+import { Box } from "@mui/material";
 import React from "react";
 
 const EditProfile = () => {
-  return <div>EditProfile</div>;
+  return (
+    <Box>
+      
+    </Box>
+  );
 };
 
 export default EditProfile;
