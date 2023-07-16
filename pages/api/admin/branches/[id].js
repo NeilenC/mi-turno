@@ -26,4 +26,16 @@ export default async function handler(req, res) {
       throw e;
     }
   }
+
+  //--------------------- OBTENER UNA BRANCH ---------------------
+  if (req.method === "GET") {
+    // const { id } = req.query;
+
+    try {
+      const getBranch = await Branches.findOne({ _id: id });
+      res.send(getBranch);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

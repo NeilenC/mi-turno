@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const Createbranch = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [name, setName] = useState("");
   const [phtoneNumber, setPhoneNumber] = useState(0);
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ const Createbranch = () => {
       });
       if (response.status === 200) {
         alert("SE CREO UNA NUEVA BRANCH");
-        router.push("/admin/branches")
+        router.push("/admin/branches");
       }
     } catch (e) {
       console.log("HUBO UN PROBLEMAAAA ");

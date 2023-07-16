@@ -9,21 +9,7 @@ import axios from "axios";
 const Branches = () => {
   useBranchData();
   const branches = useSelector((state) => state.branches);
-  const [selectedBranch, setSelectedBranch] = useState([])
-
-  // const deleteBranch = async () => {
-  //   try {
-  //     const confirmed = window.confirm('¿Estás seguro de que deseas borrar la sucursal?');
-  //     if (confirmed) {
-  //       const remove = await axios.delete(`http://localhost:3000/api/admin/updateBranch/${selectedBranch._id}`);
-  //       // Realizar cualquier acción adicional después de eliminar la sucursal
-  //       window.location.reload()
-  //     }
-  //   } catch (e) {
-  //     throw e;
-  //   }
-  // };
-
+  const [selectedBranch, setSelectedBranch] = useState([]);
 
   const deleteBranch = async (id) => {
     try {
@@ -32,15 +18,14 @@ const Branches = () => {
       );
       if (confirmed) {
         const response = await fetch(
-          `http://localhost:3000/api/admin/updateBranch/${id}`,
+          `http://localhost:3000/api/admin/branches/${id}`,
           {
             method: "DELETE",
           }
         );
-console.log("RESPONSE", response.ok, "ID", id)
         if (response.ok) {
           alert("Sucursal eliminada exitosamente");
-             window.location.reload()
+          window.location.reload();
         } else {
           alert("Error al eliminar la Sucursal");
         }
@@ -50,8 +35,6 @@ console.log("RESPONSE", response.ok, "ID", id)
     }
   };
 
-
-
   return (
     <Box sx={{ height: "100vh", pt: "80px", bgcolor: "#FAFAFAFA" }}>
       <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "154px" }}>
@@ -59,7 +42,7 @@ console.log("RESPONSE", response.ok, "ID", id)
         Sucursales{" "}
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Grid container spacing={2} sx={{ display: "flex", pb:"40px" }}>
+        <Grid container spacing={2} sx={{ display: "flex", pb: "40px" }}>
           {branches.map((branch) => (
             <Grid item key={branch._id} xs={10} sx={{ m: "auto" }}>
               <Box
@@ -119,8 +102,9 @@ console.log("RESPONSE", response.ok, "ID", id)
                     }}
                     // onClick={()=> {router.push(`/admin/editOperators/${operator._id}`)}}
                   >
-                  
-                  <DeleteForeverOutlinedIcon onClick={() => deleteBranch(branch._id)} />
+                    <DeleteForeverOutlinedIcon
+                      onClick={() => deleteBranch(branch._id)}
+                    />
                   </Button>
                 </Grid>
               </Box>

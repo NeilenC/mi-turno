@@ -33,7 +33,6 @@ const Operators = () => {
     handlerOperators();
   }, []);
 
-
   const deleteOp = async (id) => {
     try {
       const confirmed = window.confirm(
@@ -46,10 +45,10 @@ const Operators = () => {
             method: "DELETE",
           }
         );
-console.log("RESPONSE", response.ok, "ID", id)
+        console.log("RESPONSE", response.ok, "ID", id);
         if (response.ok) {
           alert("Operador eliminado exitosamente");
-             window.location.reload()
+          window.location.reload();
         } else {
           alert("Error al eliminar el operador");
         }
@@ -58,7 +57,6 @@ console.log("RESPONSE", response.ok, "ID", id)
       console.error("Error en la solicitud:", error);
     }
   };
-
 
   return (
     <Box sx={{ pt: "90px" }}>
@@ -133,7 +131,9 @@ console.log("RESPONSE", response.ok, "ID", id)
                   }}
                   // onClick={()=> {router.push(`/admin/editOperators/${operator._id}`)}}
                 >
-                  <DeleteForeverOutlinedIcon onClick={() => deleteOp(operator._id)} />
+                  <DeleteForeverOutlinedIcon
+                    onClick={() => deleteOp(operator._id)}
+                  />
                 </Button>
               </Grid>
             </Box>

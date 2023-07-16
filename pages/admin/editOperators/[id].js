@@ -1,10 +1,12 @@
-import axios from "axios";
 import {
   Box,
   Button,
   Grid,
+  IconButton,
+  InputAdornment,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   TextField,
 } from "@mui/material";
@@ -13,6 +15,7 @@ import { useSelector } from "react-redux";
 import useBranchData from "../../../Hooks/useBranchData";
 import useUserData from "../../../Hooks/useUserData";
 import { useRouter } from "next/router";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const EditOperators = () => {
   useBranchData();
@@ -23,10 +26,38 @@ const EditOperators = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [selectedBranch, setSelectedBranch] = useState("");
+  const [password, setPassword] = useState("");
+  const [selectedOp, setSelectedOp] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  console.log("ID QUERY", id);
+  console.log("ID", id);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
+  };
+
+  const getOp = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/admin/operators/${id}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = response.json();
+      setSelectedOp(data);
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  useEffect(() => {
+    getOp(id);
+  }, []);
 
   const editOperators = async () => {
     try {
@@ -36,28 +67,23 @@ const EditOperators = () => {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: name,
-            email: email,
-            lastname: lastName,
-            branchId: selectedBranch._id,
-            branchName: selectedBranch.name,
+            name: name || selectedOp.name,
+            email: email || selectedOp.email,
+            lastname: lastName || selectedOp.lastname,
+            branchId: selectedBranch._id || selectedOp.branchId,
+            branchName: selectedBranch.name || selectedOp.branchName,
+            password: password || selectedOp.password,
           }),
         }
       );
       const data = await response.json();
       alert("Datos del operador actualizados");
       router.push("/admin/operators");
-      return response.data;
+      return data;
     } catch (error) {
       console.error("Error al actualizar operador:", error);
     }
   };
-
-  useEffect(() => {
-    editOperators();
-  }, []);
-
-  console.log(name, lastName, email);
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -90,7 +116,7 @@ const EditOperators = () => {
             type="name"
             variant="outlined"
             fullWidth
-            // value={name} // agregar el valor del estado
+            value={name} // agregar el valor del estado
             onChange={(e) => setName(e.target.value)}
           />
         </Grid>
@@ -101,18 +127,18 @@ const EditOperators = () => {
             type="Apellido"
             variant="outlined"
             fullWidth
-            // value={lastName} // agregar el valor del estado
+            value={lastName} // agregar el valor del estado
             onChange={(e) => setLastName(e.target.value)}
           />
         </Grid>
         <Grid xs={12} item sx={{ pb: 1 }}>
           <InputLabel>Email</InputLabel>
           <TextField
-            name="Apellido"
-            type="Apellido"
+            name="email"
+            type="email"
             variant="outlined"
             fullWidth
-            // value={email} // agregar el valor del estado
+            value={email} // agregar el valor del estado
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
@@ -120,8 +146,8 @@ const EditOperators = () => {
           <InputLabel>Sucursal</InputLabel>
 
           <Select
-            sx={{ width: "85%", ml: 4 }}
-            // value={selectedBranch}
+            fullWidth
+            value={selectedBranch}
             onChange={(e) => {
               setSelectedBranch(e.target.value);
             }}
@@ -134,19 +160,26 @@ const EditOperators = () => {
           </Select>
         </Grid>
         <Grid xs={12} item sx={{ pb: 5 }}>
-          <InputLabel>Contraseña</InputLabel>
-
-          <TextField
-            name="password"
-            type="password"
-            variant="outlined"
+          <InputLabel>Constraseña</InputLabel>
+          <OutlinedInput
             fullWidth
-            //   value={password} // agregar el valor del estado
-            //   onChange={(e) => setPassword(e.target.value)}
+            value={password} // agregar el valor del estado
+            name="contraseña"
+            id="standard-adornment-password"
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
-          <Box sx={{ color: "#A442F1", fontWeight: "bold" }}>
-            Editar contraseña
-          </Box>
         </Grid>
         <Button
           fullWidth
