@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   Autocomplete,
   Box,
@@ -22,6 +23,7 @@ import useBranchData from "../../../Hooks/useBranchData";
 import useUserData from "../../../Hooks/useUserData";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Swal from "sweetalert2"
 
 const steps = ["Elegí tu sucursal", "Selleccioná el día", "Completá los datos"];
 
@@ -116,7 +118,11 @@ const Reserva = () => {
       const newShift = response.data;
       setNewShift(newShift);
       setActiveStep(2);
-      alert("El turno se ha creado correctamente ");
+      Swal.fire({
+        title: 'Turno reservado con exito',
+        icon: 'success',
+        confirmButtonText: 'Continuar'
+      })
       router.push(`/users/detalleReserva/${newShift._id}`);
       setSelectedBranch(null);
       setSelectedDay(null);
@@ -124,7 +130,13 @@ const Reserva = () => {
       return newShift;
     } catch (e) {
       alert("No se ha logrado crear el turno");
-      throw e;
+      Swal.fire({
+        title: 'Hubo un error al reservar el turno',
+        text: 'Por favor, intente nuevamente',
+        icon: 'error',
+        confirmButtonText: 'Continuar'
+      })
+      console.log(e) ;
     }
   };
 
@@ -304,22 +316,7 @@ const Reserva = () => {
                   </Box>
                 </Box>
               ) : null}
-              {/* <Box sx={{pt:5}}>
-
-              <Button
-              sx={{
-                ml: "32px",
-                pl: "16px",
-                p: 3,
-                bgcolor: "#A442F1",
-                color: "white",
-                
-              }}
-              // onClick={createShift}
-              >
-                Confirmar reserva
-              </Button>
-                </Box> */}
+         
             </Box>
             <Box>
               <Box

@@ -20,6 +20,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Swal from "sweetalert2";
 
 const Edit = () => {
   useUserData();
@@ -35,10 +36,31 @@ const Edit = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState(0 || null);
   const [shifts, setShifts] = useState([]);
   const now = dayjs().format("DD/MM/YYYY HH:mm"); // 2023-07-06 19:27
+  const [shiftData, setShiftData] = useState([])
   const [minDate, setMinDate] = useState(
     dayjs(now).subtract(1, "day").toDate()
   );
 
+   
+//ENCONTRAR LA RESERVA 
+
+const handlerFind = async () => {
+  try{
+    const response = await fetch(`http://localhost:3000/api/shift/reserva/${id}`,{method:"GET"})
+    const data = await response.json()
+    setShiftData(data)
+  }catch(e) {
+    console.log(e)
+  }
+}
+
+useEffect(()=>{
+  handlerFind()
+},[])
+
+console.log(shiftData)
+
+  // ACTUALIZAR LA RESERVA 
   const handlerUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -48,20 +70,29 @@ const Edit = () => {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            branchId: selectedBranch._id,
-            branchName: selectedBranch.name,
-            date: newDate,
-            email: newEmail,
-            phoneNumber: newPhoneNumber,
-            shift: newShift,
+            branchId: selectedBranch._id || shiftData.branchId, 
+            branchName: selectedBranch.name || shiftData.branchName,
+            date: newDate || shiftData.date,
+            email: newEmail || shiftData.email,
+            phoneNumber: newPhoneNumber || shiftData.phoneNumber,
+            shift: newShift || shiftData.shift,
             creatingDate: now,
           }),
         }
       );
       const data = await response.json();
-      alert("Cambiaste los datos de tu reserva");
+       Swal.fire({
+        title: 'Cambiaste los datos de tu reserva',
+        icon: 'success',
+        confirmButtonText: 'Continuar'
+      })
       router.push(`/users/detalleReserva/${id}`);
     } catch (e) {
+      Swal.fire({
+        title: 'No se logró cambiar tu reserva',
+        icon: 'error',
+        confirmButtonText: 'Continuar'
+      })
       console.log("ERROR", e);
     }
   };

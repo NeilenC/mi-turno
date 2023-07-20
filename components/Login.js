@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,14 +45,19 @@ const Login = () => {
           localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
 
-          alert("LOGIN EXITOSO");
           !user.isOp && !user.isAdmin ? router.push(`/users/reserva/${user._id}`) : null;
           user.isOp ? router.push(`operator/verReservas/${user.branchId}`) : null;
           user.isAdmin ? router.push(`/admin/branches`) : null;
         }
       })
       .catch((e) => {
-        console.log(e);
+        Swal.fire({
+          title: 'Algo anda mal',
+          text: 'por favor chequea los datos ingresados',
+          icon: 'error',
+          confirmButtonText: 'Continuar'
+        })
+        console.log(e)
       });
   };
 
