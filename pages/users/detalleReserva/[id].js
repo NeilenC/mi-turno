@@ -69,7 +69,7 @@ const DetalleReserva = () => {
 
   return (
     <Box sx={{ height: "100vh", bgcolor: "#fafafa" }}>
-      <Box sx={{ display: "flex", direction: "column", pt: "5%" }}>
+      <Box sx={{ display: "flex", direction: "column", pt: "4.5%" }}>
         <Box
           sx={{
             width: "80%",
@@ -136,36 +136,38 @@ const DetalleReserva = () => {
               </Grid>
 
               <Box sx={{ width: "280px" }}>
-                <Grid sx={{ pb: 1.5 }}>
+                <Grid container xs={12} sx={{ pb: 1.5 }}>
                   <Button
                     sx={{
                       p: 2,
                       color: "#A442F1",
                       bgcolor: "rgba(164, 66, 241, 0.1)",
                       width: "100%",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      // justifyContent: "center",
+                      // alignItems: "center",
                     }}
                     onClick={handlerEdit}
                   >
                     <BuildCircleOutlinedIcon />
-                    Editar reserva
+                    <Grid xs={4.5} sx={{ fontWeight: "bold" }}>
+                      Editar
+                    </Grid>
                   </Button>
                 </Grid>
-                <Grid>
+                <Grid container xs={12}>
                   <Button
                     sx={{
                       p: 2,
                       color: "#A442F1",
                       bgcolor: "rgba(164, 66, 241, 0.1)",
                       width: "100%",
-                      justifyContent: "center",
-                      alignItems: "center",
                     }}
                     onClick={handlerCancel}
                   >
                     <HighlightOffOutlinedIcon sx={{ color: "#e73c35" }} />
-                    Cancelar reserva
+                    <Grid xs={4.5} sx={{ fontWeight: "bold" }}>
+                      Cancelar
+                    </Grid>
                   </Button>
                 </Grid>
               </Box>

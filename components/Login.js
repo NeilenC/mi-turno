@@ -14,34 +14,21 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import useUserData from "../Hooks/useUserData";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useSelector } from "react-redux";
 
 const Login = () => {
-  useUserData();
-  const user = useSelector((state) => state.user);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  console.log("USER EN LOGIN??", user);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      redirectToUserPage();
-    }
-  }, [isLoggedIn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,30 +38,23 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
+        const user = response.data.user
         if (response.status === 200) {
+
           localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
 
           alert("LOGIN EXITOSO");
-          setIsLoggedIn(true);
+          !user.isOp && !user.isAdmin ? router.push(`/users/reserva/${user._id}`) : null;
+          user.isOp ? router.push(`operator/verReservas/${user.branchId}`) : null;
+          user.isAdmin ? router.push(`/admin/branches`) : null;
         }
       })
       .catch((e) => {
-        alert("NO SE PUDO LOGUEAR");
         console.log(e);
       });
   };
 
-  const redirectToUserPage = () => {
-    if (!user) {
-      return;
-    }
-    !user.isOp && !user.isAdmin
-      ? router.push(`/users/reserva/${user._id}`)
-      : null;
-    user.isOp ? router.push(`/verReservas/${user.branchId}`) : null;
-    user.isAdmin ? router.push(`/admin/branches`) : null;
-  };
 
   return (
     <Box
@@ -174,7 +154,6 @@ const Login = () => {
                 borderRadius: "10px",
               }}
               fullWidth
-              onClick={redirectToUserPage}
             >
               Ingresar
             </Button>

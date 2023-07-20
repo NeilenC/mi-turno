@@ -16,18 +16,54 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useRouter } from "next/navigation";
+
 import axios from "axios";
+import { CancelPresentationOutlined, CheckBox } from "@mui/icons-material";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
   const [DNI, setDNI] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const isPasswordMismatch = password !== verifyPassword;
+
+  // const passwordsMatchValidation = {
+  //   id: 5,
+  //   oracion: "Las contraseñas deben coincidir",
+  //   color: isPasswordMismatch ? "red" : "grey",
+  // };
+  const [validations, setValidations] = useState([
+    {
+      id: 1,
+      oracion: "ABC tiene una mayúscula",
+      color: "grey",
+    },
+    {
+      id: 2,
+      oracion: "abc tiene una minúscula",
+      color: "grey",
+    },
+    {
+      id: 3,
+      oracion: "123 tiene un Número",
+      color: "grey",
+    },
+    {
+      id: 4,
+      oracion: "*** Minimo 8 caracteres",
+      color: "grey",
+    },
+    // passwordsMatchValidation
+  ]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+
+  // console.log("PASSWO", isPasswordMismatch);
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
@@ -35,6 +71,12 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (password !== verifyPassword) {
+      alert("Las contraseñas deben coincidir.");
+      return;
+    }
+
     axios
       .post("http://localhost:3000/api/users/register", {
         name: name,
@@ -52,6 +94,42 @@ const Register = () => {
       });
   };
 
+  const handlePassword = (data) => {
+    const min = /[a-z]/;
+    const may = /[A-Z]/;
+    const num = /\d/;
+
+    const updatedValidations = validations.map((validation) => {
+      if (validation.id === 1) {
+        return {
+          ...validation,
+          color: may.test(data) ? "green" : "red",
+        };
+      }
+      if (validation.id === 2) {
+        return {
+          ...validation,
+          color: min.test(data) ? "green" : "red",
+        };
+      }
+      if (validation.id === 3) {
+        return {
+          ...validation,
+          color: num.test(data) ? "green" : "red",
+        };
+      }
+      if (validation.id === 4) {
+        return {
+          ...validation,
+          color: data.length >= 8 ? "green" : "red",
+        };
+      }
+      return validation;
+    });
+
+    setValidations(updatedValidations);
+  };
+
   return (
     <Box
       sx={{
@@ -62,12 +140,12 @@ const Register = () => {
       <Box
         sx={{
           margin: "auto",
-          justifyContent: " center",
+          justifyContent: "center",
           position: "absolute",
           borderRadius: "12px",
           boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
           maxWidth: "750px",
-          height: "900",
+          height: "900px",
           left: "calc(50% - 750px/2)",
           top: "160px",
           padding: "40px 32px 32px",
@@ -81,7 +159,7 @@ const Register = () => {
             display: "flex",
             mr: 4,
             fontWeight: "bold",
-            fontSize: "16px  ",
+            fontSize: "16px",
           }}
         >
           <AiOutlineArrowLeft />
@@ -90,134 +168,150 @@ const Register = () => {
         <Box sx={{ fontSize: "22px", fontWeight: "bold", textAlign: "center" }}>
           Crear cuenta
         </Box>
-
+  
         <Box
           sx={{
             display: "flex",
-            justifyConten: "center",
+            justifyContent: "center",
             p: "32px",
             gap: "20px",
           }}
         >
           <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
-            <Grid sx={{ pb: 2 }}>
-              <Grid container spacing={1} sx={{ pb: 2 }}>
-                <Grid xs={12} sm={6} item sx={{}}>
-                  <InputLabel>Nombre</InputLabel>
-                  <TextField
-                    name="name"
-                    variant="outlined"
-                    fullWidth
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Grid>
-                <Grid xs={12} sm={6} item>
-                  <InputLabel>Apellido</InputLabel>
-                  <TextField
-                    name="lastname"
-                    variant="outlined"
-                    fullWidth
-                    value={lastname} // agregar el valor del estado
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Grid>
-                <Grid xs={12} item>
-                  <InputLabel>Email</InputLabel>
-                  <TextField
-                    name="email"
-                    type="email"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    value={email} // agregar el valor del estado
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Grid>
-                <Grid xs={12} item>
-                  <InputLabel>DNI</InputLabel>
-                  <TextField
-                    name="DNI"
-                    type="DNI"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    value={DNI} // agregar el valor del estado
-                    onChange={(e) => setDNI(e.target.value)}
-                  />
-                </Grid>
-                <Grid xs={12} sm={6} item>
-                  <InputLabel>Constraseña</InputLabel>
-                  <OutlinedInput
-                    fullWidth
-                    value={password} // agregar el valor del estado
-                    name="contraseña"
-                    id="standard-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    onChange={(e) => setPassword(e.target.value)}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </Grid>
-                <Grid xs={12} sm={6} item>
-                  {/* <OutlinedInput
-               fullWidth
-               name="contraseña"
-              "
-               value={password} // agregar el valor del estado
-               onChange={(e) => setPassword(e.target.value)}
-                id="standard-adornment-password"
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-           
-          /> */}
-                </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6}>
+                <InputLabel>Nombre</InputLabel>
+                <TextField
+                  name="name"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </Grid>
-              <Box sx={{ bgcolor: "#ECECEC", pt: 2 }}>
-                <Box sx={{ ml: 3 }}>
-                  La contraseña debe contener:
-                  <Divider sx={{ width: "400px" }} />
-                  <Grid
-                    sm={10}
-                    sx={{
-                      pt: 2,
-                      display: "flex",
-                      width: "516px",
-                      height: " 104px",
-                    }}
-                    item
-                  >
-                    ABC Una letra mayúscula <br />
-                    123 Un número
-                    <Grid sm={6} sx={{ pl: 5 }} item>
-                      abc Una letra minúscula <br />
-                      *** Mínimo 3 caractéres
+              <Grid item xs={12} sm={6}>
+                <InputLabel>Apellido</InputLabel>
+                <TextField
+                  name="lastname"
+                  variant="outlined"
+                  fullWidth
+                  value={lastname}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel>Email</InputLabel>
+                <TextField
+                  name="email"
+                  type="email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel>DNI</InputLabel>
+                <TextField
+                  name="DNI"
+                  type="DNI"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  value={DNI}
+                  onChange={(e) => setDNI(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputLabel>Contraseña</InputLabel>
+                <OutlinedInput
+                  fullWidth
+                  value={password}
+                  name="contraseña"
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => {setPassword(e.target.value),
+                    handlePassword(e.target.value)}}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputLabel>Repetir contraseña</InputLabel>
+                <OutlinedInput
+                  fullWidth
+                  name="contraseña"
+                  value={verifyPassword}
+                  onChange={(e) => setVerifyPassword(e.target.value)}
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{
+                    ...(isPasswordMismatch ? { color: "red" } : { color: "black" }),
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ bgcolor: "#ECECEC", pt: 2 }}>
+                  <Box sx={{ ml: 3 }}>
+                    La contraseña debe contener:
+                    <Divider sx={{ width: "400px" }} />
+                    <Grid
+                      sm={10}
+                      sx={{
+                        pt: 2,
+                        display: "flex",
+                        width: "516px",
+                        height: "104px",
+                      }}
+                      item
+                    >
+                      {validations.map((validation) => (
+                        <span
+                          key={validation.id}
+                          className="box-span"
+                          style={{ color: validation.color }}
+                        >
+                        {validation.color === "grey" ? (
+                          validation.oracion
+                        ) : (
+                          <>
+                            {validation.color === "red" ? (
+                              <CancelPresentationOutlined />
+                            ) : (
+                              <CheckBox sx={{ color: "green" }} />
+                            )}
+                            {validation.oracion}
+                          </>
+                        )}
+                        </span>
+                      ))}
                     </Grid>
-                  </Grid>
+                  </Box>
                 </Box>
-                <Box></Box>
-              </Box>
-              <Grid xs={12} item>
+              </Grid>
+              <Grid item xs={12}>
                 <Grid
                   sx={{
                     color: "#A442F1",
@@ -226,7 +320,7 @@ const Register = () => {
                     p: 2,
                   }}
                 >
-                  ¿olvidaste tu contraseña?
+                  ¿Olvidaste tu contraseña?
                 </Grid>
                 <Box>
                   <Button
@@ -239,8 +333,7 @@ const Register = () => {
                     }}
                     fullWidth
                   >
-                    {" "}
-                    Registrarme{" "}
+                    Registrarme
                   </Button>
                 </Box>
                 <Box sx={{ p: 3 }}>
@@ -256,8 +349,7 @@ const Register = () => {
                       }}
                       fullWidth
                     >
-                      {" "}
-                      Ya tenes cuenta? Iniciar sesión{" "}
+                      Ya tienes cuenta? Iniciar sesión
                     </Button>
                   </Box>
                 </Link>
@@ -268,6 +360,5 @@ const Register = () => {
       </Box>
     </Box>
   );
-};
-
+ }
 export default Register;

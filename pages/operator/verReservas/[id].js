@@ -33,13 +33,14 @@ const Shifts = () => {
   }, []);
 
   return (
-    <Box sx={{ pt: "150px" }}>
-      <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "112px" }}>
+    <Box sx={{ pt: "100px" }}>
+      <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "8%" }}>
         {" "}
-        Reservas en tu sucursal de : {user.branchName}
+        Reservas en tu sucursal de: {user.branchName}
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ width: "85%", m: "auto" }}>
+                 
+        <Box sx={{ width: "85%", m: "auto",  pb:5 }}>
           {shifts.map((shift) => (
             <Box key={shift._id} sx={{ p: 1 }}>
               <Box

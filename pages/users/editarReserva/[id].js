@@ -35,6 +35,9 @@ const Edit = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState(0 || null);
   const [shifts, setShifts] = useState([]);
   const now = dayjs().format("DD/MM/YYYY HH:mm"); // 2023-07-06 19:27
+  const [minDate, setMinDate] = useState(
+    dayjs(now).subtract(1, "day").toDate()
+  );
 
   const handlerUpdate = async (e) => {
     e.preventDefault();
@@ -85,6 +88,10 @@ const Edit = () => {
       throw e;
     }
   };
+
+  // useEffect(() => {
+  //   setMinDate(now);
+  // }, []);
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#f5f5f5f5", height: "100vh" }}>
@@ -194,7 +201,11 @@ const Edit = () => {
             >
               <Box sx={{ pt: 1.5 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateCalendar date={newDate} onChange={handleDateChange} />
+                  <DateCalendar
+                    date={newDate}
+                    onChange={handleDateChange}
+                    minDate={minDate}
+                  />
                 </LocalizationProvider>
               </Box>
             </Grid>

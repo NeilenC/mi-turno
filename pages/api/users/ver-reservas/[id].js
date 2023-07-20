@@ -7,12 +7,12 @@ import Shift from "../../../../backend/models/shift";
 export default async function handler(req, res) {
   await connectMongoDb();
 
-  const { userId } = req.query;
+  // NO DEVUELVE TURNOS DE UN USUARIO EN ESPECIFICO
 
   if (req.method === "GET") {
+    const { id } = req.query;
     try {
-      const userShifts = await Shift.find({ userId });
-
+      const userShifts = await Shift.find({ userId: id });
       res.status(200).send(userShifts);
     } catch (e) {
       console.log("ERROR BACKEND", e);

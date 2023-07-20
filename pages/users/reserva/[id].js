@@ -33,6 +33,8 @@ const Reserva = () => {
   const [shifts, setShifts] = useState([]);
   const [selectedShift, setSelectedShift] = useState("");
   const [email, setEmail] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [activeStep, setActiveStep] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [newShift, setNewShift] = useState([]);
@@ -41,6 +43,11 @@ const Reserva = () => {
   const branches = useSelector((state) => state.branches);
   const user = useSelector((state) => state.user);
   const now = dayjs().format("DD/MM/YYYY HH:mm");
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    setId(JSON.parse(localStorage.getItem("id")));
+  }, []);
 
   // console.log("USER", user)
   // const shouldDisableDate = (date) => {
@@ -98,9 +105,9 @@ const Reserva = () => {
           branchName: selectedBranch.name,
           date: selectedDay,
           shift: selectedShift,
-          fullname: `${user.name} ${user.lastname}`,
-          email: email,
-          DNI: user.DNI,
+          fullname: `${name} ${lastname}`,
+          email: email || user.email,
+          DNI: user.DNI || user.DNI,
           userId: user.id,
           phoneNumber: phoneNumber,
           creatingDate: now,
@@ -233,7 +240,9 @@ const Reserva = () => {
                         fullWidth
                         required
                         value={user.name}
-                        // onChange={(e)=> {setName(e.target.value)}}
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
                       />
                     </Grid>
                     <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
@@ -243,7 +252,9 @@ const Reserva = () => {
                         variant="outlined"
                         fullWidth
                         value={user.lastname}
-                        // onChange={(e)=> {setLastName(e.target.value)}}
+                        onChange={(e) => {
+                          setLastName(e.target.value);
+                        }}
                       />
                     </Grid>
                   </Grid>

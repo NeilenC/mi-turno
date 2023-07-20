@@ -24,7 +24,6 @@ const Navbar = () => {
         <Box
           sx={{
             height: "90px",
-            // width: "100%",
             bgcolor: "#FFFFFF",
             alignItems: "center",
             boxShadow: "0px 10px 24px 6px rgba(0, 0, 0, 0.12);",
@@ -53,9 +52,9 @@ const Navbar = () => {
             </Grid>
 
             {/* <Box sx={{ display: "flex", alignItems: "center", width: "30%" }}> */}
-            <Grid item xs={1.2}>
+            <Grid item xs={1.3}>
               <Link
-                href={`/users/reserva/${user.id}`}
+                href={`/users/verReservas/${user.id}`}
                 sx={{
                   textDecoration: "none",
                   fontWeight: "bold",

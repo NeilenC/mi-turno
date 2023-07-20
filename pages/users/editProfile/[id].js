@@ -24,16 +24,21 @@ const EditProfile = () => {
   const [DNI, setDNI] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
+  const [verifyPassword, setVerifyPassword] = useState("")
   const router = useRouter();
   const { id } = router.query;
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (e) => {
-    e.preventDefault();
-  };
+  const isPasswordMismatch = password !== verifyPassword;
 
   const editProfile = async () => {
+
+    if (password !== verifyPassword) {
+      alert("Las contraseñas deben coincidir.");
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:3000/api/users/${id}`, {
         method: "PUT",
@@ -42,13 +47,17 @@ const EditProfile = () => {
           name: name || user.name,
           lastname: lastName || user.lastname,
           email: email || user.email,
+          DNI: DNI || user.DNI,
+          phoneNumber: phoneNumber || user.phoneNumber,
           password: password || user.password,
         }),
       });
       const data = response.json();
       alert("Sus datos fueron actualizados exitosamente");
       window.location.reload();
+      return data
     } catch (e) {
+      alert("Error al actualizar los datos");
       throw e;
     }
   };
@@ -62,100 +71,127 @@ const EditProfile = () => {
           position: "absolute",
           borderRadius: "12px",
           boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-          width: "980px",
-          height: "700px",
-          left: "calc(50% - 980px/2)",
+          width: "800px",
+          height: "680px",
+          left: "calc(50% - 800px/2)",
           top: "160px",
-          padding: "40px 32px 32px",
+          p: "60px",
           bgcolor: "#FFFFFF",
         }}
       >
         <Box
           component="form"
           noValidate
-          sx={{ fontSize: "20px", fontWeight: "bold", pb: 1 }}
+          sx={{ fontSize: "20px", fontWeight: "bold", pb: 2 }}
         >
-          Editar datos de operador
+          Editar datos de mi perfil
         </Box>
-        <Grid container xs={12} spacing={3} >
-          <Grid item xs={6} sm={6} sx={{ pb: 1 }}>
+        <Grid container xs={12} spacing={3}>
+          <Grid item xs={6} sm={6} sx={{ pb: 0.5 }}>
             <InputLabel>Nombre</InputLabel>
             <TextField
-              name="name"
-              type="name"
+              placeholder={user.name}
               variant="outlined"
               fullWidth
-              value={name} // agregar el valor del estado
+              value={name} 
               onChange={(e) => setName(e.target.value)}
             />
           </Grid>
-          <Grid xs={6} sm={6} item sx={{ pb: 1 }}>
+          <Grid xs={6} sm={6} item sx={{ pb: 0.5 }}>
             <InputLabel>Apellido</InputLabel>
             <TextField
-              name="Apellido"
-              type="Apellido"
+              placeholder={user.lastname}
               variant="outlined"
               fullWidth
-              value={lastName} // agregar el valor del estado
+              value={lastName} 
               onChange={(e) => setLastName(e.target.value)}
             />
           </Grid>
         </Grid>
-        <Grid xs={12} item sx={{ pb: 1 }}>
+        <Grid xs={12} item sx={{ pb: 0.5 }}>
           <InputLabel>DNI</InputLabel>
           <TextField
             variant="outlined"
+            type="number"
+            placeholder={user.DNI}
             fullWidth
-            value={DNI} // agregar el valor del estado
+            value={DNI} 
             onChange={(e) => setDNI(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pb: 1 }}>
+        <Grid xs={12} item sx={{ pb:  0.5 }}>
           <InputLabel>Email</InputLabel>
           <TextField
-            name="email"
+            placeholder={user.email}
             type="email"
             variant="outlined"
             fullWidth
-            value={email} // agregar el valor del estado
+            value={email} 
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pb: 1 }}>
+        <Grid xs={12} item sx={{ pb:  0.5 }}>
           <InputLabel>Teléfono</InputLabel>
           <TextField
+            placeholder={user.phoneNumber}
             variant="outlined"
+            type="number"
             fullWidth
-            value={phoneNumber} // agregar el valor del estado
+            value={phoneNumber} 
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pb: 5 }}>
-          <InputLabel>Constraseña</InputLabel>
-          <OutlinedInput
-            fullWidth
-            value={password} // agregar el valor del estado
-            name="contraseña"
-            id="standard-adornment-password"
-            type={showPassword ? "text" : "password"}
-            onChange={(e) => setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </Grid>
+        <Grid container xs={12} spacing={3}>
+         <Grid item xs={12} sm={6}>
+                <InputLabel>Contraseña</InputLabel>
+                <OutlinedInput
+                  fullWidth
+                  value={password}
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+               </Grid>
+               <Grid item xs={12} sm={6}>
+                <InputLabel>Repetir contraseña</InputLabel>
+                <OutlinedInput
+                  fullWidth
+                  name="contraseña"
+                  value={verifyPassword}
+                  onChange={(e) => setVerifyPassword(e.target.value)}
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{
+                    ...(isPasswordMismatch ? { color: "red" } : { color: "black" }),
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+               </Grid>
+              </Grid>
         <Button
           fullWidth
           onClick={editProfile}
           sx={{
+            mt:"35px",
             bgcolor: "#A442F1",
             color: "#ffffff",
             p: 2,
