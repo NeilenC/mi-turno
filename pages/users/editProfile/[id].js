@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
+  Divider,
   Grid,
   IconButton,
   InputAdornment,
@@ -9,10 +10,12 @@ import {
   OutlinedInput,
   TextField,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { CancelPresentationOutlined, CheckBox, Visibility, VisibilityOff } from "@mui/icons-material";
 import useUserData from "../../../Hooks/useUserData";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2"
+import handlePassword from "../../../functions"
 
 const EditProfile = () => {
   useUserData();
@@ -27,6 +30,29 @@ const EditProfile = () => {
   const [verifyPassword, setVerifyPassword] = useState("")
   const router = useRouter();
   const { id } = router.query;
+  const [validations, setValidations] = useState([
+    {
+      id: 1,
+      oracion: "ABC tiene una mayúscula",
+      color: "grey",
+    },
+    {
+      id: 2,
+      oracion: "abc tiene una minúscula",
+      color: "grey",
+    },
+    {
+      id: 3,
+      oracion: "123 tiene un Número",
+      color: "grey",
+    },
+    {
+      id: 4,
+      oracion: "*** Minimo 8 caracteres",
+      color: "grey",
+    },
+  ]);
+
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -53,14 +79,60 @@ const EditProfile = () => {
         }),
       });
       const data = response.json();
-      alert("Sus datos fueron actualizados exitosamente");
+      Swal.fire({
+        title: 'Sus datos fueron actualizados exitosamente',
+        icon: 'success',
+        confirmButtonText: 'Continuar'
+      })
       window.location.reload();
       return data
     } catch (e) {
-      alert("Error al actualizar los datos");
+      Swal.fire({
+        title: 'Error al actualizar los datos',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo'
+      })
       throw e;
     }
   };
+
+  const handlePassword = (data) => {
+    const min = /[a-z]/;
+    const may = /[A-Z]/;
+    const num = /\d/;
+
+    const updatedValidations = validations.map((validation) => {
+      if (validation.id === 1) {
+        return {
+          ...validation,
+          color: may.test(data) ? "green" : "red",
+        };
+      }
+      if (validation.id === 2) {
+        return {
+          ...validation,
+          color: min.test(data) ? "green" : "red",
+        };
+      }
+      if (validation.id === 3) {
+        return {
+          ...validation,
+          color: num.test(data) ? "green" : "red",
+        };
+      }
+      if (validation.id === 4) {
+        return {
+          ...validation,
+          color: data.length >= 8 ? "green" : "red",
+        };
+      }
+      return validation;
+    });
+
+    setValidations(updatedValidations);
+  };
+
+
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -72,17 +144,17 @@ const EditProfile = () => {
           borderRadius: "12px",
           boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
           width: "800px",
-          height: "680px",
+          height: "800px",
           left: "calc(50% - 800px/2)",
           top: "160px",
-          p: "60px",
+          p: "50px",
           bgcolor: "#FFFFFF",
         }}
       >
         <Box
           component="form"
           noValidate
-          sx={{ fontSize: "20px", fontWeight: "bold", pb: 2 }}
+          sx={{ fontSize: "22px", fontWeight: "bold", pb: 2 }}
         >
           Editar datos de mi perfil
         </Box>
@@ -108,18 +180,18 @@ const EditProfile = () => {
             />
           </Grid>
         </Grid>
-        <Grid xs={12} item sx={{ pb: 0.5 }}>
+        <Grid xs={12} item sx={{ pb: 0.5 , width:"96.5%"}}>
           <InputLabel>DNI</InputLabel>
           <TextField
             variant="outlined"
-            type="number"
+            // type="number"
             placeholder={user.DNI}
             fullWidth
-            value={DNI} 
+            // value={DNI}   
             onChange={(e) => setDNI(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pb:  0.5 }}>
+        <Grid xs={12} item sx={{ pb:  0.5,width:"96.5%" }}>
           <InputLabel>Email</InputLabel>
           <TextField
             placeholder={user.email}
@@ -130,14 +202,14 @@ const EditProfile = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pb:  0.5 }}>
+        <Grid xs={12} item sx={{ pb:  0.5 ,width:"96.5%"}}>
           <InputLabel>Teléfono</InputLabel>
           <TextField
             placeholder={user.phoneNumber}
             variant="outlined"
-            type="number"
+            // type="number"
             fullWidth
-            value={phoneNumber} 
+            // value={phoneNumber} 
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </Grid>
@@ -149,7 +221,8 @@ const EditProfile = () => {
                   value={password}
                   id="standard-adornment-password"
                   type={showPassword ? "text" : "password"}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {setPassword(e.target.value),
+                    handlePassword(e.target.value)}}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -162,7 +235,7 @@ const EditProfile = () => {
                   }
                 />
                </Grid>
-               <Grid item xs={12} sm={6}>
+               <Grid item xs={12} sm={6} sx={{mb:3}}>
                 <InputLabel>Repetir contraseña</InputLabel>
                 <OutlinedInput
                   fullWidth
@@ -187,15 +260,72 @@ const EditProfile = () => {
                 />
                </Grid>
               </Grid>
+
+              <Grid item xs={10}>
+                <Box sx={{ bgcolor: "#ECECEC", pt: 2 , pb:2 , width:"96%"}}>
+                  <Box sx={{ ml: 3, fontSize:"18px"}}>
+                    La contraseña debe contener:
+                    <Divider sx={{ width: "400px" }} />
+                    <Grid container spacing={2} sm={10} sx={{ pt: 2 }}>
+  <Grid item xs={6.5} sx={{p:2}}>
+    {validations.slice(0, 2).map((validation) => (
+      <Box key={validation.id} style={{ color: validation.color}}>
+        <Box sx={{ mb:1}}>
+
+        {validation.color === "grey" ? (
+          validation.oracion
+          ) : (
+          <>
+            {validation.color === "red" ? (
+              <CancelPresentationOutlined />
+              ) : (
+                <CheckBox sx={{ color: "green" }} />
+                )}
+            {validation.oracion}
+          </>
+        )}
+        </Box>
+      </Box>
+    ))}
+  </Grid>
+
+  <Grid item xs={5} sx={{}}>
+    {validations.slice(2, 4).map((validation) => (
+      <Box key={validation.id} style={{ color: validation.color }}>
+        <Box sx={{ mb:1, width:"150%"}}>
+
+        {validation.color === "grey" ? (
+          validation.oracion
+        ) : (
+          <>
+            {validation.color === "red" ? (
+              <CancelPresentationOutlined />
+              ) : (
+              <CheckBox sx={{ color: "green" }} />
+            )}
+            {validation.oracion}
+          </>
+        )}
+      </Box>
+    </Box>
+    ))}
+  </Grid>
+</Grid>
+                  </Box>
+                </Box>
+              </Grid>
+
+
         <Button
           fullWidth
           onClick={editProfile}
           sx={{
-            mt:"35px",
+            mt:"20px",
             bgcolor: "#A442F1",
             color: "#ffffff",
             p: 2,
             borderRadius: "10px",
+           width:"96%"
           }}
         >
           Aceptar

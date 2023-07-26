@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 
 const LayOut = () => {
   return (
-    <div>
+   
       <Navbar />
-    </div>
+  
   );
 };
 

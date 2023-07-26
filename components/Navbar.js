@@ -58,7 +58,7 @@ const Navbar = () => {
                 sx={{
                   textDecoration: "none",
                   fontWeight: "bold",
-                  fontSize: "18px",
+                  // fontSize: "18px",
                   color: "black",
                   mr: "25px",
                 }}
@@ -74,7 +74,7 @@ const Navbar = () => {
                 sx={{
                   fontWeight: "bold",
                   textDecoration: "none",
-                  fontSize: "18px",
+                  // fontSize: "18px",
                   color: "black",
                   mr: "35px",
                 }}
@@ -129,7 +129,7 @@ const Navbar = () => {
                   sx={{
                     fontWeight: "bold",
                     textDecoration: "none",
-                    fontSize: "18px",
+                    // fontSize: "18px",
                     color: "black",
                     mr: "35px",
                   }}
@@ -151,8 +151,11 @@ const Navbar = () => {
           sx={{
             height: "90px",
             display: "flex",
-            bgcolor: "#FFFFFF",
-            boxShadow: "0px 10px 24px 6px rgba(0, 0, 0, 0.12);",
+            // bgcolor: "#FFFFFF",
+            // bgcolor: "green",
+            boxShadow: "12px 10px 24px 6px rgba(0, 0, 0, 0.12);",
+            // boxShadow: " 0px 5px 15px rgba(0, 0, 0, 0.35);",
+            zIndex:1,
             mt: 3,
           }}
         >
@@ -222,7 +225,7 @@ const Navbar = () => {
                 sx={{
                   fontWeight: "bold",
                   textDecoration: "none",
-                  fontSize: "18px",
+                  // fontSize: "18px",
                   color: "black",
                   mr: 5,
                 }}

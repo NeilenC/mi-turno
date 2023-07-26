@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 const Createbranch = () => {
   const router = useRouter();
   const [name, setName] = useState("");
-  const [phtoneNumber, setPhoneNumber] = useState(0);
+  const [phtoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState("");
   const [openingH, setOpeningH] = useState("");
   const [closingH, setClosingH] = useState("");
@@ -35,11 +35,15 @@ const Createbranch = () => {
         closingH: closingH,
       });
       if (response.status === 200) {
-        alert("SE CREO UNA NUEVA BRANCH");
         router.push("/admin/branches");
       }
     } catch (e) {
-      console.log("HUBO UN PROBLEMAAAA ");
+      Swal.fire({
+        title:"Hubo un error",
+        icon:"error",
+        confirmButtonText: 'Continuar'
+
+      })
     }
   }
 
@@ -67,12 +71,12 @@ const Createbranch = () => {
               bgcolor: "#FFFFFF",
             }}
           >
-            <Box sx={{ fontSize: "20px", fontWeight: "bold", pt: 2, pb: 3 }}>
+            <Box sx={{ fontSize: "21px", fontWeight: "bold", pt: 2, pb: 3 }}>
               Crear una nueva sucursal
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                <InputLabel>Nombre</InputLabel>
+                 <InputLabel  sx={{color:"black"}}>Nombre</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -84,7 +88,7 @@ const Createbranch = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                <InputLabel>Dirección</InputLabel>
+                 <InputLabel  sx={{color:"black"}}>Dirección</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -97,7 +101,7 @@ const Createbranch = () => {
               </Grid>
             </Grid>
             <Grid xs={12} item sx={{ pt: 0, pb: 2 }}>
-              <InputLabel>Email</InputLabel>
+               <InputLabel  sx={{color:"black"}}>Email</InputLabel>
               <TextField
                 id="outlined-multiline-flexible"
                 multiline
@@ -108,9 +112,9 @@ const Createbranch = () => {
                 }}
               />
             </Grid>
-            <Grid container spacing={2} sx={{ pb: 2 }}>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                <InputLabel>Teléfono</InputLabel>
+            {/* <Grid container spacing={2} sx={{ pb: 2 }}> */}
+              <Grid xs={12}  item sx={{  pb: 2 }}>
+                 <InputLabel  sx={{color:"black"}}>Teléfono</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -121,8 +125,8 @@ const Createbranch = () => {
                   }}
                 />
               </Grid>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                <InputLabel>Capacidad máxima</InputLabel>
+              {/* <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
+                 <InputLabel  sx={{color:"black"}}>Capacidad máxima</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -131,13 +135,14 @@ const Createbranch = () => {
                     setMaxCap(e.target.value);
                   }}
                 />
-              </Grid>
-            </Grid>
+              </Grid> */}
+            {/* </Grid> */}
             <Grid container spacing={2} sx={{ pb: 2 }}>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Horario de apertura</InputLabel>
+              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 5 }}>
+                 <InputLabel  sx={{color:"black"}}>Horario de apertura</InputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
+                  placeholder="HH:mm"
                   multiline
                   fullWidth
                   value={openingH}
@@ -147,8 +152,9 @@ const Createbranch = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                <InputLabel>Horario de cierre</InputLabel>
+                 <InputLabel  sx={{color:"black"}}>Horario de cierre</InputLabel>
                 <TextField
+                  placeholder="HH:mm"
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth

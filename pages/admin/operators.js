@@ -10,6 +10,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import Swal from "sweetalert2"
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 
 const Operators = () => {
   const router = useRouter();
@@ -35,10 +40,19 @@ const Operators = () => {
 
   const deleteOp = async (id) => {
     try {
-      const confirmed = window.confirm(
-        "¿Estás seguro de querer eliminar este operador?"
-      );
-      if (confirmed) {
+      const confirmed = await Swal.fire({
+        title: "Espera",
+        text:"¿Estas seguro de querer eliminar este operador?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#9c27b0 ',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: false
+     })
+
+      if (confirmed.isConfirmed) {
         const response = await fetch(
           `http://localhost:3000/api/admin/operators/${id}`,
           {
@@ -47,10 +61,17 @@ const Operators = () => {
         );
         console.log("RESPONSE", response.ok, "ID", id);
         if (response.ok) {
-          alert("Operador eliminado exitosamente");
+          Swal.fire({
+            title:"Operador eliminado",
+            icon:"success",
+          })
           window.location.reload();
         } else {
-          alert("Error al eliminar el operador");
+          Swal.fire({
+            title:"Error al eliminar el operador",
+            icon:"error",
+            confirmButtonText:"Continuar"
+          })
         }
       }
     } catch (error) {
@@ -59,13 +80,16 @@ const Operators = () => {
   };
 
   return (
+    <>
+    {operators.length ? 
+   
     <Box sx={{ pt: "90px" }}>
       <Box
         sx={{
           fontWeight: "bold",
           fontSize: "24px",
           pb: 3,
-          pl: "152px",
+          pl: "155px",
           display: "flex",
           direction: "column",
         }}
@@ -77,7 +101,7 @@ const Operators = () => {
           <Grid item key={operator._id} xs={10} sx={{ m: "auto" }}>
             <Box
               sx={{
-                border: "1.5px solid #F0F0F0",
+                border: "1.5px solid #DEDEDE",
                 p: "24px",
                 borderRadius: "12px",
                 display: "flex",
@@ -95,6 +119,16 @@ const Operators = () => {
               <Grid item xs={6}>
                 <InputLabel>Email</InputLabel>
                 <Grid>{operator.email}</Grid>
+              </Grid>
+
+              <Grid item xs={6}>
+                <InputLabel>Teléfono</InputLabel>
+                <Grid>{operator.phoneNumber}</Grid>
+              </Grid>
+
+              <Grid item xs={6}>
+                <InputLabel>DNI</InputLabel>
+                <Grid>{operator.DNI}</Grid>
               </Grid>
 
               <Grid item xs={6}>
@@ -140,7 +174,19 @@ const Operators = () => {
           </Grid>
         ))}
       </Grid>
-    </Box>
+    </Box> :  <Box
+        sx={{
+          fontWeight: "bold",
+          fontSize: "24px",
+          display: "flex",
+        }}
+      >
+        <Box  sx={{m:"auto", pt:"300px"}} >
+        <Stack sx={{ color: 'purple.500' }} spacing={2} direction="row">
+          
+      <CircularProgress color="secondary" />
+    </Stack> </Box> </Box> }
+    </>
   );
 };
 

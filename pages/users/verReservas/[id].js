@@ -35,6 +35,8 @@ const VerReserva = () => {
     getAllBookings();
   }, []);
 
+
+  console.log("BOOOKINGS", bookings)
   return (
     <Box sx={{ pt: "90px" }}>
       <Box

@@ -98,53 +98,52 @@ const Reserva = () => {
     }
   }, [selectedDay, selectedBranch]);
 
-  const createShift = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/shift/create",
-        {
-          branchId: selectedBranch._id,
-          branchName: selectedBranch.name,
-          date: selectedDay,
-          shift: selectedShift,
-          fullname: `${name} ${lastname}`,
-          email: email || user.email,
-          DNI: user.DNI || user.DNI,
-          userId: user.id,
-          phoneNumber: phoneNumber,
-          creatingDate: now,
-        }
-      );
-      const newShift = response.data;
-      setNewShift(newShift);
-      setActiveStep(2);
-      Swal.fire({
-        title: 'Turno reservado con exito',
-        icon: 'success',
-        confirmButtonText: 'Continuar'
-      })
-      router.push(`/users/detalleReserva/${newShift._id}`);
-      setSelectedBranch(null);
-      setSelectedDay(null);
-      setSelectedShift("");
-      return newShift;
-    } catch (e) {
-      alert("No se ha logrado crear el turno");
-      Swal.fire({
-        title: 'Hubo un error al reservar el turno',
-        text: 'Por favor, intente nuevamente',
-        icon: 'error',
-        confirmButtonText: 'Continuar'
-      })
-      console.log(e) ;
-    }
-  };
+  // const createShift = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:3000/api/shift/create",
+  //       {
+  //         branchId: selectedBranch._id,
+  //         branchName: selectedBranch.name,
+  //         date: selectedDay,
+  //         shift: selectedShift,
+  //         fullname: `${name} ${lastname}`,
+  //         email: email || user.email,
+  //         DNI: user.DNI || user.DNI,
+  //         userId: user.id,
+  //         phoneNumber: phoneNumber,
+  //         creatingDate: now,
+  //       }
+  //     );
+  //     const newShift = response.data;
+  //     setNewShift(newShift);
+  //     setActiveStep(2);
+  //     Swal.fire({
+  //       title: 'Turno reservado con exito',
+  //       icon: 'success',
+  //       confirmButtonText: 'Continuar'
+  //     })
+  //     router.push(`/users/detalleReserva/${newShift._id}`);
+  //     setSelectedBranch(null);
+  //     setSelectedDay(null);
+  //     setSelectedShift("");
+  //     return newShift;
+  //   } catch (e) {
+  //     Swal.fire({
+  //       title: 'Hubo un error al reservar el turno',
+  //       text: 'Por favor, intente nuevamente',
+  //       icon: 'error',
+  //       confirmButtonText: 'Continuar'
+  //     })
+  //     console.log(e) ;
+  //   }
+  // };
 
-  useEffect(() => {
-    if (selectedBranch && selectedDay) {
-      createShift();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (selectedBranch && selectedDay) {
+  //     createShift();
+  //   }
+  // }, []);
 
   // console.log("NUEVA RESERVA", newShift);
 
@@ -221,7 +220,11 @@ const Reserva = () => {
               {/* INICIO PASO 2 */}
 
               {selectedBranch && selectedDay ? (
-                <Box>
+              
+                  <Box
+                sx={{bgcolor:"pink"}}
+                >
+                  
                   <InputLabel sx={{ m: 0.5, ml: 4 }}>Horario</InputLabel>
                   <Select
                     sx={{ width: "84%", ml: 4 }}
@@ -236,7 +239,7 @@ const Reserva = () => {
                       </MenuItem>
                     ))}
                   </Select>
-                </Box>
+                 </Box>
               ) : null}
               {/* SIN PASO 2 */}
               {/* INICIO PASO 3 */}
@@ -309,7 +312,7 @@ const Reserva = () => {
                         bgcolor: "#A442F1",
                         color: "white",
                       }}
-                      onClick={createShift}
+                      // onClick={createShift}
                     >
                       Confirmar reserva
                     </Button>

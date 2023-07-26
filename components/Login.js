@@ -9,7 +9,9 @@ import {
   InputAdornment,
   Link,
   OutlinedInput,
+  createTheme,
   TextField,
+  ThemeProvider,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -18,6 +20,24 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Swal from 'sweetalert2'
+
+// const theme = createTheme({
+//   components: {
+//     MuiOutlinedInput: {
+//       styleOverrides: {
+//         root: {
+//           "& .MuiOutlinedInput-notchedOutline": {
+//             borderColor: "grey",
+//           },
+       
+//           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+//             borderColor: "black",
+//           },
+//         },
+//       },
+//     },
+//   },
+// });
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,8 +66,8 @@ const Login = () => {
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
 
           !user.isOp && !user.isAdmin ? router.push(`/users/reserva/${user._id}`) : null;
-          user.isOp ? router.push(`operator/verReservas/${user.branchId}`) : null;
           user.isAdmin ? router.push(`/admin/branches`) : null;
+          user.isOp ? router.push(`operator/verReservas/${user.branchId}`) : null;
         }
       })
       .catch((e) => {
@@ -63,6 +83,7 @@ const Login = () => {
 
 
   return (
+    // <ThemeProvider theme={theme}>
     <Box
       sx={{
         height: "100vh",
@@ -84,21 +105,10 @@ const Login = () => {
           bgcolor: "#FFFFFF",
         }}
       >
+
         <Box
           sx={{
-            ml: 1,
-            color: "#A442F1",
-            display: "flex",
-            mr: 4,
-            fontWeight: "bold",
-            fontSize: "16px  ",
-          }}
-        >
-          <AiOutlineArrowLeft />
-          <Box sx={{ ml: 1 }}>Atras</Box>
-        </Box>
-        <Box
-          sx={{
+            pt:2,
             paddingBottom: 5,
             textAlign: "center",
             fontWeight: "bold",
@@ -109,23 +119,26 @@ const Login = () => {
           Iniciar sesión
         </Box>
         <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
-          <InputLabel>Email</InputLabel>
+          <InputLabel  sx={{color:"black"}}>Email</InputLabel>
 
           <TextField
             name="email"
             // value={email}
             fullWidth
+            focused={false}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             sx={{ paddingBottom: 3 }}
           />
 
-          <InputLabel>Contraseña</InputLabel>
+          <InputLabel  sx={{color:"black"}}>Contraseña</InputLabel>
           <OutlinedInput
             fullWidth
+            focused={false}
             id="standard-adornment-password"
             type={showPassword ? "text" : "password"}
             // value={password}
+            placeholder="******"
             onChange={(e) => setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
@@ -133,7 +146,16 @@ const Login = () => {
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
-                >
+                  // sx={{
+                   
+                  //   "&:hover .MuiOutlinedInput-notchedOutline": {
+                  //     borderColor: "transparent",
+                  //   },
+                  //   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  //     borderColor: "transparent",
+                  //   },
+                  // }}
+                  >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -186,6 +208,7 @@ const Login = () => {
         </Box>
       </Box>
     </Box>
+    // </ThemeProvider>
   );
 };
 

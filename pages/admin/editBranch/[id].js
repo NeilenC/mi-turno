@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import useBranchData from "../../../Hooks/useBranchData";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2"
 
 const EditBranch = () => {
   useBranchData();
@@ -21,7 +22,7 @@ const EditBranch = () => {
   const [address, setAddress] = useState("");
   const [openingH, setOpeningH] = useState("");
   const [closingH, setClosingH] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [email, setEmail] = useState("");
   const { id } = router.query;
 
@@ -65,10 +66,19 @@ const EditBranch = () => {
           }
         );
         if (response.ok) {
-          alert("La sucursal se actualizó correctamente");
+          Swal.fire({
+            title: 'La sucursal se actualizó correctamente',
+            icon: 'success',
+            confirmButtonText: 'Continuar'
+          })
           router.push("/admin/branches");
         } else {
-          alert("Error al actualizar la sucursal:");
+          Swal.fire({
+            title: 'Error al actualizar la sucursal',
+            text: 'Por favor, intente nuevamente',
+            icon: 'error',
+            confirmButtonText: 'Continuar'
+          })
         }
       }
     } catch (error) {
@@ -103,7 +113,7 @@ const EditBranch = () => {
           Editar datos de Sucursal
         </Box>
         <Grid xs={12} sm={6} item sx={{ pb: 1 }}>
-          <InputLabel>Nombre</InputLabel>
+          <InputLabel  sx={{color:"black"}}>Nombre</InputLabel>
           <TextField
             variant="outlined"
             fullWidth
@@ -112,7 +122,7 @@ const EditBranch = () => {
           />
         </Grid>
         <Grid xs={12} sm={6} item sx={{ pb: 1 }}>
-          <InputLabel>Dirección</InputLabel>
+          <InputLabel  sx={{color:"black"}}>Dirección</InputLabel>
           <TextField
             variant="outlined"
             fullWidth
@@ -122,7 +132,7 @@ const EditBranch = () => {
         </Grid>
         <Grid container spacing={2} sx={{}}>
           <Grid xs={12} sm={6} item sx={{ pt: 2 }}>
-            <InputLabel>Horario de apertura</InputLabel>
+            <InputLabel  sx={{color:"black"}}>Horario de apertura</InputLabel>
             <TextField
               id="outlined-multiline-flexible"
               placeholder="HH:mm"
@@ -135,7 +145,7 @@ const EditBranch = () => {
             />
           </Grid>
           <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-            <InputLabel>Horario de cierre</InputLabel>
+            <InputLabel  sx={{color:"black"}}>Horario de cierre</InputLabel>
             <TextField
               id="outlined-multiline-flexible"
               placeholder="HH:mm"
@@ -151,7 +161,7 @@ const EditBranch = () => {
 
         <Grid container spacing={2} sx={{ pb: 2 }}>
           <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-            <InputLabel>Email</InputLabel>
+            <InputLabel  sx={{color:"black"}}>Email</InputLabel>
             <TextField
               id="outlined-multiline-flexible"
               multiline
@@ -163,7 +173,7 @@ const EditBranch = () => {
             />
           </Grid>
           <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-            <InputLabel>Teléfono</InputLabel>
+            <InputLabel  sx={{color:"black"}}>Teléfono</InputLabel>
             <TextField
               id="outlined-multiline-flexible"
               multiline

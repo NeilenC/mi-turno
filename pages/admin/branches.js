@@ -4,30 +4,55 @@ import React, { useEffect, useState } from "react";
 import useBranchData from "../../Hooks/useBranchData";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import Swal from "sweetalert2"
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+import useUserData from "../../Hooks/useUserData";
 
 const Branches = () => {
+  useUserData()
   useBranchData();
   const branches = useSelector((state) => state.branches);
-  const [selectedBranch, setSelectedBranch] = useState([]);
+  const user = useSelector((state) => state.user);
 
   const deleteBranch = async (id) => {
     try {
-      const confirmed = window.confirm(
-        "¿Estás seguro de querer eliminar esta sucursal?"
-      );
-      if (confirmed) {
+      // const confirmed = window.confirm(
+      //   "¿Estás seguro de querer eliminar esta sucursal?"
+      // );
+
+      const confirmed = await Swal.fire({
+        title: "Espera",
+        text:"¿Estas seguro de querer eliminar esta sucursal?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#9c27b0',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: false
+     })
+      if (confirmed.isConfirmed) {
         const response = await fetch(
           `http://localhost:3000/api/admin/branches/${id}`,
           {
             method: "DELETE",
           }
         );
+      const data = await response.json();
         if (response.ok) {
-          alert("Sucursal eliminada exitosamente");
+          Swal.fire({
+            title:"Sucursal eliminada",
+            icon:"success",
+          })
           window.location.reload();
+         
         } else {
-          alert("Error al eliminar la Sucursal");
+          Swal.fire({
+            title:"Error al eliminar la Sucursal",
+            icon:"error",
+            confirmButtonText:"Continuar"
+          })
         }
       }
     } catch (error) {
@@ -36,9 +61,19 @@ const Branches = () => {
   };
 
   return (
-    <Box sx={{ height: "100vh", pt: "80px", bgcolor: "#FAFAFAFA" }}>
-      <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "154px" }}>
-        {" "}
+    <>
+    {branches.length && user.isAdmin ? 
+    <Box sx={{ pt: "90px" }}>
+      <Box
+        sx={{
+          fontWeight: "bold",
+          fontSize: "24px",
+          pb: 3,
+          pl: "155px",
+          display: "flex",
+          direction: "column",
+        }}
+      >
         Sucursales{" "}
       </Box>
       <Box sx={{ display: "flex" }}>
@@ -47,7 +82,7 @@ const Branches = () => {
             <Grid item key={branch._id} xs={10} sx={{ m: "auto" }}>
               <Box
                 sx={{
-                  border: "1.5px solid #F0F0F0",
+                  border: "1.5px solid #DEDEDE",
                   p: "24px",
                   borderRadius: "12px",
                   display: "flex",
@@ -113,6 +148,19 @@ const Branches = () => {
         </Grid>
       </Box>
     </Box>
+  :  <Box
+  sx={{
+    fontWeight: "bold",
+    fontSize: "24px",
+    display: "flex",
+  }}
+>
+  <Box  sx={{m:"auto", pt:"300px"}} >
+  <Stack sx={{ color: 'purple.500' }} spacing={2} direction="row">
+    
+<CircularProgress color="secondary" />
+</Stack> </Box> </Box> }
+</>
   );
 };
 
