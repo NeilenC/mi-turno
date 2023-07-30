@@ -15,8 +15,10 @@ import useBranchData from "../../Hooks/useBranchData";
 import { useSelector } from "react-redux";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {StyledInputLabel} from "../../components/LayOut"
+
 
 const CreateOperator = () => {
   useBranchData();
@@ -27,10 +29,12 @@ const CreateOperator = () => {
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [phoneNumber,setPhoneNumber] = useState(null)
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [branch, setBranch] = useState("");
   const branches = useSelector((state) => state.branches);
-  const router = useRouter()
+  const isPasswordMismatch = password !== verifyPassword;
+
+  const router = useRouter();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -48,23 +52,22 @@ const CreateOperator = () => {
           password: password,
           branchId: branch._id,
           branchName: branch.name,
-          phoneNumber:phoneNumber,
+          phoneNumber: phoneNumber,
           isOp: true,
         }
       );
       console.log(response.data);
       if (password === verifyPassword && response.status === 200) {
-        router.push("/admin/operators")
+        router.push("/admin/operators");
       }
     } catch (e) {
       Swal.fire({
-        title:"Hubo un error",
-        text:"No se ha podido crear el operador",
-        icon:"error",
-        confirmButtonText: 'Continuar'
-
-      })
-      console.log("ERROR", e)
+        title: "Hubo un error",
+        text: "No se ha podido crear el operador",
+        icon: "error",
+        confirmButtonText: "Continuar",
+      });
+      console.log("ERROR", e);
     }
   }
 
@@ -97,7 +100,7 @@ const CreateOperator = () => {
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <InputLabel  sx={{color:"black"}}>Nombre</InputLabel>
+                <StyledInputLabel>Nombre</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -109,7 +112,7 @@ const CreateOperator = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <InputLabel  sx={{color:"black"}}>Apellido</InputLabel>
+                <StyledInputLabel>Apellido</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -122,7 +125,7 @@ const CreateOperator = () => {
               </Grid>
             </Grid>
             <Grid xs={12} item sx={{ pb: 2 }}>
-              <InputLabel  sx={{color:"black"}}>Email</InputLabel>
+              <StyledInputLabel>Email</StyledInputLabel>
               <TextField
                 id="outlined-multiline-flexible"
                 multiline
@@ -134,7 +137,7 @@ const CreateOperator = () => {
               />
             </Grid>
             <Grid xs={12} item sx={{ pb: 2 }}>
-              <InputLabel  sx={{color:"black"}}>Teléfono</InputLabel>
+              <StyledInputLabel>Teléfono</StyledInputLabel>
               <TextField
                 id="outlined-multiline-flexible"
                 multiline
@@ -147,21 +150,20 @@ const CreateOperator = () => {
             </Grid>
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <InputLabel  sx={{color:"black"}}>DNI</InputLabel>
+                <StyledInputLabel>DNI</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
                   fullWidth
-                 
                   value={DNI}
                   onChange={(e) => {
                     setDNI(e.target.value);
                   }}
                 />
               </Grid>
-              
+
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <InputLabel  sx={{color:"black"}}>Sucursal</InputLabel>
+                <StyledInputLabel>Sucursal</StyledInputLabel>
                 <Select
                   fullWidth
                   value={branch}
@@ -178,9 +180,9 @@ const CreateOperator = () => {
               </Grid>
             </Grid>
 
-            <Grid container spacing={2} sx={{pb:3}}>
-         <Grid item xs={12} sm={6}>
-                <InputLabel  sx={{color:"black"}}>Contraseña</InputLabel>
+            <Grid container spacing={2} sx={{ pb: 3 }}>
+              <Grid item xs={12} sm={6}>
+                <StyledInputLabel>Contraseña</StyledInputLabel>
                 <OutlinedInput
                   fullWidth
                   value={password}
@@ -198,9 +200,11 @@ const CreateOperator = () => {
                     </InputAdornment>
                   }
                 />
-               </Grid>
-               <Grid item xs={12} sm={6} sx={{mb:3}}>
-                <InputLabel  sx={{color:"black"}}>Repetir contraseña</InputLabel>
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{ mb: 3 }}>
+                <StyledInputLabel>
+                  Repetir contraseña
+                </StyledInputLabel>
                 <OutlinedInput
                   fullWidth
                   name="contraseña"
@@ -208,7 +212,11 @@ const CreateOperator = () => {
                   onChange={(e) => setVerifyPassword(e.target.value)}
                   id="standard-adornment-password"
                   type={showPassword ? "text" : "password"}
-                 
+                  sx={{
+                    ...(isPasswordMismatch
+                      ? { color: "red" }
+                      : { color: "black" }),
+                  }}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -220,8 +228,8 @@ const CreateOperator = () => {
                     </InputAdornment>
                   }
                 />
-               </Grid>
               </Grid>
+            </Grid>
             <Button
               fullWidth
               onClick={handleNewOperator}

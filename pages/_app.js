@@ -2,8 +2,8 @@ import "../styles/globals.css";
 import { Provider } from "react-redux";
 import LayOut from "../components/LayOut";
 import store from "../redux/store";
-import { createTheme , ThemeProvider} from "@mui/material";
-
+import { createTheme, ThemeProvider } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const theme = createTheme({
   components: {
@@ -14,7 +14,7 @@ const theme = createTheme({
             borderWidth: 1,
             borderColor: "#d4d4d4",
           },
-       
+
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderWidth: 1,
             borderColor: "#221f1f",
@@ -28,12 +28,12 @@ const theme = createTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <LayOut />
-        <Component {...pageProps} />
-      </Provider>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <LayOut />
+          <Component {...pageProps} />
+        </Provider>
+      </ThemeProvider>
     </>
   );
 }

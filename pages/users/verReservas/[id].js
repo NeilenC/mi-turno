@@ -15,8 +15,6 @@ const VerReserva = () => {
     setId(JSON.parse(localStorage.getItem("id")));
   }, []);
 
-  console.log("IF", id);
-
   const getAllBookings = async () => {
     try {
       if (id) {
@@ -35,8 +33,7 @@ const VerReserva = () => {
     getAllBookings();
   }, []);
 
-
-  console.log("BOOOKINGS", bookings)
+  console.log("BOOOKINGS", bookings);
   return (
     <Box sx={{ pt: "90px" }}>
       <Box
@@ -51,72 +48,71 @@ const VerReserva = () => {
       >
         Mis reservas
       </Box>
-      {bookings.length ? 
-      <Grid container spacing={2} sx={{ display: "flex" }}>
-        {bookings.map((booking) => (
-          <Grid item key={booking._id} xs={10} sx={{ m: "auto" }}>
-            <Box
-              sx={{
-                border: "1.5px solid #F0F0F0",
-                p: "24px",
-                borderRadius: "12px",
-                display: "flex",
-                direction: "column",
-                alignItems: "center",
-                fontSize: "14px",
-              }}
-            >
-              <Grid item xs={6}>
-                <InputLabel>Nombre</InputLabel>
-                {booking.fullname}
-              </Grid>
+      {bookings.length ? (
+        <Grid container spacing={2} sx={{ display: "flex" }}>
+          {bookings.map((booking) => (
+            <Grid item key={booking._id} xs={10} sx={{ m: "auto" }}>
+              <Box
+                sx={{
+                  border: "1.5px solid #F0F0F0",
+                  p: "24px",
+                  borderRadius: "12px",
+                  display: "flex",
+                  direction: "column",
+                  alignItems: "center",
+                  fontSize: "14px",
+                }}
+              >
+                <Grid item xs={6}>
+                  <InputLabel>Nombre</InputLabel>
+                  {booking.fullname}
+                </Grid>
 
-              <Grid item xs={6}>
-                <InputLabel>Fecha</InputLabel>
-                <Grid>{booking.date}</Grid>
-              </Grid>
+                <Grid item xs={6}>
+                  <InputLabel>Fecha</InputLabel>
+                  <Grid>{booking.date}</Grid>
+                </Grid>
 
-              <Grid item xs={6}>
-                <InputLabel>Horario</InputLabel>
-                <Grid>{booking.shift}</Grid>
-              </Grid>
+                <Grid item xs={6}>
+                  <InputLabel>Horario</InputLabel>
+                  <Grid>{booking.shift}</Grid>
+                </Grid>
 
-              <Grid item xs={6}>
-                <InputLabel>Email</InputLabel>
-                <Grid>{booking.email}</Grid>
-              </Grid>
+                <Grid item xs={6}>
+                  <InputLabel>Email</InputLabel>
+                  <Grid>{booking.email}</Grid>
+                </Grid>
 
-              <Grid item xs={6}>
-                <InputLabel>DNI</InputLabel>
-                <Grid>{booking.DNI}</Grid>
-              </Grid>
+                <Grid item xs={6}>
+                  <InputLabel>DNI</InputLabel>
+                  <Grid>{booking.DNI}</Grid>
+                </Grid>
 
-              <Grid item xs={6}>
-                <InputLabel>Sucursal</InputLabel>
-                <Grid>{booking.branchName}</Grid>
-              </Grid>
-  
-              <Grid item xs={6}>
-                <InputLabel>Nº de reserva</InputLabel>
-                <Grid>{booking.bookingNumber}</Grid>
-              </Grid>
+                <Grid item xs={6}>
+                  <InputLabel>Sucursal</InputLabel>
+                  <Grid>{booking.branchName}</Grid>
+                </Grid>
 
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-      : 
-      <Box
-      sx={{
-        fontWeight: "bold",
-        fontSize: "24px",
-        display: "flex",
-        direction: "column",
-      }}
-    >
-      <Box sx={{m:"auto"}}> Aún no tienes reservas </Box> 
-      </Box>
-      }
+                <Grid item xs={6}>
+                  <InputLabel>Nº de reserva</InputLabel>
+                  <Grid>{booking.bookingNumber}</Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Box
+          sx={{
+            fontWeight: "bold",
+            fontSize: "24px",
+            display: "flex",
+            direction: "column",
+          }}
+        >
+          <Box sx={{ m: "auto" }}> Aún no tienes reservas </Box>
+        </Box>
+      )}
     </Box>
   );
 };

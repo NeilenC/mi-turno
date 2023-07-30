@@ -26,7 +26,6 @@ const Shifts = () => {
       throw e;
     }
   };
-  console.log("TURNOS", shifts);
 
   useEffect(() => {
     getShifts();
@@ -39,8 +38,7 @@ const Shifts = () => {
         Reservas en tu sucursal de: {user.branchName}
       </Box>
       <Box sx={{ display: "flex" }}>
-                 
-        <Box sx={{ width: "85%", m: "auto",  pb:5 }}>
+        <Box sx={{ width: "85%", m: "auto", pb: 5 }}>
           {shifts.map((shift) => (
             <Box key={shift._id} sx={{ p: 1 }}>
               <Box

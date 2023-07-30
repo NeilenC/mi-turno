@@ -10,21 +10,21 @@ export default async function handler(req, res) {
   const datosDeActualizacion = req.body;
 
   if (req.method === "GET") {
+    try {
+      if (!id) {
+        return res.status(400).send("El identificador (id) no está definido.");
+      }
 
-      try {
-        if (!id) {
-          return res.status(400).send("El identificador (id) no está definido.");
-        }
-    
-        const obtenerReserva = await Shift.findOne({ _id: id });
-    
-        if (!obtenerReserva) {
-          return res.status(404).send("No se encontró ninguna reserva con el id proporcionado.");
-        }
-    
-        console.log("RESERVA", obtenerReserva);
-        return res.status(200).json(obtenerReserva); 
-      
+      const obtenerReserva = await Shift.findOne({ _id: id });
+
+      if (!obtenerReserva) {
+        return res
+          .status(404)
+          .send("No se encontró ninguna reserva con el id proporcionado.");
+      }
+
+      console.log("RESERVA", obtenerReserva);
+      return res.status(200).json(obtenerReserva);
     } catch (e) {
       console.log("ERROR BACK ", e);
     }

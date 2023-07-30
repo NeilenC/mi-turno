@@ -14,13 +14,13 @@ import {
   Box,
   Button,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
   Typography,
 } from "@mui/material";
 import Swal from "sweetalert2";
+import { StyledInputLabel } from "../../../components/LayOut";
 
 const Edit = () => {
   useUserData();
@@ -36,31 +36,33 @@ const Edit = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState(0 || null);
   const [shifts, setShifts] = useState([]);
   const now = dayjs().format("DD/MM/YYYY HH:mm"); // 2023-07-06 19:27
-  const [shiftData, setShiftData] = useState([])
+  const [shiftData, setShiftData] = useState([]);
   const [minDate, setMinDate] = useState(
     dayjs(now).subtract(1, "day").toDate()
   );
 
-   
-//ENCONTRAR LA RESERVA 
+  //ENCONTRAR LA RESERVA
 
-const handlerFind = async () => {
-  try{
-    const response = await fetch(`http://localhost:3000/api/shift/reserva/${id}`,{method:"GET"})
-    const data = await response.json()
-    setShiftData(data)
-  }catch(e) {
-    console.log(e)
-  }
-}
+  const handlerFind = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/shift/reserva/${id}`,
+        { method: "GET" }
+      );
+      const data = await response.json();
+      setShiftData(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-useEffect(()=>{
-  handlerFind()
-},[])
+  useEffect(() => {
+    handlerFind();
+  }, []);
 
-console.log(shiftData)
+  console.log(shiftData);
 
-  // ACTUALIZAR LA RESERVA 
+  // ACTUALIZAR LA RESERVA
   const handlerUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -70,7 +72,7 @@ console.log(shiftData)
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            branchId: selectedBranch._id || shiftData.branchId, 
+            branchId: selectedBranch._id || shiftData.branchId,
             branchName: selectedBranch.name || shiftData.branchName,
             date: newDate || shiftData.date,
             email: newEmail || shiftData.email,
@@ -81,18 +83,18 @@ console.log(shiftData)
         }
       );
       const data = await response.json();
-       Swal.fire({
-        title: 'Cambiaste los datos de tu reserva',
-        icon: 'success',
-        confirmButtonText: 'Continuar'
-      })
+      Swal.fire({
+        title: "Cambiaste los datos de tu reserva",
+        icon: "success",
+        confirmButtonText: "Continuar",
+      });
       router.push(`/users/detalleReserva/${id}`);
     } catch (e) {
       Swal.fire({
-        title: 'No se logró cambiar tu reserva',
-        icon: 'error',
-        confirmButtonText: 'Continuar'
-      })
+        title: "No se logró cambiar tu reserva",
+        icon: "error",
+        confirmButtonText: "Continuar",
+      });
       console.log("ERROR", e);
     }
   };
@@ -154,7 +156,7 @@ console.log(shiftData)
                 </Typography>
               </Box>
               {/* PASO 1 */}
-              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Sucursal</InputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Sucursal</StyledInputLabel>
               <Select
                 sx={{ width: "85%", ml: 4 }}
                 value={selectedBranch}
@@ -172,7 +174,7 @@ console.log(shiftData)
               {/* FIN PASO 1 */}
 
               {/* INICIO PASO 2  */}
-              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Horario</InputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Horario</StyledInputLabel>
 
               <Select
                 sx={{ width: "85%", ml: 4 }}
@@ -188,7 +190,7 @@ console.log(shiftData)
                 ))}
               </Select>
 
-              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Email</InputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Email</StyledInputLabel>
 
               <TextField
                 id="branch"
@@ -197,7 +199,7 @@ console.log(shiftData)
                 onChange={(e) => setNewEmail(e.target.value)}
               />
 
-              <InputLabel sx={{ mt: 0.5, ml: 4 }}>Teléfono</InputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Teléfono</StyledInputLabel>
               <TextField
                 id="branch"
                 sx={{ width: "85%", ml: 4 }}

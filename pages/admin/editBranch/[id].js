@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -11,7 +10,8 @@ import React, { useEffect, useState } from "react";
 import useBranchData from "../../../Hooks/useBranchData";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
+import { StyledInputLabel } from "../../../components/LayOut";
 
 const EditBranch = () => {
   useBranchData();
@@ -67,18 +67,18 @@ const EditBranch = () => {
         );
         if (response.ok) {
           Swal.fire({
-            title: 'La sucursal se actualizó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Continuar'
-          })
+            title: "La sucursal se actualizó correctamente",
+            icon: "success",
+            confirmButtonText: "Continuar",
+          });
           router.push("/admin/branches");
         } else {
           Swal.fire({
-            title: 'Error al actualizar la sucursal',
-            text: 'Por favor, intente nuevamente',
-            icon: 'error',
-            confirmButtonText: 'Continuar'
-          })
+            title: "Error al actualizar la sucursal",
+            text: "Por favor, intente nuevamente",
+            icon: "error",
+            confirmButtonText: "Continuar",
+          });
         }
       }
     } catch (error) {
@@ -113,7 +113,7 @@ const EditBranch = () => {
           Editar datos de Sucursal
         </Box>
         <Grid xs={12} sm={6} item sx={{ pb: 1 }}>
-          <InputLabel  sx={{color:"black"}}>Nombre</InputLabel>
+          <StyledInputLabel>Nombre</StyledInputLabel>
           <TextField
             variant="outlined"
             fullWidth
@@ -122,7 +122,7 @@ const EditBranch = () => {
           />
         </Grid>
         <Grid xs={12} sm={6} item sx={{ pb: 1 }}>
-          <InputLabel  sx={{color:"black"}}>Dirección</InputLabel>
+          <StyledInputLabel>Dirección</StyledInputLabel>
           <TextField
             variant="outlined"
             fullWidth
@@ -132,7 +132,7 @@ const EditBranch = () => {
         </Grid>
         <Grid container spacing={2} sx={{}}>
           <Grid xs={12} sm={6} item sx={{ pt: 2 }}>
-            <InputLabel  sx={{color:"black"}}>Horario de apertura</InputLabel>
+            <StyledInputLabel>Horario de apertura</StyledInputLabel>
             <TextField
               id="outlined-multiline-flexible"
               placeholder="HH:mm"
@@ -145,7 +145,7 @@ const EditBranch = () => {
             />
           </Grid>
           <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-            <InputLabel  sx={{color:"black"}}>Horario de cierre</InputLabel>
+            <StyledInputLabel>Horario de cierre</StyledInputLabel>
             <TextField
               id="outlined-multiline-flexible"
               placeholder="HH:mm"
@@ -161,7 +161,7 @@ const EditBranch = () => {
 
         <Grid container spacing={2} sx={{ pb: 2 }}>
           <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-            <InputLabel  sx={{color:"black"}}>Email</InputLabel>
+            <StyledInputLabel>Email</StyledInputLabel>
             <TextField
               id="outlined-multiline-flexible"
               multiline
@@ -173,7 +173,7 @@ const EditBranch = () => {
             />
           </Grid>
           <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-            <InputLabel  sx={{color:"black"}}>Teléfono</InputLabel>
+            <StyledInputLabel>Teléfono</StyledInputLabel>
             <TextField
               id="outlined-multiline-flexible"
               multiline

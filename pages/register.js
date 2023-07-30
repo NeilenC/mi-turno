@@ -6,7 +6,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   Link,
   OutlinedInput,
   TextField,
@@ -16,7 +15,8 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
+import { StyledInputLabel } from "../components/LayOut";
 
 import axios from "axios";
 import { CancelPresentationOutlined, CheckBox } from "@mui/icons-material";
@@ -63,7 +63,6 @@ const Register = () => {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-
   // console.log("PASSWO", isPasswordMismatch);
 
   const handleMouseDownPassword = (e) => {
@@ -75,10 +74,10 @@ const Register = () => {
 
     if (password !== verifyPassword) {
       Swal.fire({
-        title:"Las contraseñas deben coincidir.",
-        icon:"error",
-        confirmButtonText:"Ok"
-      })
+        title: "Las contraseñas deben coincidir.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
       return;
     }
 
@@ -95,11 +94,11 @@ const Register = () => {
       })
       .catch((error) => {
         Swal.fire({
-          title:"HUBO UN ERROR",
-          text:"Verifica los datos ingresados",
-          icon:"error",
-          confirmButtonText:"Continuar"
-        })
+          title: "HUBO UN ERROR",
+          text: "Verifica los datos ingresados",
+          icon: "error",
+          confirmButtonText: "Continuar",
+        });
       });
   };
 
@@ -177,20 +176,19 @@ const Register = () => {
         <Box sx={{ fontSize: "22px", fontWeight: "bold", textAlign: "center" }}>
           Crear cuenta
         </Box>
-  
+
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             p: "32px",
             gap: "20px",
-           
           }}
         >
           <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6}>
-                <InputLabel>Nombre</InputLabel>
+                <StyledInputLabel>Nombre</StyledInputLabel>
                 <TextField
                   name="name"
                   variant="outlined"
@@ -201,7 +199,7 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputLabel>Apellido</InputLabel>
+                <StyledInputLabel>Apellido</StyledInputLabel>
                 <TextField
                   name="lastname"
                   variant="outlined"
@@ -211,7 +209,7 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputLabel>Email</InputLabel>
+                <StyledInputLabel>Email</StyledInputLabel>
                 <TextField
                   name="email"
                   type="email"
@@ -223,7 +221,7 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <InputLabel>DNI</InputLabel>
+                <StyledInputLabel>DNI</StyledInputLabel>
                 <TextField
                   name="DNI"
                   type="DNI"
@@ -235,39 +233,15 @@ const Register = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputLabel>Contraseña</InputLabel>
+                <StyledInputLabel>Contraseña</StyledInputLabel>
                 <OutlinedInput
                   fullWidth
                   value={password}
                   name="contraseña"
                   id="standard-adornment-password"
                   type={showPassword ? "text" : "password"}
-                  onChange={(e) => {setPassword(e.target.value),
-                    handlePassword(e.target.value)}}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} sx={{pb:2}}>
-                <InputLabel>Repetir contraseña</InputLabel>
-                <OutlinedInput
-                  fullWidth
-                  name="contraseña"
-                  value={verifyPassword}
-                  onChange={(e) => setVerifyPassword(e.target.value)}
-                  id="standard-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  sx={{
-                    ...(isPasswordMismatch ? { color: "red" } : { color: "black" }),
+                  onChange={(e) => {
+                    setPassword(e.target.value), handlePassword(e.target.value);
                   }}
                   endAdornment={
                     <InputAdornment position="end">
@@ -282,56 +256,92 @@ const Register = () => {
                   }
                 />
               </Grid>
-              <Grid item xs={12} sx={{pt:5}}>
-                <Box sx={{bgcolor: "#ECECEC", pt: 2, pb:2}}>
-                  <Box sx={{ ml: 3, fontSize:"18px" }}>
+              <Grid item xs={12} sm={6} sx={{ pb: 2 }}>
+                <StyledInputLabel>Repetir contraseña</StyledInputLabel>
+                <OutlinedInput
+                  fullWidth
+                  name="contraseña"
+                  value={verifyPassword}
+                  onChange={(e) => setVerifyPassword(e.target.value)}
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{
+                    ...(isPasswordMismatch
+                      ? { color: "red" }
+                      : { color: "black" }),
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sx={{ pt: 5 }}>
+                <Box sx={{ bgcolor: "#ECECEC", pt: 2, pb: 2 }}>
+                  <Box sx={{ ml: 3, fontSize: "18px" }}>
                     La contraseña debe contener:
                     <Divider sx={{ width: "400px" }} />
-                    <Grid container spacing={2} sm={10} sx={{ pt: 2, width: "516px", height: "104px" }}>
-  <Grid item xs={6} sx={{p:2}}>
-    {validations.slice(0, 2).map((validation) => (
-      <Box key={validation.id} style={{ color: validation.color}}>
-        <Box sx={{ mb:1}}>
+                    <Grid
+                      container
+                      spacing={2}
+                      sm={10}
+                      sx={{ pt: 2, width: "516px", height: "104px" }}
+                    >
+                      <Grid item xs={6} sx={{ p: 2 }}>
+                        {validations.slice(0, 2).map((validation) => (
+                          <Box
+                            key={validation.id}
+                            style={{ color: validation.color }}
+                          >
+                            <Box sx={{ mb: 1 }}>
+                              {validation.color === "grey" ? (
+                                validation.oracion
+                              ) : (
+                                <>
+                                  {validation.color === "red" ? (
+                                    <CancelPresentationOutlined />
+                                  ) : (
+                                    <CheckBox sx={{ color: "green" }} />
+                                  )}
+                                  {validation.oracion}
+                                </>
+                              )}
+                            </Box>
+                          </Box>
+                        ))}
+                      </Grid>
 
-        {validation.color === "grey" ? (
-          validation.oracion
-          ) : (
-          <>
-            {validation.color === "red" ? (
-              <CancelPresentationOutlined />
-              ) : (
-                <CheckBox sx={{ color: "green" }} />
-                )}
-            {validation.oracion}
-          </>
-        )}
-        </Box>
-      </Box>
-    ))}
-  </Grid>
-
-  <Grid item xs={6}>
-    {validations.slice(2, 4).map((validation) => (
-      <Box key={validation.id} style={{ color: validation.color }}>
-        <Box sx={{ mb:1}}>
-
-        {validation.color === "grey" ? (
-          validation.oracion
-        ) : (
-          <>
-            {validation.color === "red" ? (
-              <CancelPresentationOutlined />
-              ) : (
-              <CheckBox sx={{ color: "green" }} />
-            )}
-            {validation.oracion}
-          </>
-        )}
-      </Box>
-    </Box>
-    ))}
-  </Grid>
-</Grid>
+                      <Grid item xs={6}>
+                        {validations.slice(2, 4).map((validation) => (
+                          <Box
+                            key={validation.id}
+                            style={{ color: validation.color }}
+                          >
+                            <Box sx={{ mb: 1 }}>
+                              {validation.color === "grey" ? (
+                                validation.oracion
+                              ) : (
+                                <>
+                                  {validation.color === "red" ? (
+                                    <CancelPresentationOutlined />
+                                  ) : (
+                                    <CheckBox sx={{ color: "green" }} />
+                                  )}
+                                  {validation.oracion}
+                                </>
+                              )}
+                            </Box>
+                          </Box>
+                        ))}
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Box>
               </Grid>
@@ -384,5 +394,5 @@ const Register = () => {
       </Box>
     </Box>
   );
- }
+};
 export default Register;

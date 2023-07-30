@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -23,7 +22,8 @@ import useBranchData from "../../../Hooks/useBranchData";
 import useUserData from "../../../Hooks/useUserData";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
+import { StyledInputLabel } from "../../../components/LayOut";
 
 const steps = ["Elegí tu sucursal", "Selleccioná el día", "Completá los datos"];
 
@@ -200,7 +200,7 @@ const Reserva = () => {
               </Stepper>
               {/* PASO 1 */}
               <Box>
-                <InputLabel sx={{ m: 0.5, ml: 4 }}>Sucursal</InputLabel>
+                <StyledInputLabel sx={{ m: 0.5, ml: 4 }}>Sucursal</StyledInputLabel>
                 <Select
                   sx={{ width: "84%", ml: 4 }}
                   value={selectedBranch}
@@ -220,12 +220,8 @@ const Reserva = () => {
               {/* INICIO PASO 2 */}
 
               {selectedBranch && selectedDay ? (
-              
-                  <Box
-                sx={{bgcolor:"pink"}}
-                >
-                  
-                  <InputLabel sx={{ m: 0.5, ml: 4 }}>Horario</InputLabel>
+                <Box sx={{ bgcolor: "pink" }}>
+                  <StyledInputLabel sx={{ m: 0.5, ml: 4 }}>Horario</StyledInputLabel>
                   <Select
                     sx={{ width: "84%", ml: 4 }}
                     value={selectedShift}
@@ -239,7 +235,7 @@ const Reserva = () => {
                       </MenuItem>
                     ))}
                   </Select>
-                 </Box>
+                </Box>
               ) : null}
               {/* SIN PASO 2 */}
               {/* INICIO PASO 3 */}
@@ -248,7 +244,7 @@ const Reserva = () => {
                 <Box>
                   <Grid container spacing={1} sx={{ pt: 2 }}>
                     <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
-                      <InputLabel sx={{}}>Nombre</InputLabel>
+                      <StyledInputLabel sx={{}}>Nombre</StyledInputLabel>
                       <TextField
                         name="name"
                         variant="outlined"
@@ -261,7 +257,7 @@ const Reserva = () => {
                       />
                     </Grid>
                     <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
-                      <InputLabel sx={{}}>Apellido</InputLabel>
+                      <StyledInputLabel sx={{}}>Apellido</StyledInputLabel>
                       <TextField
                         name="lastname"
                         variant="outlined"
@@ -274,7 +270,7 @@ const Reserva = () => {
                     </Grid>
                   </Grid>
                   <Grid xs={6} sm={12} item sx={{}}>
-                    <InputLabel sx={{ mt: 1, ml: 4 }}>Teléfono</InputLabel>
+                    <StyledInputLabel sx={{ mt: 1, ml: 4 }}>Teléfono</StyledInputLabel>
                     <TextField
                       id="branch"
                       fullWidth
@@ -287,7 +283,7 @@ const Reserva = () => {
                   </Grid>
                   <Grid container spacing={1} sx={{ pt: 2 }}>
                     <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
-                      <InputLabel sx={{}}>Email</InputLabel>
+                      <StyledInputLabel sx={{}}>Email</StyledInputLabel>
                       <TextField
                         id="branch"
                         onChange={(e) => {
@@ -298,7 +294,7 @@ const Reserva = () => {
                       />
                     </Grid>
                     <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
-                      <InputLabel sx={{}}>DNI</InputLabel>
+                      <StyledInputLabel sx={{}}>DNI</StyledInputLabel>
                       <TextField id="branch" value={user.DNI} fullWidth />
                     </Grid>
                   </Grid>
@@ -319,7 +315,6 @@ const Reserva = () => {
                   </Box>
                 </Box>
               ) : null}
-         
             </Box>
             <Box>
               <Box

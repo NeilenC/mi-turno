@@ -19,25 +19,8 @@ import { useRouter } from "next/navigation";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Swal from 'sweetalert2'
-
-// const theme = createTheme({
-//   components: {
-//     MuiOutlinedInput: {
-//       styleOverrides: {
-//         root: {
-//           "& .MuiOutlinedInput-notchedOutline": {
-//             borderColor: "grey",
-//           },
-       
-//           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-//             borderColor: "black",
-//           },
-//         },
-//       },
-//     },
-//   },
-// });
+import Swal from "sweetalert2";
+import {StyledInputLabel} from "./LayOut"
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,31 +42,32 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
-        const user = response.data.user
+        const user = response.data.user;
         if (response.status === 200) {
-
           localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
 
-          !user.isOp && !user.isAdmin ? router.push(`/users/reserva/${user._id}`) : null;
+          !user.isOp && !user.isAdmin
+            ? router.push(`/users/reserva/${user._id}`)
+            : null;
           user.isAdmin ? router.push(`/admin/branches`) : null;
-          user.isOp ? router.push(`operator/verReservas/${user.branchId}`) : null;
+          user.isOp
+            ? router.push(`operator/verReservas/${user.branchId}`)
+            : null;
         }
       })
       .catch((e) => {
         Swal.fire({
-          title: 'Algo anda mal',
-          text: 'por favor chequea los datos ingresados',
-          icon: 'error',
-          confirmButtonText: 'Continuar'
-        })
-        console.log(e)
+          title: "Algo anda mal",
+          text: "por favor chequea los datos ingresados",
+          icon: "error",
+          confirmButtonText: "Continuar",
+        });
+        console.log(e);
       });
   };
 
-
   return (
-    // <ThemeProvider theme={theme}>
     <Box
       sx={{
         height: "100vh",
@@ -105,10 +89,9 @@ const Login = () => {
           bgcolor: "#FFFFFF",
         }}
       >
-
         <Box
           sx={{
-            pt:2,
+            pt: 2,
             paddingBottom: 5,
             textAlign: "center",
             fontWeight: "bold",
@@ -119,7 +102,7 @@ const Login = () => {
           Iniciar sesión
         </Box>
         <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
-          <InputLabel  sx={{color:"black"}}>Email</InputLabel>
+          <StyledInputLabel>Email</StyledInputLabel>
 
           <TextField
             name="email"
@@ -131,7 +114,7 @@ const Login = () => {
             sx={{ paddingBottom: 3 }}
           />
 
-          <InputLabel  sx={{color:"black"}}>Contraseña</InputLabel>
+          <StyledInputLabel>Contraseña</StyledInputLabel>
           <OutlinedInput
             fullWidth
             focused={false}
@@ -146,16 +129,7 @@ const Login = () => {
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
-                  // sx={{
-                   
-                  //   "&:hover .MuiOutlinedInput-notchedOutline": {
-                  //     borderColor: "transparent",
-                  //   },
-                  //   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  //     borderColor: "transparent",
-                  //   },
-                  // }}
-                  >
+                >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -208,7 +182,6 @@ const Login = () => {
         </Box>
       </Box>
     </Box>
-    // </ThemeProvider>
   );
 };
 

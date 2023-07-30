@@ -11,6 +11,8 @@ import axios from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import {StyledInputLabel} from "../../components/LayOut"
+
 
 const Createbranch = () => {
   const router = useRouter();
@@ -39,11 +41,10 @@ const Createbranch = () => {
       }
     } catch (e) {
       Swal.fire({
-        title:"Hubo un error",
-        icon:"error",
-        confirmButtonText: 'Continuar'
-
-      })
+        title: "Hubo un error",
+        icon: "error",
+        confirmButtonText: "Continuar",
+      });
     }
   }
 
@@ -76,7 +77,7 @@ const Createbranch = () => {
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                 <InputLabel  sx={{color:"black"}}>Nombre</InputLabel>
+                <StyledInputLabel>Nombre</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -88,7 +89,7 @@ const Createbranch = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                 <InputLabel  sx={{color:"black"}}>Dirección</InputLabel>
+                <StyledInputLabel>Dirección</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -101,7 +102,7 @@ const Createbranch = () => {
               </Grid>
             </Grid>
             <Grid xs={12} item sx={{ pt: 0, pb: 2 }}>
-               <InputLabel  sx={{color:"black"}}>Email</InputLabel>
+              <StyledInputLabel>Email</StyledInputLabel>
               <TextField
                 id="outlined-multiline-flexible"
                 multiline
@@ -113,20 +114,20 @@ const Createbranch = () => {
               />
             </Grid>
             {/* <Grid container spacing={2} sx={{ pb: 2 }}> */}
-              <Grid xs={12}  item sx={{  pb: 2 }}>
-                 <InputLabel  sx={{color:"black"}}>Teléfono</InputLabel>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  multiline
-                  fullWidth
-                  value={phtoneNumber}
-                  onChange={(e) => {
-                    setPhoneNumber(e.target.value);
-                  }}
-                />
-              </Grid>
-              {/* <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                 <InputLabel  sx={{color:"black"}}>Capacidad máxima</InputLabel>
+            <Grid xs={12} item sx={{ pb: 2 }}>
+              <StyledInputLabel>Teléfono</StyledInputLabel>
+              <TextField
+                id="outlined-multiline-flexible"
+                multiline
+                fullWidth
+                value={phtoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              />
+            </Grid>
+            {/* <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
+                 <StyledInputLabel  >Capacidad máxima</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   multiline
@@ -139,7 +140,7 @@ const Createbranch = () => {
             {/* </Grid> */}
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 5 }}>
-                 <InputLabel  sx={{color:"black"}}>Horario de apertura</InputLabel>
+                <StyledInputLabel>Horario de apertura</StyledInputLabel>
                 <TextField
                   id="outlined-multiline-flexible"
                   placeholder="HH:mm"
@@ -152,7 +153,7 @@ const Createbranch = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 2 }}>
-                 <InputLabel  sx={{color:"black"}}>Horario de cierre</InputLabel>
+                <StyledInputLabel>Horario de cierre</StyledInputLabel>
                 <TextField
                   placeholder="HH:mm"
                   id="outlined-multiline-flexible"

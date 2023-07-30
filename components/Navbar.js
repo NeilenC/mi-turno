@@ -1,4 +1,12 @@
-import { Box, Button, Grid, Link } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Link,
+  ThemeProvider,
+  createTheme,
+  styled,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useUserData from "../Hooks/useUserData";
 import Logout from "./Logout";
@@ -9,8 +17,24 @@ import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"; // calendario
 import StoreMallDirectoryOutlinedIcon from "@mui/icons-material/StoreMallDirectoryOutlined"; // sucursal
 
+const StyledBox = styled(Box)(() => ({
+  height: "90px",
+  display: "flex",
+  boxShadow: "12px 10px 24px 6px rgba(0, 0, 0, 0.12);",
+  marginTop: "24px",
+}));
+
+const StyledLink = styled(Link)(() => ({
+  fontWeight: "bold",
+  textDecoration: "none",
+  mr: 3,
+  color: "black",
+  ml: "26%",
+}));
+
 const Navbar = () => {
   useUserData();
+  const [id, setId] = useState("");
   const router = useRouter();
   const user = useSelector((state) => state.user);
 
@@ -18,229 +42,142 @@ const Navbar = () => {
     router.push(`/users/reserva/${user.id}`);
   };
 
+  useEffect(() => {
+    setId(JSON.parse(localStorage.getItem("id")));
+  }, []);
+
+  const theme = createTheme({
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "rgba(164, 66, 241, 0.1)",
+            color: "#A442F1",
+            fontWeight: "bold",
+            p: 2,
+            width: "200px",
+            height: "45px",
+          },
+        },
+      },
+    },
+  });
+
   return (
     <>
-      {!user.isOp && !user.isAdmin && user.name != "" ? (
-        <Box
-          sx={{
-            height: "90px",
-            bgcolor: "#FFFFFF",
-            alignItems: "center",
-            boxShadow: "0px 10px 24px 6px rgba(0, 0, 0, 0.12);",
-            mt: 3,
-          }}
-        >
-          <Grid
-            container
-            spacing={2.5}
-            xs={12}
-            sx={{ m: "auto", alignItems: "center" }}
-          >
-            <Grid item xs={8}>
-              <Button
-                onClick={handleBooking}
-                sx={{
-                  marginLeft: "10%",
-                  color: "#A442F1",
-                  bgcolor: "rgba(164, 66, 241, 0.1)",
-                  fontWeight: "bold",
-                  p: 1.5,
-                }}
-              >
-                Reservar
-              </Button>
-            </Grid>
+      <ThemeProvider theme={theme}>
+        {!user.isOp && !user.isAdmin && id ? (
+          <StyledBox>
+            <Grid
+              container
+              spacing={2.5}
+              xs={12}
+              sx={{ m: "auto", alignItems: "center" }}
+            >
+              <Grid item xs={8}>
+                <Button onClick={handleBooking}>Reservar</Button>
+              </Grid>
 
-            {/* <Box sx={{ display: "flex", alignItems: "center", width: "30%" }}> */}
-            <Grid item xs={1.3}>
-              <Link
-                href={`/users/verReservas/${user.id}`}
-                sx={{
-                  textDecoration: "none",
-                  fontWeight: "bold",
-                  // fontSize: "18px",
-                  color: "black",
-                  mr: "25px",
-                }}
-              >
-                Mis reservas
-                <CalendarMonthOutlinedIcon />
-              </Link>
-            </Grid>
+              {/* <Box sx={{ display: "flex", alignItems: "center", width: "30%" }}> */}
+              <Grid item xs={1.3}>
+                <StyledLink href={`/users/verReservas/${user.id}`}>
+                  Mis reservas
+                  <CalendarMonthOutlinedIcon />
+                </StyledLink>
+              </Grid>
 
-            <Grid item xs={1.2}>
-              <Link
-                href={`/users/editProfile/${user.id}`}
-                sx={{
-                  fontWeight: "bold",
-                  textDecoration: "none",
-                  // fontSize: "18px",
-                  color: "black",
-                  mr: "35px",
-                }}
-              >
-                Mi cuenta
-                <PersonOutlineOutlinedIcon />
-              </Link>
-            </Grid>
-            <Grid item xs={1.2}>
-              <Logout sx={{ marginLeft: "10px", mr: "10%" }} />
-            </Grid>
-          </Grid>
-        </Box>
-      ) : // </Box>
-      null}
-
-      {user.isOp && user.name != "" ? (
-        <Box
-          sx={{
-            height: "90px",
-            bgcolor: "#FFFFFF",
-            boxShadow: "0px 10px 24px 6px rgba(0, 0, 0, 0.12);",
-            mt: 3,
-          }}
-        >
-          <Grid
-            container
-            spacing={2.5}
-            xs={12}
-            sx={{ m: "auto", alignItems: "center" }}
-          >
-            <Grid item xs={9}>
-              <Button
-                onClick={() => {
-                  router.push(`/operator/verReservas/${user.branchId}`);
-                }}
-                sx={{
-                  marginLeft: "10%",
-                  color: "#A442F1",
-                  bgcolor: "rgba(164, 66, 241, 0.1)",
-                  fontWeight: "bold",
-                  p: 1.5,
-                }}
-              >
-                Ver reservas
-              </Button>
-            </Grid>
-            <Grid item xs={2}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Link
-                  href={`/users/editProfile/${user.id}`}
-                  sx={{
-                    fontWeight: "bold",
-                    textDecoration: "none",
-                    // fontSize: "18px",
-                    color: "black",
-                    mr: "35px",
-                  }}
-                >
+              <Grid item xs={1.2}>
+                <StyledLink href={`/users/editProfile/${user.id}`}>
                   Mi cuenta
                   <PersonOutlineOutlinedIcon />
-                </Link>
-                <Grid item xs={4}>
-                  <Logout />
-                </Grid>
-              </Box>
+                </StyledLink>
+              </Grid>
+              <Grid item xs={1.2}>
+                <Logout sx={{ marginLeft: "10px", mr: "10%" }} />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      ) : null}
+          </StyledBox>
+        ) : null}
 
-      {user.isAdmin && user.name != "" ? (
-        <Box
-          sx={{
-            height: "90px",
-            display: "flex",
-            // bgcolor: "#FFFFFF",
-            // bgcolor: "green",
-            boxShadow: "12px 10px 24px 6px rgba(0, 0, 0, 0.12);",
-            // boxShadow: " 0px 5px 15px rgba(0, 0, 0, 0.35);",
-            zIndex:1,
-            mt: 3,
-          }}
-        >
-          <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
-            <Grid item xs={1.4} sx={{ ml: "5%" }}>
-              <Button
-                sx={{
-                  color: "#A442F1",
-                  bgcolor: "rgba(164, 66, 241, 0.1)",
-                  fontWeight: "bold",
-                  p: 1.5,
-                }}
-                onClick={() => {
-                  router.push(`/admin/createBranch`);
-                }}
-              >
-                Crear sucursal
-              </Button>
+        {user.isOp && id ? (
+          <StyledBox>
+            <Grid
+              container
+              spacing={2.5}
+              xs={12}
+              sx={{ m: "auto", alignItems: "center" }}
+            >
+              <Grid item xs={9}>
+                <Button
+                  onClick={() => {
+                    router.push(`/operator/verReservas/${user.branchId}`);
+                  }}
+                >
+                  Ver reservas
+                </Button>
+              </Grid>
+              <Grid item xs={2}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <StyledLink href={`/users/editProfile/${user.id}`}>
+                    Mi cuenta
+                    <PersonOutlineOutlinedIcon />
+                  </StyledLink>
+                  <Grid item xs={4}>
+                    <Logout />
+                  </Grid>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={5}>
-              <Button
-                sx={{
-                  color: "#A442F1",
-                  bgcolor: "rgba(164, 66, 241, 0.1)",
-                  fontWeight: "bold",
-                  p: 1.5,
-                }}
-                onClick={() => {
-                  router.push(`/admin/createOperator`);
-                }}
-              >
-                Crear operador
-              </Button>
-            </Grid>
-            <Grid></Grid>
+          </StyledBox>
+        ) : null}
 
-            <Grid item xs={1.4}>
-              <Link
-                href={`/admin/branches`}
-                sx={{
-                  fontWeight: "bold",
-                  textDecoration: "none",
-                  mr: 3,
-                  color: "black",
-                  ml: "26%",
-                }}
-              >
-                Sucursales <StoreMallDirectoryOutlinedIcon />
-              </Link>
-            </Grid>
-            <Grid item xs={1.1}>
-              <Link
-                href={`/admin/operators`}
-                sx={{
-                  fontWeight: "bold",
-                  textDecoration: "none",
-                  mr: 3,
-                  color: "black",
-                }}
-              >
-                Operadores <SupportAgentOutlinedIcon />
-              </Link>
-            </Grid>
-            <Grid item xs={1.1}>
-              <Link
-                href={`/users/editProfile/${user.id}`}
-                sx={{
-                  fontWeight: "bold",
-                  textDecoration: "none",
-                  // fontSize: "18px",
-                  color: "black",
-                  mr: 5,
-                }}
-              >
-                Mi cuenta
-                <PersonOutlineOutlinedIcon />
-              </Link>
-            </Grid>
+        {user.isAdmin && user.name != "" ? (
+          <StyledBox>
+            <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
+              <Grid item xs={1.4} sx={{ ml: "5%" }}>
+                <Button
+                  onClick={() => {
+                    router.push(`/admin/createBranch`);
+                  }}
+                >
+                  Crear sucursal
+                </Button>
+              </Grid>
+              <Grid item xs={4.5}>
+                <Button
+                  onClick={() => {
+                    router.push(`/admin/createOperator`);
+                  }}
+                >
+                  Crear operador
+                </Button>
+              </Grid>
+              <Grid></Grid>
 
-            <Grid item xs={1}>
-              <Logout />
+              <Grid item xs={1}>
+                <StyledLink href={`/admin/branches`}>
+                  Sucursales <StoreMallDirectoryOutlinedIcon />
+                </StyledLink>
+              </Grid>
+              <Grid item xs={1.1}>
+                <StyledLink href={`/admin/operators`}>
+                  Operadores <SupportAgentOutlinedIcon />
+                </StyledLink>
+              </Grid>
+              <Grid item xs={1}>
+                <StyledLink href={`/users/editProfile/${user.id}`}>
+                  Mi cuenta
+                  <PersonOutlineOutlinedIcon />
+                </StyledLink>
+              </Grid>
+
+              <Grid item xs={1}>
+                <Logout />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      ) : null}
+          </StyledBox>
+        ) : null}
+      </ThemeProvider>
     </>
   );
 };
