@@ -8,6 +8,7 @@ import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import BuildCircleOutlinedIcon from "@mui/icons-material/BuildCircleOutlined"; // tool
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined"; // cancel
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
+import Swal from "sweetalert2";
 
 const DetalleReserva = () => {
   useUserData();
@@ -16,34 +17,69 @@ const DetalleReserva = () => {
   const [booking, setBooking] = useState([]);
   const { id } = router.query;
 
-  console.log("reserva", booking);
+
+  // const handlerCancel = async () => {
+  //   try {
+  //     const confirmed = window.confirm(
+  //       "¿Estás seguro de querer eliminar esta reserva?"
+  //     );
+  //     if (confirmed) {
+  //       const response = await fetch(
+  //         `http://localhost:3000/api/shift/reserva/${id}`,
+  //         {
+  //           method: "DELETE",
+  //         }
+  //       );
+
+  //       if (response.ok) {
+  //         alert("Reserva eliminada exitosamente");
+  //         router.push(`/users/reserva/${user.id}`);
+  //       } else {
+  //         alert("Error al eliminar la Reserva");
+  //       }
+  //     } else {
+  //       alert("La eliminación de la reserva fue cancelada");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error en la solicitud:", error);
+  //   }
+  // };
 
   const handlerCancel = async () => {
-    try {
-      const confirmed = window.confirm(
-        "¿Estás seguro de querer eliminar esta reserva?"
-      );
-      if (confirmed) {
-        const response = await fetch(
-          `http://localhost:3000/api/shift/reserva/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+    try{
 
-        if (response.ok) {
-          alert("Reserva eliminada exitosamente");
-          router.push(`/users/reserva/${user.id}`);
-        } else {
-          alert("Error al eliminar la Reserva");
+      const confirmed = await Swal.fire({
+        title: "Espera",
+        text: "¿Estas seguro de querer cancelar tu turno?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#9c27b0",
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: false,
+      });
+      if (confirmed.isConfirmed) {
+          const response = await fetch(`http://localhost:3000/api/shift/cancel/${id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify({ newState: "cancelada" }),
+            headers: {
+              "Content-Type": "application/json", 
+            },
+          });
+        if (response.ok ){
+          Swal.fire({title:"Reserva cancelada", text:"Esperamos verte pronto", type:"success"})
+          router.push(`/users/reserva/${user.id}`)
+        } else{
+          Swal.fire({title:"No se ha podido cancelar la reserva",text:"Intenta nuevamente", type:"error"})
+        } 
         }
-      } else {
-        alert("La eliminación de la reserva fue cancelada");
-      }
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-    }
-  };
+      } 
+        catch(e){
+            throw e
+          }
+  }
 
   const handlerEdit = () => {
     router.push(`/users/editarReserva/${id}`);

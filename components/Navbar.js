@@ -27,7 +27,6 @@ const StyledBox = styled(Box)(() => ({
 const StyledLink = styled(Link)(() => ({
   fontWeight: "bold",
   textDecoration: "none",
-  mr: 3,
   color: "black",
   ml: "26%",
 }));
@@ -68,13 +67,8 @@ const Navbar = () => {
       <ThemeProvider theme={theme}>
         {!user.isOp && !user.isAdmin && id ? (
           <StyledBox>
-            <Grid
-              container
-              spacing={2.5}
-              xs={12}
-              sx={{ m: "auto", alignItems: "center" }}
-            >
-              <Grid item xs={8}>
+              <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }} >
+              <Grid item xs={7} sx={{ ml: "4.5%" }}>
                 <Button onClick={handleBooking}>Reservar</Button>
               </Grid>
 
@@ -101,13 +95,8 @@ const Navbar = () => {
 
         {user.isOp && id ? (
           <StyledBox>
-            <Grid
-              container
-              spacing={2.5}
-              xs={12}
-              sx={{ m: "auto", alignItems: "center" }}
-            >
-              <Grid item xs={9}>
+            <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }} >
+              <Grid item xs={8} sx={{ ml: "5%" }}>
                 <Button
                   onClick={() => {
                     router.push(`/operator/verReservas/${user.branchId}`);
@@ -116,13 +105,13 @@ const Navbar = () => {
                   Ver reservas
                 </Button>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <StyledLink href={`/users/editProfile/${user.id}`}>
                     Mi cuenta
                     <PersonOutlineOutlinedIcon />
                   </StyledLink>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} sx={{ml:"15%"}}>
                     <Logout />
                   </Grid>
                 </Box>

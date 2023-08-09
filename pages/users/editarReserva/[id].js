@@ -36,12 +36,24 @@ const Edit = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState(0 || null);
   const [shifts, setShifts] = useState([]);
   const now = dayjs().format("DD/MM/YYYY HH:mm"); // 2023-07-06 19:27
+  const today = dayjs()
   const [shiftData, setShiftData] = useState([]);
-  const [minDate, setMinDate] = useState(
-    dayjs(now).subtract(1, "day").toDate()
-  );
+  // const [minDate, setMinDate] = useState(
+  //   dayjs(now).subtract(1, "day").toDate()
+  // );
 
   //ENCONTRAR LA RESERVA
+
+  const shouldDisableDate = (date) => {
+    // Deshabilitar días anteriores al día actual
+    if (date.isBefore(today, 'day')) {
+      return true;
+    }
+
+    // Deshabilitar fines de semana (sábado y domingo)
+    const dayOfWeek = date.day();
+    return dayOfWeek === 0 || dayOfWeek === 6;
+  };
 
   const handlerFind = async () => {
     try {
@@ -223,7 +235,7 @@ const Edit = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid container xs={6} sx={{ pl: "10%" }}>
+          <Grid container xs={6} sx={{ pl: "6%" }}>
             <Grid
               sx={{
                 bgcolor: "#FFFFFF",
@@ -237,7 +249,7 @@ const Edit = () => {
                   <DateCalendar
                     date={newDate}
                     onChange={handleDateChange}
-                    minDate={minDate}
+                    shouldDisableDate={shouldDisableDate}
                   />
                 </LocalizationProvider>
               </Box>

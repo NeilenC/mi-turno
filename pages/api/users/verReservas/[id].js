@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       const userShifts = await Shift.find({ userId: id });
       res.status(200).send(userShifts);
     } catch (e) {
-      console.log("ERROR BACKEND", e);
+      console.log("ERROR VER RESERVAS", e);
       throw e;
     }
   }

@@ -4,11 +4,11 @@ import Shift from "../../../../backend/models/shift";
 
 export default async function handler(req, res) {
   await connectMongoDb();
-  const { branchId } = req.query;
+  const { id } = req.query;
+
   if (req.method === "GET") {
     try {
-      const getShifts = await Shift.find(branchId);
-      console.log(getShifts);
+      const getShifts = await Shift.find({branchId: id});
 
       res.status(201).send(getShifts);
     } catch (e) {

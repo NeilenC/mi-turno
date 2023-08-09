@@ -8,12 +8,11 @@ export default async function handler(req, res) {
 
   const { _id, date, branchId } = req.body;
 
+
   if (req.method === "POST") {
     try {
       //------------------Sucursal
       const branch = await Branches.findOne({ _id: branchId });
-
-      console.log("BRANCH", branch);
 
       const startTime = moment(branch.openingH, "HH:mm");
       const endTime = moment(branch.closingH, "HH:mm");
@@ -33,13 +32,20 @@ export default async function handler(req, res) {
 
       //Arreglo con los turnos ocupados
       const horariosTomados = shifts.map((turno) => {
-        return turno.shift;
+        if(turno && turno.status !== "cancelada") {
+          return turno.shift;
+        }
       });
 
       //Si el resultado es false filtra los horarios ya tomados y devuelve los disponibles
       const horariosDisponibles = timeSlots.filter((horario) => {
         return !horariosTomados.includes(horario);
       });
+
+      //Pushea el horario que se canceló
+      // if(shift){
+      //   horariosDisponibles.push(shift)
+      // }
 
       res.send(horariosDisponibles);
     } catch (e) {

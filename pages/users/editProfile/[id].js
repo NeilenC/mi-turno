@@ -8,6 +8,7 @@ import {
   InputAdornment,
   OutlinedInput,
   TextField,
+  Typography,
 } from "@mui/material";
 import {
   CancelPresentationOutlined,
@@ -50,6 +51,7 @@ const EditProfile = () => {
       id: 3,
       oracion: "123 tiene un Número",
       color: "grey",
+
     },
     {
       id: 4,
@@ -163,7 +165,7 @@ const EditProfile = () => {
           <Grid item xs={6} sm={6} sx={{ pb: 0.5 }}>
             <StyledInputLabel>Nombre</StyledInputLabel>
             <TextField
-              placeholder={user.name}
+              // placeholder={user.name}
               variant="outlined"
               fullWidth
               value={name}
@@ -173,7 +175,7 @@ const EditProfile = () => {
           <Grid xs={6} sm={6} item sx={{ pb: 0.5 }}>
             <StyledInputLabel>Apellido</StyledInputLabel>
             <TextField
-              placeholder={user.lastname}
+              // placeholder={user.lastname}
               variant="outlined"
               fullWidth
               value={lastName}
@@ -186,7 +188,7 @@ const EditProfile = () => {
           <TextField
             variant="outlined"
             // type="number"
-            placeholder={user.DNI}
+            // placeholder={user.DNI}
             fullWidth
             // value={DNI}
             onChange={(e) => setDNI(e.target.value)}
@@ -195,7 +197,7 @@ const EditProfile = () => {
         <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
           <StyledInputLabel>Email</StyledInputLabel>
           <TextField
-            placeholder={user.email}
+            // placeholder={user.email}
             type="email"
             variant="outlined"
             fullWidth
@@ -260,13 +262,14 @@ const EditProfile = () => {
                 </InputAdornment>
               }
             />
+          <Typography sx={{color:"red"}}>{verifyPassword && isPasswordMismatch ? <small>*las contraseñas deben coincidir</small> : null }</Typography>
           </Grid>
         </Grid>
 
         <Grid item xs={10}>
           <Box sx={{ bgcolor: "#ECECEC", pt: 2, pb: 2, width: "96%" }}>
-            <Box sx={{ ml: 3, fontSize: "18px" }}>
-              La contraseña debe contener:
+            <Box sx={{ ml: 3, fontSize: "16px" }}>
+              Recuerde que contraseña debe contener:
               <Divider sx={{ width: "400px" }} />
               <Grid container spacing={2} sm={10} sx={{ pt: 2 }}>
                 <Grid item xs={6.5} sx={{ p: 2 }}>
@@ -274,6 +277,7 @@ const EditProfile = () => {
                     <Box
                       key={validation.id}
                       style={{ color: validation.color }}
+              
                     >
                       <Box sx={{ mb: 1 }}>
                         {validation.color === "grey" ? (
@@ -281,11 +285,11 @@ const EditProfile = () => {
                         ) : (
                           <>
                             {validation.color === "red" ? (
-                              <CancelPresentationOutlined />
+                              <CancelPresentationOutlined sx={{fontSize:"15px"}} />
                             ) : (
-                              <CheckBox sx={{ color: "green" }} />
+                              <CheckBox sx={{ color: "green", fontSize:"15px" }} />
                             )}
-                            {validation.oracion}
+                           &nbsp; {validation.oracion}
                           </>
                         )}
                       </Box>
@@ -305,11 +309,11 @@ const EditProfile = () => {
                         ) : (
                           <>
                             {validation.color === "red" ? (
-                              <CancelPresentationOutlined />
+                              <CancelPresentationOutlined sx={{fontSize:"15px"}}/>
                             ) : (
-                              <CheckBox sx={{ color: "green" }} />
+                              <CheckBox sx={{ color: "green", fontSize:"15px" }} />
                             )}
-                            {validation.oracion}
+                            &nbsp; {validation.oracion}
                           </>
                         )}
                       </Box>

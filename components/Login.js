@@ -82,7 +82,7 @@ const Login = () => {
           borderRadius: "12px",
           boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
           width: "700px",
-          height: "560px",
+          // height: "560px",
           left: "calc(50% - 700px/2)",
           top: "160px",
           padding: "40px 32px 32px",
@@ -91,7 +91,6 @@ const Login = () => {
       >
         <Box
           sx={{
-            pt: 2,
             paddingBottom: 5,
             textAlign: "center",
             fontWeight: "bold",
@@ -145,7 +144,7 @@ const Login = () => {
           >
             ¿Olvidaste tu contraseña?
           </Box>
-          <Box sx={{ paddingBottom: 3, paddingTop: 3 }}>
+          <Box sx={{ paddingBottom: 3, paddingTop: 1.5 }}>
             <Button
               type="submit"
               sx={{
@@ -168,7 +167,7 @@ const Login = () => {
               <Button
                 sx={{
                   color: "#A442F1",
-                  bgcolor: "rgba(164, 66, 241, 0.6)",
+                  bgcolor: "rgba(164, 66, 241, 0.1)",
                   padding: "12px 24px",
                   borderRadius: "10px",
                 }}

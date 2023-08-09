@@ -38,13 +38,14 @@ const Reserva = () => {
   const [lastname, setLastName] = useState("");
   const [name, setName] = useState("");
   const [activeStep, setActiveStep] = useState([]);
-  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [newShift, setNewShift] = useState([]);
   const [isCalendarDisabled, setIsCalendarDisabled] = useState(true);
   const router = useRouter();
   const branches = useSelector((state) => state.branches);
   const user = useSelector((state) => state.user);
   const now = dayjs().format("DD/MM/YYYY HH:mm");
+  const today = dayjs()
   const [id, setId] = useState("");
 
   useEffect(() => {
@@ -52,19 +53,29 @@ const Reserva = () => {
   }, []);
 
   // console.log("USER", user)
-  // const shouldDisableDate = (date) => {
-  //   const day = date.getDay(); // Obtener el día de la semana (0 = domingo, 1 = lunes, ..., 6 = sábado)
-  //   return day === 0 || day === 6; // Deshabilitar sábado (6) y domingo (0)
-  // };
+  const shouldDisableDate = (date) => {
+    // Deshabilitar días anteriores al día actual
+    if (date.isBefore(today, 'day')) {
+      return true;
+    }
+
+    // Deshabilitar fines de semana (sábado y domingo)
+    const dayOfWeek = date.day();
+    return dayOfWeek === 0 || dayOfWeek === 6;
+  };
+
+  const handleNextStep = () => {
+    setActiveStep((prevStep) => prevStep + 1);
+  };
 
   const handleBranchSelect = (e) => {
-    setActiveStep(0);
-    setIsCalendarDisabled(false);
+    setActiveStep(1);
+    setIsCalendarDisabled(false)
   };
 
   const handleDateChange = (date) => {
     setSelectedDay(date.format("DD/MM/YYYY"));
-    setActiveStep(1);
+    handleNextStep()
     if (selectedBranch) {
       getAvailableShift();
     }
@@ -72,6 +83,12 @@ const Reserva = () => {
 
   const getStepColor = (stepIndex) => {
     if (stepIndex === 0 && selectedBranch) {
+      return "primary";
+    }
+    else if (stepIndex === 1 && selectedDay) {
+      return "primary";
+    }
+    else if (stepIndex === 2 && name) {
       return "primary";
     }
     return undefined; // Mantener el color por defecto
@@ -98,46 +115,50 @@ const Reserva = () => {
     }
   }, [selectedDay, selectedBranch]);
 
-  // const createShift = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3000/api/shift/create",
-  //       {
-  //         branchId: selectedBranch._id,
-  //         branchName: selectedBranch.name,
-  //         date: selectedDay,
-  //         shift: selectedShift,
-  //         fullname: `${name} ${lastname}`,
-  //         email: email || user.email,
-  //         DNI: user.DNI || user.DNI,
-  //         userId: user.id,
-  //         phoneNumber: phoneNumber,
-  //         creatingDate: now,
-  //       }
-  //     );
-  //     const newShift = response.data;
-  //     setNewShift(newShift);
-  //     setActiveStep(2);
-  //     Swal.fire({
-  //       title: 'Turno reservado con exito',
-  //       icon: 'success',
-  //       confirmButtonText: 'Continuar'
-  //     })
-  //     router.push(`/users/detalleReserva/${newShift._id}`);
-  //     setSelectedBranch(null);
-  //     setSelectedDay(null);
-  //     setSelectedShift("");
-  //     return newShift;
-  //   } catch (e) {
-  //     Swal.fire({
-  //       title: 'Hubo un error al reservar el turno',
-  //       text: 'Por favor, intente nuevamente',
-  //       icon: 'error',
-  //       confirmButtonText: 'Continuar'
-  //     })
-  //     console.log(e) ;
-  //   }
-  // };
+  const createShift = async () => {
+    console.log("ADENTRO")
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/shift/create",
+        {
+          branchId: selectedBranch._id,
+          branchName: selectedBranch.name,
+          date: selectedDay,
+          shift: selectedShift,
+          fullname: `${name} ${lastname}` || `${user.name} ${user.lastname}`,
+          email: email || user.email,
+          DNI: user.DNI || user.DNI,
+          userId: user.id,
+          phoneNumber: phoneNumber || user.phoneNumber,
+          creatingDate: now,
+        }
+      );
+      console.log("response", response)
+
+      const newShift = response.data;
+      console.log("SHIFT", newShift)
+      setNewShift(newShift);
+      setActiveStep(2);
+      Swal.fire({
+        title: 'Turno reservado con éxito', 
+        icon: 'success',
+        confirmButtonText: 'Continuar'
+      })
+      router.push(`/users/detalleReserva/${newShift._id}`);
+      setSelectedBranch(null);
+      setSelectedDay(null);
+      setSelectedShift("");
+      return newShift;
+    } catch (e) {
+      Swal.fire({
+        title: 'Hubo un error al reservar el turno',
+        text: 'Por favor, intente nuevamente',
+        icon: 'error',
+        confirmButtonText: 'Continuar'
+      })
+      console.log(e) ;
+    }
+  };
 
   // useEffect(() => {
   //   if (selectedBranch && selectedDay) {
@@ -149,7 +170,7 @@ const Reserva = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", bgcolor: "#F5f5f5f5", height: "100vh" }}>
+      <Box sx={{ display: "flex", bgcolor: "#F5f5f5f5"}}>
         <Box
           sx={{
             // height: "500px",
@@ -165,20 +186,18 @@ const Reserva = () => {
             sx={{
               width: "80%",
               height: "550px",
-              display: "flex",
               m: "auto",
             }}
           >
+           <Grid item xs={7} >
+
             <Box
               sx={{
-                width: "65%",
-                // bgcolor: "#FFFFFF",
+                bgcolor: "#FFFFFF",
                 p: "40px",
-                bgcolor: "green",
-                height: "66%",
                 borderRadius: "10px",
               }}
-            >
+             >
               <Box sx={{ ml: 4, fontSize: "23px", fontWeight: "bold" }}>
                 Reserva <br />
                 <small>Seleccioná las opciones disponibles</small>
@@ -190,9 +209,9 @@ const Reserva = () => {
               >
                 {steps.map((label, index) => (
                   <Step
-                    key={label}
-                    completed={index < activeStep}
-                    color={getStepColor(index)}
+                  key={label}
+                  completed={index < activeStep}
+                  color={getStepColor(index)}
                   >
                     <StepLabel>{label}</StepLabel>
                   </Step>
@@ -200,7 +219,8 @@ const Reserva = () => {
               </Stepper>
               {/* PASO 1 */}
               <Box>
-                <StyledInputLabel sx={{ m: 0.5, ml: 4 }}>Sucursal</StyledInputLabel>
+
+                <StyledInputLabel sx={{ m: 0.5, ml: 4, pt:3 }}>Sucursal</StyledInputLabel>
                 <Select
                   sx={{ width: "84%", ml: 4 }}
                   value={selectedBranch}
@@ -216,11 +236,12 @@ const Reserva = () => {
                 </Select>
               </Box>
 
+
               {/* FIN PASO 1 */}
               {/* INICIO PASO 2 */}
 
               {selectedBranch && selectedDay ? (
-                <Box sx={{ bgcolor: "pink" }}>
+                <Box >
                   <StyledInputLabel sx={{ m: 0.5, ml: 4 }}>Horario</StyledInputLabel>
                   <Select
                     sx={{ width: "84%", ml: 4 }}
@@ -237,12 +258,12 @@ const Reserva = () => {
                   </Select>
                 </Box>
               ) : null}
-              {/* SIN PASO 2 */}
+              {/* FIN PASO 2 */}
               {/* INICIO PASO 3 */}
 
               {selectedBranch && selectedDay && selectedShift ? (
                 <Box>
-                  <Grid container spacing={1} sx={{ pt: 2 }}>
+                  <Grid container spacing={1} sx={{ pt: 1 }}>
                     <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
                       <StyledInputLabel sx={{}}>Nombre</StyledInputLabel>
                       <TextField
@@ -281,7 +302,7 @@ const Reserva = () => {
                       }}
                     />
                   </Grid>
-                  <Grid container spacing={1} sx={{ pt: 2 }}>
+                  <Grid container spacing={1} sx={{ pt: 1 }}>
                     <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
                       <StyledInputLabel sx={{}}>Email</StyledInputLabel>
                       <TextField
@@ -299,7 +320,7 @@ const Reserva = () => {
                     </Grid>
                   </Grid>
 
-                  <Box sx={{ pt: 5, pb: 5 }}>
+                  <Box sx={{ pt: 5 }}>
                     <Button
                       sx={{
                         ml: "32px",
@@ -308,7 +329,7 @@ const Reserva = () => {
                         bgcolor: "#A442F1",
                         color: "white",
                       }}
-                      // onClick={createShift}
+                      onClick={createShift}
                     >
                       Confirmar reserva
                     </Button>
@@ -316,6 +337,9 @@ const Reserva = () => {
                 </Box>
               ) : null}
             </Box>
+            </Grid>
+            <Grid item xs={5} >
+
             <Box>
               <Box
                 sx={{
@@ -323,8 +347,7 @@ const Reserva = () => {
                   pt: 2,
                   bgcolor: "#FFFFFF",
                   ml: 5,
-                  width: "120%",
-                  height: "66%",
+                  height: "340px",
                   borderRadius: "10px",
                 }}
               >
@@ -333,11 +356,12 @@ const Reserva = () => {
                     date={selectedDay}
                     onChange={handleDateChange}
                     disabled={isCalendarDisabled}
-                    // shouldDisableDate={shouldDisableDate}
+                    shouldDisableDate={shouldDisableDate}
                   />
                 </LocalizationProvider>
               </Box>
             </Box>
+            </Grid>
           </Grid>
         </Box>
       </Box>
