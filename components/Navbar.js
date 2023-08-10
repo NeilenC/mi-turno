@@ -67,7 +67,7 @@ const Navbar = () => {
       <ThemeProvider theme={theme}>
         {!user.isOp && !user.isAdmin && id ? (
           <StyledBox>
-              <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }} >
+            <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
               <Grid item xs={7} sx={{ ml: "4.5%" }}>
                 <Button onClick={handleBooking}>Reservar</Button>
               </Grid>
@@ -95,7 +95,7 @@ const Navbar = () => {
 
         {user.isOp && id ? (
           <StyledBox>
-            <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }} >
+            <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
               <Grid item xs={8} sx={{ ml: "5%" }}>
                 <Button
                   onClick={() => {
@@ -111,7 +111,7 @@ const Navbar = () => {
                     Mi cuenta
                     <PersonOutlineOutlinedIcon />
                   </StyledLink>
-                  <Grid item xs={4} sx={{ml:"15%"}}>
+                  <Grid item xs={4} sx={{ ml: "15%" }}>
                     <Logout />
                   </Grid>
                 </Box>

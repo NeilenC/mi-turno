@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     try {
-      const getShifts = await Shift.find({branchId: id});
+      const getShifts = await Shift.find({ branchId: id });
 
       res.status(201).send(getShifts);
     } catch (e) {

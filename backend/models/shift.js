@@ -38,7 +38,7 @@ const ShiftSchema = new Schema({
   status: {
     type: String,
     default: "confirmada",
-  }
+  },
 });
 
 ShiftSchema.pre("save", function () {
@@ -49,7 +49,6 @@ ShiftSchema.pre("save", function () {
   }
 });
 
-
 function generateRandomBookingNumber() {
   const characters = "0123456789";
   let bookingNumber = "";
@@ -59,7 +58,6 @@ function generateRandomBookingNumber() {
   }
   return bookingNumber;
 }
-
 
 const Shift = models.Shift || model("Shift", ShiftSchema);
 

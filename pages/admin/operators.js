@@ -1,18 +1,11 @@
-import {
-  Box,
-  Button,
-  Grid,
-  InputLabel,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, InputLabel, Typography } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Swal from "sweetalert2";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useRouter } from "next/router";
 
 const Operators = () => {
   const router = useRouter();
@@ -57,7 +50,6 @@ const Operators = () => {
             method: "DELETE",
           }
         );
-        console.log("RESPONSE", response.ok, "ID", id);
         if (response.ok) {
           Swal.fire({
             title: "Operador eliminado",
@@ -105,7 +97,6 @@ const Operators = () => {
                     direction: "column",
                     alignItems: "center",
                     fontSize: "14px",
-                    // justifyContent: "space-between",
                   }}
                 >
                   <Grid item xs={6}>
@@ -156,11 +147,9 @@ const Operators = () => {
                     <Button
                       sx={{
                         p: "10px 24px",
-                        // bgcolor: "#F5F5F5",
                         color: "#e73c35",
                         fontWeight: "bold",
                       }}
-                      // onClick={()=> {router.push(`/admin/editOperators/${operator._id}`)}}
                     >
                       <DeleteForeverOutlinedIcon
                         onClick={() => deleteOp(operator._id)}

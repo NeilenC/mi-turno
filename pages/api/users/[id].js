@@ -40,7 +40,6 @@ export default async function handler(req, res) {
         break;
     }
   } catch (error) {
-    console.log("Error:", error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 }

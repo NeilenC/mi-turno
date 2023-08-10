@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -20,7 +20,6 @@ import useUserData from "../../../Hooks/useUserData";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-import handlePassword from "../../../functions";
 import { StyledInputLabel } from "../../../components/LayOut";
 
 const EditProfile = () => {
@@ -51,7 +50,6 @@ const EditProfile = () => {
       id: 3,
       oracion: "123 tiene un Número",
       color: "grey",
-
     },
     {
       id: 4,
@@ -262,7 +260,11 @@ const EditProfile = () => {
                 </InputAdornment>
               }
             />
-          <Typography sx={{color:"red"}}>{verifyPassword && isPasswordMismatch ? <small>*las contraseñas deben coincidir</small> : null }</Typography>
+            <Typography sx={{ color: "red" }}>
+              {verifyPassword && isPasswordMismatch ? (
+                <small>*las contraseñas deben coincidir</small>
+              ) : null}
+            </Typography>
           </Grid>
         </Grid>
 
@@ -277,7 +279,6 @@ const EditProfile = () => {
                     <Box
                       key={validation.id}
                       style={{ color: validation.color }}
-              
                     >
                       <Box sx={{ mb: 1 }}>
                         {validation.color === "grey" ? (
@@ -285,11 +286,15 @@ const EditProfile = () => {
                         ) : (
                           <>
                             {validation.color === "red" ? (
-                              <CancelPresentationOutlined sx={{fontSize:"15px"}} />
+                              <CancelPresentationOutlined
+                                sx={{ fontSize: "15px" }}
+                              />
                             ) : (
-                              <CheckBox sx={{ color: "green", fontSize:"15px" }} />
+                              <CheckBox
+                                sx={{ color: "green", fontSize: "15px" }}
+                              />
                             )}
-                           &nbsp; {validation.oracion}
+                            &nbsp; {validation.oracion}
                           </>
                         )}
                       </Box>
@@ -309,9 +314,13 @@ const EditProfile = () => {
                         ) : (
                           <>
                             {validation.color === "red" ? (
-                              <CancelPresentationOutlined sx={{fontSize:"15px"}}/>
+                              <CancelPresentationOutlined
+                                sx={{ fontSize: "15px" }}
+                              />
                             ) : (
-                              <CheckBox sx={{ color: "green", fontSize:"15px" }} />
+                              <CheckBox
+                                sx={{ color: "green", fontSize: "15px" }}
+                              />
                             )}
                             &nbsp; {validation.oracion}
                           </>

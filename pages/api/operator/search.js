@@ -4,13 +4,12 @@ import Shift from "../../../backend/models/shift";
 export default async function handler(req, res) {
   await connectMongoDb();
 
-  if (req.method === "POST") { // Cambiamos de GET a POST para enviar el DNI en el body
+  if (req.method === "POST") {
+    // Cambiamos de GET a POST para enviar el DNI en el body
     try {
       const { dni } = req.body; // Ahora esperamos el DNI en el body de la solicitud
-      console.log("RUTA SEARCH DNI REQ BODY!", dni);
 
       const getShift = await Shift.find({ DNI: dni }); // Asegúrate de que el campo sea "DNI" o el nombre correcto en tu modelo de datos
-      console.log(getShift);
 
       res.status(200).json(getShift); // Cambiamos 201 a 200, ya que es más apropiado para una respuesta exitosa en una búsqueda
     } catch (e) {

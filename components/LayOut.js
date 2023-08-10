@@ -4,9 +4,9 @@ import useUserData from "../Hooks/useUserData";
 import { useSelector } from "react-redux";
 import { InputLabel, styled } from "@mui/material";
 
-export const StyledInputLabel = styled(InputLabel)(()=>({
-  color:"black"
-}))
+export const StyledInputLabel = styled(InputLabel)(() => ({
+  color: "black",
+}));
 
 const LayOut = () => {
   useUserData();

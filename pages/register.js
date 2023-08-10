@@ -59,12 +59,9 @@ const Register = () => {
       oracion: "*** Minimo 8 caracteres",
       color: "grey",
     },
-    // passwordsMatchValidation
   ]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  // console.log("PASSWO", isPasswordMismatch);
 
   const handleMouseDownPassword = (e) => {
     e.preventDefault();
@@ -170,10 +167,15 @@ const Register = () => {
             fontWeight: "bold",
             fontSize: "16px",
           }}
+        ></Box>
+        <Box
+          sx={{
+            fontSize: "22px",
+            fontWeight: "bold",
+            textAlign: "center",
+            pt: 1.5,
+          }}
         >
-         
-        </Box>
-        <Box sx={{ fontSize: "22px", fontWeight: "bold", textAlign: "center" , pt:1.5}}>
           Crear cuenta
         </Box>
 
@@ -281,65 +283,76 @@ const Register = () => {
                       </IconButton>
                     </InputAdornment>
                   }
-          />
-          <Typography sx={{color:"grey"}}>{verifyPassword && isPasswordMismatch ? <small>*las contraseñas deben coincidir</small> : null }</Typography>
+                />
+                <Typography sx={{ color: "grey" }}>
+                  {verifyPassword && isPasswordMismatch ? (
+                    <small>*las contraseñas deben coincidir</small>
+                  ) : null}
+                </Typography>
               </Grid>
               <Grid item xs={12} sx={{ pt: 5 }}>
                 <Box sx={{ bgcolor: "#ECECEC", pt: 2, pb: 2 }}>
-                <Box sx={{ ml: 3, fontSize: "16px" }}>
-              La contraseña debe contener:
-              <Divider sx={{ width: "400px" }} />
-              <Grid container spacing={2} sm={10} sx={{ pt: 2 }}>
-                <Grid item xs={6.5} sx={{ p: 2 }}>
-                  {validations.slice(0, 2).map((validation) => (
-                    <Box
-                      key={validation.id}
-                      style={{ color: validation.color }}
-              
-                    >
-                      <Box sx={{ mb: 1 }}>
-                        {validation.color === "grey" ? (
-                          validation.oracion
-                        ) : (
-                          <>
-                            {validation.color === "red" ? (
-                              <CancelPresentationOutlined sx={{fontSize:"15px"}} />
-                            ) : (
-                              <CheckBox sx={{ color: "green", fontSize:"15px" }} />
-                            )}
-                           &nbsp; {validation.oracion}
-                          </>
-                        )}
-                      </Box>
-                    </Box>
-                  ))}
-                </Grid>
+                  <Box sx={{ ml: 3, fontSize: "16px" }}>
+                    La contraseña debe contener:
+                    <Divider sx={{ width: "400px" }} />
+                    <Grid container spacing={2} sm={10} sx={{ pt: 2 }}>
+                      <Grid item xs={6.5} sx={{ p: 2 }}>
+                        {validations.slice(0, 2).map((validation) => (
+                          <Box
+                            key={validation.id}
+                            style={{ color: validation.color }}
+                          >
+                            <Box sx={{ mb: 1 }}>
+                              {validation.color === "grey" ? (
+                                validation.oracion
+                              ) : (
+                                <>
+                                  {validation.color === "red" ? (
+                                    <CancelPresentationOutlined
+                                      sx={{ fontSize: "15px" }}
+                                    />
+                                  ) : (
+                                    <CheckBox
+                                      sx={{ color: "green", fontSize: "15px" }}
+                                    />
+                                  )}
+                                  &nbsp; {validation.oracion}
+                                </>
+                              )}
+                            </Box>
+                          </Box>
+                        ))}
+                      </Grid>
 
-                <Grid item xs={5} sx={{}}>
-                  {validations.slice(2, 4).map((validation) => (
-                    <Box
-                      key={validation.id}
-                      style={{ color: validation.color }}
-                    >
-                      <Box sx={{ mb: 1, width: "150%" }}>
-                        {validation.color === "grey" ? (
-                          validation.oracion
-                        ) : (
-                          <>
-                            {validation.color === "red" ? (
-                              <CancelPresentationOutlined sx={{fontSize:"15px"}}/>
-                            ) : (
-                              <CheckBox sx={{ color: "green", fontSize:"15px" }} />
-                            )}
-                            &nbsp; {validation.oracion}
-                          </>
-                        )}
-                      </Box>
-                    </Box>
-                  ))}
-                </Grid>
-              </Grid>
-            </Box>
+                      <Grid item xs={5} sx={{}}>
+                        {validations.slice(2, 4).map((validation) => (
+                          <Box
+                            key={validation.id}
+                            style={{ color: validation.color }}
+                          >
+                            <Box sx={{ mb: 1, width: "150%" }}>
+                              {validation.color === "grey" ? (
+                                validation.oracion
+                              ) : (
+                                <>
+                                  {validation.color === "red" ? (
+                                    <CancelPresentationOutlined
+                                      sx={{ fontSize: "15px" }}
+                                    />
+                                  ) : (
+                                    <CheckBox
+                                      sx={{ color: "green", fontSize: "15px" }}
+                                    />
+                                  )}
+                                  &nbsp; {validation.oracion}
+                                </>
+                              )}
+                            </Box>
+                          </Box>
+                        ))}
+                      </Grid>
+                    </Grid>
+                  </Box>
                 </Box>
               </Grid>
               <Grid item xs={12}>
@@ -347,7 +360,7 @@ const Register = () => {
                   sx={{
                     color: "#A442F1",
                     fontWeight: "bold",
-                    fontSize:"15px",
+                    fontSize: "15px",
                     textAlign: "center",
                     p: 2,
                   }}

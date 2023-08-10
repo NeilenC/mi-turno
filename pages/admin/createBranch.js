@@ -11,8 +11,7 @@ import axios from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import {StyledInputLabel} from "../../components/LayOut"
-
+import { StyledInputLabel } from "../../components/LayOut";
 
 const Createbranch = () => {
   const router = useRouter();

@@ -7,8 +7,6 @@ export default async function handler(req, res) {
 
   const { id } = req.query;
 
-  console.log("ID BACKEND", id);
-
   if (req.method === "GET") {
     try {
       const detalleReserva = await Shift.findOne({ _id: id });
@@ -18,7 +16,6 @@ export default async function handler(req, res) {
         res.status(404).send([]);
       }
     } catch (e) {
-      console.log("ERRRORRR", e);
       res.status(500).send("Error al obtener la reserva");
     }
   }

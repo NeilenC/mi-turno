@@ -9,7 +9,6 @@ export default async function handler(req, res) {
 
     res.status(200).send({ token: createToken(user) });
   } catch (e) {
-    console.log(e);
     throw e;
   }
 }

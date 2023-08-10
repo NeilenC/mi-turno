@@ -23,10 +23,9 @@ export default async function handler(req, res) {
           .send("No se encontró ninguna reserva con el id proporcionado.");
       }
 
-      console.log("RESERVA", obtenerReserva);
       return res.status(200).json(obtenerReserva);
     } catch (e) {
-      console.log("ERROR BACK ", e);
+      throw e;
     }
   }
 
@@ -47,14 +46,11 @@ export default async function handler(req, res) {
   if (req.method === "DELETE") {
     try {
       const borrarReserva = await Shift.findByIdAndDelete({ _id: id });
-      // Si se elimina correctamente, se devuelve un mensaje de éxito
-      res.status(200).json({ message: "Shift eliminado exitosamente" });
+      res.status(200).json({ message: "Turno eliminado exitosamente" });
     } catch (error) {
-      // Si ocurre un error, se devuelve un mensaje de error
-      res.status(500).json({ error: "No se pudo eliminar el shift" });
+      res.status(500).json({ error: "No se pudo eliminar el turno" });
     }
   } else {
-    // Si el método de la solicitud no es DELETE, se devuelve un mensaje de error
     res.status(400).json({ error: "Método no permitido" });
   }
 }

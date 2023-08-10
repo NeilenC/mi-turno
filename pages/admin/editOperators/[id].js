@@ -100,7 +100,6 @@ const EditOperators = () => {
       console.error("Error al actualizar operador:", error);
     }
   };
-  console.log("ID", phoneNumber);
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>

@@ -20,7 +20,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Swal from "sweetalert2";
-import {StyledInputLabel} from "./LayOut"
+import { StyledInputLabel } from "./LayOut";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);

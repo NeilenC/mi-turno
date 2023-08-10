@@ -17,8 +17,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {StyledInputLabel} from "../../components/LayOut"
-
+import { StyledInputLabel } from "../../components/LayOut";
 
 const CreateOperator = () => {
   useBranchData();
@@ -46,7 +45,6 @@ const CreateOperator = () => {
         {
           name: name,
           lastname: lastName,
-          // fullname: `${name} ${lastName}`,
           email: email,
           DNI: DNI,
           password: password,
@@ -56,7 +54,6 @@ const CreateOperator = () => {
           isOp: true,
         }
       );
-      console.log(response.data);
       if (password === verifyPassword && response.status === 200) {
         router.push("/admin/operators");
       }
@@ -202,9 +199,7 @@ const CreateOperator = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6} sx={{ mb: 3 }}>
-                <StyledInputLabel>
-                  Repetir contraseña
-                </StyledInputLabel>
+                <StyledInputLabel>Repetir contraseña</StyledInputLabel>
                 <OutlinedInput
                   fullWidth
                   name="contraseña"

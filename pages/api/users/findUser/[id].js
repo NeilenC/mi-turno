@@ -9,7 +9,6 @@ export default async function handler(req, res) {
       const response = await User.findOne({ _id: id });
       res.status(200).send(response);
     } catch (e) {
-      console.log("RESPONSE CATCH", e);
       throw e;
     }
   }

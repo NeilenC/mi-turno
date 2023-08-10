@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -36,17 +36,14 @@ const Edit = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState(0 || null);
   const [shifts, setShifts] = useState([]);
   const now = dayjs().format("DD/MM/YYYY HH:mm"); // 2023-07-06 19:27
-  const today = dayjs()
+  const today = dayjs();
   const [shiftData, setShiftData] = useState([]);
-  // const [minDate, setMinDate] = useState(
-  //   dayjs(now).subtract(1, "day").toDate()
-  // );
 
   //ENCONTRAR LA RESERVA
 
   const shouldDisableDate = (date) => {
     // Deshabilitar días anteriores al día actual
-    if (date.isBefore(today, 'day')) {
+    if (date.isBefore(today, "day")) {
       return true;
     }
 
@@ -55,7 +52,7 @@ const Edit = () => {
     return dayOfWeek === 0 || dayOfWeek === 6;
   };
 
-  const handlerFind = async () => {
+  const handlerFind = useCallback(async () => {
     try {
       const response = await fetch(
         `http://localhost:3000/api/shift/reserva/${id}`,
@@ -64,15 +61,13 @@ const Edit = () => {
       const data = await response.json();
       setShiftData(data);
     } catch (e) {
-      console.log(e);
+      throw e;
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     handlerFind();
-  }, []);
-
-  console.log(shiftData);
+  }, [handlerFind]);
 
   // ACTUALIZAR LA RESERVA
   const handlerUpdate = async (e) => {
@@ -107,7 +102,7 @@ const Edit = () => {
         icon: "error",
         confirmButtonText: "Continuar",
       });
-      console.log("ERROR", e);
+      throw e;
     }
   };
 
@@ -133,10 +128,6 @@ const Edit = () => {
       throw e;
     }
   };
-
-  // useEffect(() => {
-  //   setMinDate(now);
-  // }, []);
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#f5f5f5f5", height: "100vh" }}>
@@ -168,7 +159,9 @@ const Edit = () => {
                 </Typography>
               </Box>
               {/* PASO 1 */}
-              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Sucursal</StyledInputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>
+                Sucursal
+              </StyledInputLabel>
               <Select
                 sx={{ width: "85%", ml: 4 }}
                 value={selectedBranch}
@@ -186,7 +179,9 @@ const Edit = () => {
               {/* FIN PASO 1 */}
 
               {/* INICIO PASO 2  */}
-              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Horario</StyledInputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>
+                Horario
+              </StyledInputLabel>
 
               <Select
                 sx={{ width: "85%", ml: 4 }}
@@ -211,7 +206,9 @@ const Edit = () => {
                 onChange={(e) => setNewEmail(e.target.value)}
               />
 
-              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>Teléfono</StyledInputLabel>
+              <StyledInputLabel sx={{ mt: 0.5, ml: 4 }}>
+                Teléfono
+              </StyledInputLabel>
               <TextField
                 id="branch"
                 sx={{ width: "85%", ml: 4 }}

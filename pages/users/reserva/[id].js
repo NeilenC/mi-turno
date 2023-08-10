@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Grid,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import Navbar from "../../../components/Navbar";
-import { useDispatch, useSelector } from "react-redux";
+import { Box, Button, Grid, MenuItem, Select, TextField } from "@mui/material";
+import { useSelector } from "react-redux";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -45,17 +36,16 @@ const Reserva = () => {
   const branches = useSelector((state) => state.branches);
   const user = useSelector((state) => state.user);
   const now = dayjs().format("DD/MM/YYYY HH:mm");
-  const today = dayjs()
+  const today = dayjs();
   const [id, setId] = useState("");
 
   useEffect(() => {
     setId(JSON.parse(localStorage.getItem("id")));
   }, []);
 
-  // console.log("USER", user)
   const shouldDisableDate = (date) => {
     // Deshabilitar días anteriores al día actual
-    if (date.isBefore(today, 'day')) {
+    if (date.isBefore(today, "day")) {
       return true;
     }
 
@@ -70,12 +60,12 @@ const Reserva = () => {
 
   const handleBranchSelect = (e) => {
     setActiveStep(1);
-    setIsCalendarDisabled(false)
+    setIsCalendarDisabled(false);
   };
 
   const handleDateChange = (date) => {
     setSelectedDay(date.format("DD/MM/YYYY"));
-    handleNextStep()
+    handleNextStep();
     if (selectedBranch) {
       getAvailableShift();
     }
@@ -84,17 +74,15 @@ const Reserva = () => {
   const getStepColor = (stepIndex) => {
     if (stepIndex === 0 && selectedBranch) {
       return "primary";
-    }
-    else if (stepIndex === 1 && selectedDay) {
+    } else if (stepIndex === 1 && selectedDay) {
       return "primary";
-    }
-    else if (stepIndex === 2 && name) {
+    } else if (stepIndex === 2 && name) {
       return "primary";
     }
     return undefined; // Mantener el color por defecto
   };
 
-  const getAvailableShift = async () => {
+  const getAvailableShift = useCallback(async () => {
     try {
       const availableShifts = await axios.post(
         "http://localhost:3000/api/shift/check",
@@ -107,16 +95,15 @@ const Reserva = () => {
     } catch (e) {
       throw e;
     }
-  };
+  }, [selectedBranch, selectedDay]);
 
   useEffect(() => {
     if (selectedBranch && selectedDay) {
       getAvailableShift();
     }
-  }, [selectedDay, selectedBranch]);
+  }, [getAvailableShift, selectedBranch, selectedDay]);
 
   const createShift = async () => {
-    console.log("ADENTRO")
     try {
       const response = await axios.post(
         "http://localhost:3000/api/shift/create",
@@ -133,17 +120,15 @@ const Reserva = () => {
           creatingDate: now,
         }
       );
-      console.log("response", response)
 
       const newShift = response.data;
-      console.log("SHIFT", newShift)
       setNewShift(newShift);
       setActiveStep(2);
       Swal.fire({
-        title: 'Turno reservado con éxito', 
-        icon: 'success',
-        confirmButtonText: 'Continuar'
-      })
+        title: "Turno reservado con éxito",
+        icon: "success",
+        confirmButtonText: "Continuar",
+      });
       router.push(`/users/detalleReserva/${newShift._id}`);
       setSelectedBranch(null);
       setSelectedDay(null);
@@ -151,26 +136,18 @@ const Reserva = () => {
       return newShift;
     } catch (e) {
       Swal.fire({
-        title: 'Hubo un error al reservar el turno',
-        text: 'Por favor, intente nuevamente',
-        icon: 'error',
-        confirmButtonText: 'Continuar'
-      })
-      console.log(e) ;
+        title: "Hubo un error al reservar el turno",
+        text: "Por favor, intente nuevamente",
+        icon: "error",
+        confirmButtonText: "Continuar",
+      });
+      throw e;
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedBranch && selectedDay) {
-  //     createShift();
-  //   }
-  // }, []);
-
-  // console.log("NUEVA RESERVA", newShift);
-
   return (
     <>
-      <Box sx={{ display: "flex", bgcolor: "#F5f5f5f5"}}>
+      <Box sx={{ display: "flex", bgcolor: "#F5f5f5f5" }}>
         <Box
           sx={{
             // height: "500px",
@@ -189,178 +166,180 @@ const Reserva = () => {
               m: "auto",
             }}
           >
-           <Grid item xs={7} >
-
-            <Box
-              sx={{
-                bgcolor: "#FFFFFF",
-                p: "40px",
-                borderRadius: "10px",
-              }}
-             >
-              <Box sx={{ ml: 4, fontSize: "23px", fontWeight: "bold" }}>
-                Reserva <br />
-                <small>Seleccioná las opciones disponibles</small>
-              </Box>
-              <Stepper
-                activeStep={activeStep}
-                alternativeLabel
-                sx={{ m: "auto", pt: 5 }}
+            <Grid item xs={7}>
+              <Box
+                sx={{
+                  bgcolor: "#FFFFFF",
+                  p: "40px",
+                  borderRadius: "10px",
+                }}
               >
-                {steps.map((label, index) => (
-                  <Step
-                  key={label}
-                  completed={index < activeStep}
-                  color={getStepColor(index)}
-                  >
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              {/* PASO 1 */}
-              <Box>
-
-                <StyledInputLabel sx={{ m: 0.5, ml: 4, pt:3 }}>Sucursal</StyledInputLabel>
-                <Select
-                  sx={{ width: "84%", ml: 4 }}
-                  value={selectedBranch}
-                  onChange={(e) => {
-                    setSelectedBranch(e.target.value), handleBranchSelect();
-                  }}
+                <Box sx={{ ml: 4, fontSize: "23px", fontWeight: "bold" }}>
+                  Reserva <br />
+                  <small>Seleccioná las opciones disponibles</small>
+                </Box>
+                <Stepper
+                  activeStep={activeStep}
+                  alternativeLabel
+                  sx={{ m: "auto", pt: 5 }}
                 >
-                  {branches.map((branch) => (
-                    <MenuItem key={branch._id} value={branch}>
-                      {branch.name}
-                    </MenuItem>
+                  {steps.map((label, index) => (
+                    <Step
+                      key={label}
+                      completed={index < activeStep}
+                      color={getStepColor(index)}
+                    >
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
                   ))}
-                </Select>
-              </Box>
-
-
-              {/* FIN PASO 1 */}
-              {/* INICIO PASO 2 */}
-
-              {selectedBranch && selectedDay ? (
-                <Box >
-                  <StyledInputLabel sx={{ m: 0.5, ml: 4 }}>Horario</StyledInputLabel>
+                </Stepper>
+                {/* PASO 1 */}
+                <Box>
+                  <StyledInputLabel sx={{ m: 0.5, ml: 4, pt: 3 }}>
+                    Sucursal
+                  </StyledInputLabel>
                   <Select
                     sx={{ width: "84%", ml: 4 }}
-                    value={selectedShift}
+                    value={selectedBranch}
                     onChange={(e) => {
-                      setSelectedShift(e.target.value);
+                      setSelectedBranch(e.target.value), handleBranchSelect();
                     }}
                   >
-                    {shifts.map((turno, i = 0) => (
-                      <MenuItem key={i + 1} value={turno}>
-                        {turno}
+                    {branches.map((branch) => (
+                      <MenuItem key={branch._id} value={branch}>
+                        {branch.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </Box>
-              ) : null}
-              {/* FIN PASO 2 */}
-              {/* INICIO PASO 3 */}
 
-              {selectedBranch && selectedDay && selectedShift ? (
-                <Box>
-                  <Grid container spacing={1} sx={{ pt: 1 }}>
-                    <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
-                      <StyledInputLabel sx={{}}>Nombre</StyledInputLabel>
-                      <TextField
-                        name="name"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        value={user.name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
-                      <StyledInputLabel sx={{}}>Apellido</StyledInputLabel>
-                      <TextField
-                        name="lastname"
-                        variant="outlined"
-                        fullWidth
-                        value={user.lastname}
-                        onChange={(e) => {
-                          setLastName(e.target.value);
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid xs={6} sm={12} item sx={{}}>
-                    <StyledInputLabel sx={{ mt: 1, ml: 4 }}>Teléfono</StyledInputLabel>
-                    <TextField
-                      id="branch"
-                      fullWidth
+                {/* FIN PASO 1 */}
+                {/* INICIO PASO 2 */}
+
+                {selectedBranch && selectedDay ? (
+                  <Box>
+                    <StyledInputLabel sx={{ m: 0.5, ml: 4 }}>
+                      Horario
+                    </StyledInputLabel>
+                    <Select
                       sx={{ width: "84%", ml: 4 }}
-                      value={phoneNumber}
+                      value={selectedShift}
                       onChange={(e) => {
-                        setPhoneNumber(e.target.value);
+                        setSelectedShift(e.target.value);
                       }}
-                    />
-                  </Grid>
-                  <Grid container spacing={1} sx={{ pt: 1 }}>
-                    <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
-                      <StyledInputLabel sx={{}}>Email</StyledInputLabel>
+                    >
+                      {shifts.map((turno, i = 0) => (
+                        <MenuItem key={i + 1} value={turno}>
+                          {turno}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </Box>
+                ) : null}
+                {/* FIN PASO 2 */}
+                {/* INICIO PASO 3 */}
+
+                {selectedBranch && selectedDay && selectedShift ? (
+                  <Box>
+                    <Grid container spacing={1} sx={{ pt: 1 }}>
+                      <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
+                        <StyledInputLabel sx={{}}>Nombre</StyledInputLabel>
+                        <TextField
+                          name="name"
+                          variant="outlined"
+                          fullWidth
+                          required
+                          value={user.name}
+                          onChange={(e) => {
+                            setName(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
+                        <StyledInputLabel sx={{}}>Apellido</StyledInputLabel>
+                        <TextField
+                          name="lastname"
+                          variant="outlined"
+                          fullWidth
+                          value={user.lastname}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid xs={6} sm={12} item sx={{}}>
+                      <StyledInputLabel sx={{ mt: 1, ml: 4 }}>
+                        Teléfono
+                      </StyledInputLabel>
                       <TextField
                         id="branch"
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
                         fullWidth
-                        // value={user.email}
+                        sx={{ width: "84%", ml: 4 }}
+                        value={phoneNumber}
+                        onChange={(e) => {
+                          setPhoneNumber(e.target.value);
+                        }}
                       />
                     </Grid>
-                    <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
-                      <StyledInputLabel sx={{}}>DNI</StyledInputLabel>
-                      <TextField id="branch" value={user.DNI} fullWidth />
+                    <Grid container spacing={1} sx={{ pt: 1 }}>
+                      <Grid xs={12} sm={5} item sx={{ ml: 4.3 }}>
+                        <StyledInputLabel sx={{}}>Email</StyledInputLabel>
+                        <TextField
+                          id="branch"
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                          }}
+                          fullWidth
+                          // value={user.email}
+                        />
+                      </Grid>
+                      <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
+                        <StyledInputLabel sx={{}}>DNI</StyledInputLabel>
+                        <TextField id="branch" value={user.DNI} fullWidth />
+                      </Grid>
                     </Grid>
-                  </Grid>
 
-                  <Box sx={{ pt: 5 }}>
-                    <Button
-                      sx={{
-                        ml: "32px",
-                        pl: "16px",
-                        p: 3,
-                        bgcolor: "#A442F1",
-                        color: "white",
-                      }}
-                      onClick={createShift}
-                    >
-                      Confirmar reserva
-                    </Button>
+                    <Box sx={{ pt: 5 }}>
+                      <Button
+                        sx={{
+                          ml: "32px",
+                          pl: "16px",
+                          p: 3,
+                          bgcolor: "#A442F1",
+                          color: "white",
+                        }}
+                        onClick={createShift}
+                      >
+                        Confirmar reserva
+                      </Button>
+                    </Box>
                   </Box>
-                </Box>
-              ) : null}
-            </Box>
-            </Grid>
-            <Grid item xs={5} >
-
-            <Box>
-              <Box
-                sx={{
-                  justifyContent: "center",
-                  pt: 2,
-                  bgcolor: "#FFFFFF",
-                  ml: 5,
-                  height: "340px",
-                  borderRadius: "10px",
-                }}
-              >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateCalendar
-                    date={selectedDay}
-                    onChange={handleDateChange}
-                    disabled={isCalendarDisabled}
-                    shouldDisableDate={shouldDisableDate}
-                  />
-                </LocalizationProvider>
+                ) : null}
               </Box>
-            </Box>
+            </Grid>
+            <Grid item xs={5}>
+              <Box>
+                <Box
+                  sx={{
+                    justifyContent: "center",
+                    pt: 2,
+                    bgcolor: "#FFFFFF",
+                    ml: 5,
+                    height: "340px",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar
+                      date={selectedDay}
+                      onChange={handleDateChange}
+                      disabled={isCalendarDisabled}
+                      shouldDisableDate={shouldDisableDate}
+                    />
+                  </LocalizationProvider>
+                </Box>
+              </Box>
             </Grid>
           </Grid>
         </Box>

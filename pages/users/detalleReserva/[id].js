@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import useBranchData from "../../../Hooks/useBranchData";
+import React, { useState, useEffect, useCallback } from "react";
 import useUserData from "../../../Hooks/useUserData";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -17,37 +16,8 @@ const DetalleReserva = () => {
   const [booking, setBooking] = useState([]);
   const { id } = router.query;
 
-
-  // const handlerCancel = async () => {
-  //   try {
-  //     const confirmed = window.confirm(
-  //       "¿Estás seguro de querer eliminar esta reserva?"
-  //     );
-  //     if (confirmed) {
-  //       const response = await fetch(
-  //         `http://localhost:3000/api/shift/reserva/${id}`,
-  //         {
-  //           method: "DELETE",
-  //         }
-  //       );
-
-  //       if (response.ok) {
-  //         alert("Reserva eliminada exitosamente");
-  //         router.push(`/users/reserva/${user.id}`);
-  //       } else {
-  //         alert("Error al eliminar la Reserva");
-  //       }
-  //     } else {
-  //       alert("La eliminación de la reserva fue cancelada");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error en la solicitud:", error);
-  //   }
-  // };
-
   const handlerCancel = async () => {
-    try{
-
+    try {
       const confirmed = await Swal.fire({
         title: "Espera",
         text: "¿Estas seguro de querer cancelar tu turno?",
@@ -60,32 +30,41 @@ const DetalleReserva = () => {
         closeOnCancel: false,
       });
       if (confirmed.isConfirmed) {
-          const response = await fetch(`http://localhost:3000/api/shift/cancel/${id}`,
+        const response = await fetch(
+          `http://localhost:3000/api/shift/cancel/${id}`,
           {
             method: "PUT",
             body: JSON.stringify({ newState: "cancelada" }),
             headers: {
-              "Content-Type": "application/json", 
+              "Content-Type": "application/json",
             },
-          });
-        if (response.ok ){
-          Swal.fire({title:"Reserva cancelada", text:"Esperamos verte pronto", type:"success"})
-          router.push(`/users/reserva/${user.id}`)
-        } else{
-          Swal.fire({title:"No se ha podido cancelar la reserva",text:"Intenta nuevamente", type:"error"})
-        } 
-        }
-      } 
-        catch(e){
-            throw e
           }
-  }
+        );
+        if (response.ok) {
+          Swal.fire({
+            title: "Reserva cancelada",
+            text: "Esperamos verte pronto",
+            type: "success",
+          });
+          router.push(`/users/reserva/${user.id}`);
+        } else {
+          Swal.fire({
+            title: "No se ha podido cancelar la reserva",
+            text: "Intenta nuevamente",
+            type: "error",
+          });
+        }
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
 
   const handlerEdit = () => {
     router.push(`/users/editarReserva/${id}`);
   };
 
-  const getBooking = async () => {
+  const getBooking = useCallback(async () => {
     try {
       if (id) {
         const response = await axios.get(
@@ -94,14 +73,13 @@ const DetalleReserva = () => {
         setBooking(response.data);
       }
     } catch (e) {
-      console.log("ERROR CATCH", e);
       throw e;
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     getBooking();
-  }, [id]);
+  }, [id, getBooking]);
 
   return (
     <Box sx={{ height: "100vh", bgcolor: "#fafafa" }}>
