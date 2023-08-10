@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
       //Arreglo con los turnos ocupados
       const horariosTomados = shifts.map((turno) => {
-        if(turno && turno.status !== "cancelada") {
+        if(turno && turno.status !== "cancelada" || turno.status !== "asistida") {
           return turno.shift;
         }
       });

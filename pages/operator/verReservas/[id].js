@@ -147,7 +147,7 @@ const Shifts = () => {
                         shift.status == "asistida" ? "grey": "black",
                         fontWeight:"bold",
                         fontSize:"15px"
-                    }}
+                    }} 
                    value={shift.status}
                    onChange={(e) => handleShiftChange(shift._id, e.target.value)}
                    displayEmpty
@@ -156,7 +156,7 @@ const Shifts = () => {
                       <MenuItem sx={{color:"purple" ,fontSize:"15px"}} value={"confirmada"}>CONFIRMADA</MenuItem>
                       <MenuItem sx={{color:"grey" ,fontSize:"15px" }} value={"cancelada"} >CANCELADA</MenuItem>
                       <MenuItem sx={{color:"dark" ,fontSize:"15px" }} value={"asistida"} >ASISTIDA</MenuItem>
-                    </Select>
+                    </Select> 
                   </FormControl> 
                 
                

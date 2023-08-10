@@ -31,7 +31,7 @@ const VerReserva = () => {
       console.log("ERROR CATCH", e);
       throw e;
     }
-  };
+  }; 
 
   const cancellBooking = async (id) => {
 
@@ -149,7 +149,7 @@ const VerReserva = () => {
                 </Grid> 
 
 
-            {booking.status != "cancelada" ? 
+            {booking.status != "cancelada" || booking.status != "asistida"  ? 
               <Grid item xs={1}>
                 <Button onClick={() => {cancellBooking(booking._id)}}
                  sx={{color:"red", fontSize:"13px", bgcolor:"rgba(164, 66, 241, 0.1)"}}>
@@ -161,7 +161,7 @@ const VerReserva = () => {
                  sx={{color:"red", fontSize:"13px", bgcolor:"rgba(164, 66, 241, 0.1)"}}>
               cancelar
                 </Button> 
-              </Grid>}
+              </Grid>} 
               </Box>         
             </Grid>
           ))}
