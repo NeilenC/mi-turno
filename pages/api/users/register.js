@@ -8,10 +8,9 @@ export default async function handler(req, res) {
 
     const { password } = req.body;
 
-    // Check if the password meets the requirements
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/;
     if (!passwordRegex.test(password)) {
-      return res.status(400).json({ error: 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and be at least 9 characters long.' });
+      return res.status(400).json({ error: 'La contraseña debe contener las características indicadas' });
     }
 
     const user = await User.create(req.body);
@@ -19,6 +18,6 @@ export default async function handler(req, res) {
     res.status(200).send({ token: createToken(user) });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500).json({ error: 'Error' });
   }
 }
