@@ -23,7 +23,7 @@ const EditBranch = () => {
     try {
       if (id) {
         const response = await fetch(
-          `http://localhost:3000/api/admin/branches/${id}`,
+          `/api/admin/branches/${id}`,
           {
             method: "GET",
           }
@@ -44,7 +44,7 @@ const EditBranch = () => {
     try {
       if (id) {
         const response = await fetch(
-          `http://localhost:3000/api/admin/branches/${id}`,
+          `/api/admin/branches/${id}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },

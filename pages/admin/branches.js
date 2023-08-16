@@ -30,7 +30,7 @@ const Branches = () => {
       });
       if (confirmed.isConfirmed) {
         const response = await fetch(
-          `http://localhost:3000/api/admin/branches/${id}`,
+          `/api/admin/branches/${id}`,
           {
             method: "DELETE",
           }

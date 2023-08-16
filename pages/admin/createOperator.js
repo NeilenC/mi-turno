@@ -41,7 +41,7 @@ const CreateOperator = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/admin/createOp",
+        "/api/admin/createOp",
         {
           name: name,
           lastname: lastName,

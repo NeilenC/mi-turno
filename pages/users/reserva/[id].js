@@ -85,7 +85,7 @@ const Reserva = () => {
   const getAvailableShift = useCallback(async () => {
     try {
       const availableShifts = await axios.post(
-        "http://localhost:3000/api/shift/check",
+        "/api/shift/check",
         {
           branchId: selectedBranch._id,
           date: selectedDay,
@@ -106,7 +106,7 @@ const Reserva = () => {
   const createShift = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/shift/create",
+        "/api/shift/create",
         {
           branchId: selectedBranch._id,
           branchName: selectedBranch.name,
@@ -249,7 +249,7 @@ const Reserva = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          value={user.name}
+                          // value={user.name}
                           onChange={(e) => {
                             setName(e.target.value);
                           }}
@@ -261,7 +261,7 @@ const Reserva = () => {
                           name="lastname"
                           variant="outlined"
                           fullWidth
-                          value={user.lastname}
+                          // value={user.lastname}
                           onChange={(e) => {
                             setLastName(e.target.value);
                           }}

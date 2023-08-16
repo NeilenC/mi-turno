@@ -45,7 +45,7 @@ const Operators = () => {
 
       if (confirmed.isConfirmed) {
         const response = await fetch(
-          `http://localhost:3000/api/admin/operators/${id}`,
+          `/api/admin/operators/${id}`,
           {
             method: "DELETE",
           }

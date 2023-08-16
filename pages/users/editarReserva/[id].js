@@ -55,7 +55,7 @@ const Edit = () => {
   const handlerFind = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/shift/reserva/${id}`,
+        `/api/shift/reserva/${id}`,
         { method: "GET" }
       );
       const data = await response.json();
@@ -74,7 +74,7 @@ const Edit = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3000/api/shift/reserva/${id}`,
+        `/api/shift/reserva/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -116,7 +116,7 @@ const Edit = () => {
   const getAvailableShift = async () => {
     try {
       const availableShifts = await axios.post(
-        "http://localhost:3000/api/shift/check",
+        "/api/shift/check",
         {
           branchId: selectedBranch._id,
           date: newDate,

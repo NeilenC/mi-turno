@@ -33,6 +33,7 @@ const Register = () => {
   const router = useRouter();
   const isPasswordMismatch = password !== verifyPassword;
 
+
   // const passwordsMatchValidation = {
   //   id: 5,
   //   oracion: "Las contraseñas deben coincidir",
@@ -80,7 +81,7 @@ const Register = () => {
     }
 
     axios
-      .post("http://localhost:3000/api/users/register", {
+      .post(`/api/users/register`, {
         name: name,
         lastname: lastname,
         password: password,

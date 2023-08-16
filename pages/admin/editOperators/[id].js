@@ -45,7 +45,7 @@ const EditOperators = () => {
   const getOp = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/admin/operators/${id}`,
+        `/api/admin/operators/${id}`,
         {
           method: "GET",
         }
@@ -73,7 +73,7 @@ const EditOperators = () => {
 
     try {
       if (id) {
-        const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+        const response = await fetch(`/api/users/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

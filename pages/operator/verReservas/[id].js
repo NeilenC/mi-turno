@@ -19,7 +19,7 @@ const Shifts = () => {
   const getShifts = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/operator/verReservas/${id}`
+        `/api/operator/verReservas/${id}`
       );
       const data = response.data;
       const shiftsFromToday = data.filter(
@@ -46,7 +46,7 @@ const Shifts = () => {
   const handleShiftChange = async (shiftId, status) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/shift/cancel/${shiftId}`,
+        `/api/shift/cancel/${shiftId}`,
         {
           method: "PUT",
           headers: {

@@ -15,10 +15,14 @@ export default async function handler(req, res) {
         const user = await User.findOne({ _id: id });
 
         if (!user) {
-          return res.status(404).send({ message: "User not found" });
+          return res.status(404).send({ message: "Usuario no encontrado" });
         }
 
         if (password) {
+          const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/;
+          if (!passwordRegex.test(password)) {
+            return res.status(400).json({ error: 'La contraseña debe contar con las características requeridas' });
+          }
           const hashedPassword = await bcrypt.hash(password, user.salt);
           updates.password = hashedPassword;
         }
@@ -31,15 +35,14 @@ export default async function handler(req, res) {
           new: true,
           runValidators: true,
         });
-
         res.status(200).send(updatedUser);
         break;
 
       default:
-        res.status(405).send({ message: "Method Not Allowed" });
+        res.status(405).send({ message: "Metodo no permitido" });
         break;
     }
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: "Error" });
   }
 }

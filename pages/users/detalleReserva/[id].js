@@ -31,7 +31,7 @@ const DetalleReserva = () => {
       });
       if (confirmed.isConfirmed) {
         const response = await fetch(
-          `http://localhost:3000/api/shift/cancel/${id}`,
+          `/api/shift/cancel/${id}`,
           {
             method: "PUT",
             body: JSON.stringify({ newState: "cancelada" }),
@@ -68,7 +68,7 @@ const DetalleReserva = () => {
     try {
       if (id) {
         const response = await axios.get(
-          `http://localhost:3000/api/users/detalleReserva/${id}`
+          `/api/users/detalleReserva/${id}`
         );
         setBooking(response.data);
       }

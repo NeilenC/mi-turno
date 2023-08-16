@@ -29,7 +29,7 @@ const VerReserva = () => {
     try {
       if (id) {
         const response = await axios.get(
-          `http://localhost:3000/api/users/verReservas/${id}`
+          `/api/users/verReservas/${id}`
         );
         const data = response.data;
         setBookings(data);
@@ -58,7 +58,7 @@ const VerReserva = () => {
       });
       if (confirmed.isConfirmed) {
         const response = await fetch(
-          `http://localhost:3000/api/shift/cancel/${id}`,
+          `/api/shift/cancel/${id}`,
           {
             method: "PUT",
             body: JSON.stringify({ newState: "cancelada" }),
