@@ -4,9 +4,12 @@ import isAuth from "../../../backend/middlewares/auth";
 import { createToken } from "../../../backend/services";
 
 async function handler(req, res) {
+  
+  if(req.method === "POST") {
   try {
-    await connectMongoDb();
-    const user = await User.findOne({ email: req.body.email });
+
+      await connectMongoDb();
+      const user = await User.findOne({ email: req.body.email });
 
     const isMatch = await user.validatePassword(req.body.password, 8);
 
@@ -19,6 +22,7 @@ async function handler(req, res) {
   } catch (error) {
     res.status(500).send({ message: "Error en el servidor", token: null });
   }
+}
 }
 
 // Envuelve la función handler en una función intermedia para aplicar el middleware

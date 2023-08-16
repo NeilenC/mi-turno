@@ -3,12 +3,14 @@ import User from "../../../backend/models/users";
 import { createToken } from "../../../backend/services";
 
 export default async function handler(req, res) {
-  try {
-    await connectMongoDb();
+  if(req.method === "POST") {
 
-    const { password } = req.body;
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/;
+    try {
+      await connectMongoDb();
+      
+      const { password } = req.body;
+      
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({ error: 'La contraseña debe contener las características indicadas' });
     }
@@ -20,4 +22,5 @@ export default async function handler(req, res) {
     console.error(e);
     res.status(500).json({ error: 'Error' });
   }
+}
 }
