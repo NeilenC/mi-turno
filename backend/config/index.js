@@ -1,5 +1,4 @@
-module.exports = {
-  port: process.env.PORT,
-  mongoUri: process.env.MONGO_URI,
-  secret: process.env.SECRET_JWT,
-};
+export const port = process.env.PORT;
+export const mongoUri = process.env.MONGO_URI;
+export const secret = process.env.SECRET_JWT;
+export const endpointURL = process.env.URL;

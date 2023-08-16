@@ -12,6 +12,8 @@ function createToken(user) {
   return jwt.encode(payload, config.secret);
 }
 
+console.log("SECRET", config.secret)
+
 function decodeToken(token) {
   const decoded = new Promise((resolve, reject) => {
     try {
