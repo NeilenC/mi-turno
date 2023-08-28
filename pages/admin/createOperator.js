@@ -242,7 +242,7 @@ const CreateOperator = () => {
                 "&:hover": { bgcolor: "rgba(164, 66, 241, 0.6)" },
               }}
             >
-              Crear
+              Crear operador
             </Button>
           </Box>
         </Box>

@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 }
 
 function isValidPassword(password) {
-  // Requisitos de contraseña
+  // Requisitos de contraseña usuario
   const uppercaseRegex = /[A-Z]/;
   const lowercaseRegex = /[a-z]/;
   const numberRegex = /[0-9]/;
