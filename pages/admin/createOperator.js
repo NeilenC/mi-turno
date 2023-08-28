@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   Grid,
   IconButton,
   InputAdornment,
@@ -9,6 +10,7 @@ import {
   OutlinedInput,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import useBranchData from "../../Hooks/useBranchData";
@@ -85,14 +87,14 @@ const CreateOperator = () => {
               borderRadius: "12px",
               boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
               width: "980px",
-              height: "730px",
               left: "calc(50% - 980px/2)",
               top: "160px",
               padding: "40px 32px 32px",
               bgcolor: "#FFFFFF",
+              p: 5
             }}
           >
-            <Box sx={{ fontSize: "21px", fontWeight: "bold", pt: 2, pb: 3 }}>
+            <Box sx={{ fontSize: "21px", fontWeight: "bold", pb: 3 }}>
               Crear nuevo operador
             </Box>
             <Grid container spacing={2} sx={{ pb: 2 }}>
@@ -177,7 +179,7 @@ const CreateOperator = () => {
               </Grid>
             </Grid>
 
-            <Grid container spacing={2} sx={{ pb: 3 }}>
+            <Grid container spacing={2} sx={{ pb: 1 }}>
               <Grid item xs={12} sm={6}>
                 <StyledInputLabel>Contraseña</StyledInputLabel>
                 <OutlinedInput
@@ -198,7 +200,7 @@ const CreateOperator = () => {
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ mb: 3 }}>
+              <Grid item xs={12} sm={6} sx={{ mb: 1 }}>
                 <StyledInputLabel>Repetir contraseña</StyledInputLabel>
                 <OutlinedInput
                   fullWidth
@@ -209,7 +211,7 @@ const CreateOperator = () => {
                   type={showPassword ? "text" : "password"}
                   sx={{
                     ...(isPasswordMismatch
-                      ? { color: "red" }
+                      ? { color: "purple" }
                       : { color: "black" }),
                   }}
                   endAdornment={
@@ -223,8 +225,12 @@ const CreateOperator = () => {
                     </InputAdornment>
                   }
                 />
+                {isPasswordMismatch ? (<Typography variant='body2'>*las contraseñas deben coincidir</Typography>) : null}
               </Grid>
+
             </Grid>
+              {/* <Divider/> */}
+                  <Box sx={{pl: "30px", bgcolor:"lightgray", p:2, mb:2 , borderRadius: "10px"}}> Recuerda las restricciones de contraseña</Box>
             <Button
               fullWidth
               onClick={handleNewOperator}
