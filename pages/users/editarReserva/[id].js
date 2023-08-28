@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import { StyledInputLabel } from "../../../components/LayOut";
 
 const Edit = () => {
-  useUserData();
+  // useUserData();
   useBranchData();
   const branches = useSelector((state) => state.branches);
   const user = useSelector((state) => state.user);
@@ -212,7 +212,7 @@ const Edit = () => {
               <TextField
                 id="branch"
                 sx={{ width: "85%", ml: 4 }}
-                value={user.newPhoneNumber}
+                value={user?.newPhoneNumber}
                 onChange={(e) => {
                   setNewPhoneNumber(e.target.value);
                 }}

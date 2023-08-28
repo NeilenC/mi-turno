@@ -3,9 +3,10 @@ import { Box, Button } from "@mui/material";
 import { useRouter } from "next/router";
 import useUserData from "../Hooks/useUserData";
 import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "../redux/userInfo";
 
 const Logout = () => {
-  useUserData();
+  // useUserData();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -20,11 +21,8 @@ const Logout = () => {
   const handleLogOut = async () => {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
-
+    dispatch(setUserInfo(null))
     router.push("/");
-    // .then(() => {
-    //   window.location.reload();
-    // })
   };
 
   return (

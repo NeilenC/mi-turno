@@ -91,6 +91,7 @@ const Operators = () => {
                 <Box
                   sx={{
                     border: "1.5px solid #DEDEDE",
+                    fontWeight: "bold",
                     p: "24px",
                     borderRadius: "12px",
                     display: "flex",

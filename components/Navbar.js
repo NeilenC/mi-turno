@@ -32,19 +32,20 @@ const StyledLink = styled(Link)(() => ({
 }));
 
 const Navbar = () => {
-  useUserData();
+  // useUserData();
   const [id, setId] = useState("");
   const router = useRouter();
   const user = useSelector((state) => state.user);
 
   const handleBooking = () => {
-    router.push(`/users/reserva/${user.id}`);
+    router.push(`/users/reserva/${user?.id}`);
   };
 
-  useEffect(() => {
-    setId(JSON.parse(localStorage.getItem("id")));
-  }, []);
+  // useEffect(() => {
+  //   setId(JSON.parse(localStorage.getItem("id")));
+  // }, []);
 
+  console.log("USER NAVBAR", user)
   const theme = createTheme({
     components: {
       MuiButton: {
@@ -65,7 +66,7 @@ const Navbar = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        {!user.isOp && !user.isAdmin && id ? (
+        {user && !user?.isOp && !user?.isAdmin ? (
           <StyledBox>
             <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
               <Grid item xs={7} sx={{ ml: "4.5%" }}>
@@ -74,14 +75,14 @@ const Navbar = () => {
 
               {/* <Box sx={{ display: "flex", alignItems: "center", width: "30%" }}> */}
               <Grid item xs={1.3}>
-                <StyledLink href={`/users/verReservas/${user.id}`}>
+                <StyledLink href={`/users/verReservas/${user?.id}`}>
                   Mis reservas
                   <CalendarMonthOutlinedIcon />
                 </StyledLink>
               </Grid>
 
               <Grid item xs={1.2}>
-                <StyledLink href={`/users/editProfile/${user.id}`}>
+                <StyledLink href={`/users/editProfile/${user?.id}`}>
                   Mi cuenta
                   <PersonOutlineOutlinedIcon />
                 </StyledLink>
@@ -93,13 +94,13 @@ const Navbar = () => {
           </StyledBox>
         ) : null}
 
-        {user.isOp && id ? (
+        {user?.isOp ? (
           <StyledBox>
             <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
               <Grid item xs={8} sx={{ ml: "5%" }}>
                 <Button
                   onClick={() => {
-                    router.push(`/operator/verReservas/${user.branchId}`);
+                    router.push(`/operator/verReservas/${user?.branchId}`);
                   }}
                 >
                   Ver reservas
@@ -107,7 +108,7 @@ const Navbar = () => {
               </Grid>
               <Grid item xs={3}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <StyledLink href={`/users/editProfile/${user.id}`}>
+                  <StyledLink href={`/users/editProfile/${user?.id}`}>
                     Mi cuenta
                     <PersonOutlineOutlinedIcon />
                   </StyledLink>
@@ -120,7 +121,7 @@ const Navbar = () => {
           </StyledBox>
         ) : null}
 
-        {user.isAdmin && user.name != "" ? (
+        {user?.isAdmin ? (
           <StyledBox>
             <Grid container xs={12} sx={{ m: "auto", alignItems: "center" }}>
               <Grid item xs={1.4} sx={{ ml: "5%" }}>
@@ -154,7 +155,7 @@ const Navbar = () => {
                 </StyledLink>
               </Grid>
               <Grid item xs={1}>
-                <StyledLink href={`/users/editProfile/${user.id}`}>
+                <StyledLink href={`/users/editProfile/${user?.id}`}>
                   Mi cuenta
                   <PersonOutlineOutlinedIcon />
                 </StyledLink>

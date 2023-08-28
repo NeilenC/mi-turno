@@ -9,10 +9,10 @@ export const StyledInputLabel = styled(InputLabel)(() => ({
 }));
 
 const LayOut = () => {
-  useUserData();
+  // useUserData();
   const user = useSelector((state) => state.user);
 
-  return <> {user.id != "" ? <Navbar /> : null} </>;
+  return <> {user?.id != "" ? <Navbar /> : null} </>;
 };
 
 export default LayOut;

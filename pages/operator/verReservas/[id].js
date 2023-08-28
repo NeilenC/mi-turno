@@ -9,11 +9,10 @@ import dayjs from "dayjs";
 import Buscador from "../../../components/Search";
 
 const Shifts = () => {
-  useUserData();
+  // useUserData();
   const user = useSelector((state) => state.user);
   const router = useRouter();
   const [shifts, setShifts] = useState([]);
-  const today = dayjs().format("DD-MM-YYYYY");
   const { id } = router.query;
 
   const getShifts = useCallback(async () => {
@@ -22,6 +21,8 @@ const Shifts = () => {
         `/api/operator/verReservas/${id}`
       );
       const data = response.data;
+      const today = dayjs().format("DD-MM-YYYYY");
+
       const shiftsFromToday = data.filter(
         (shift) =>
           dayjs(shift.date).isAfter(today, "day") ||
@@ -37,7 +38,7 @@ const Shifts = () => {
     } catch (e) {
       throw e;
     }
-  }, [id, today]);
+  }, [id]);
 
   useEffect(() => {
     getShifts();
@@ -73,13 +74,15 @@ const Shifts = () => {
     }
   };
 
+  console.log("TURNOS", shifts)
+
   return (
     <>
       {/* <Buscador/> */}
       <Box sx={{ pt: "100px" }}>
         <Box sx={{ fontWeight: "bold", fontSize: "24px", pb: 3, pl: "8%" }}>
           {" "}
-          Reservas en tu sucursal de: {user.branchName}
+          Reservas en tu sucursal de: {user?.branchName}
         </Box>
 
         <Box sx={{ display: "flex" }}>

@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
 const VerReserva = () => {
-  useUserData();
+  // useUserData();
   const user = useSelector((state) => state.user);
   const router = useRouter();
   const [bookings, setBookings] = useState([]);
@@ -67,7 +67,7 @@ const VerReserva = () => {
             },
           }
         );
-        response.ok ? router.push(`/users/reserva/${user.id}`) : null;
+        response.ok ? router.push(`/users/reserva/${user?.id}`) : null;
       }
     } catch (e) {
       throw e;

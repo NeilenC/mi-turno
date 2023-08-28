@@ -20,7 +20,7 @@ import { StyledInputLabel } from "../../../components/LayOut";
 
 const EditOperators = () => {
   useBranchData();
-  useUserData();
+  // useUserData();
   const branches = useSelector((state) => state.branches);
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");

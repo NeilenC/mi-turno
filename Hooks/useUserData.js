@@ -1,17 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../redux/userInfo";
 import axios from "axios";
 
 export default function useUserData() {
-  const [id, setId] = useState("");
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user)
 
-  useEffect(() => {
-    setId(JSON.parse(localStorage.getItem("id")));
-  }, []);
-
-  const getUser = useCallback(async () => {
+  const getUser = async (id) => {
     try {
       const response = await axios.get(
         `/api/users/findUser/${id}`
@@ -35,13 +31,12 @@ export default function useUserData() {
       console.log("ERROR USUARIO", e);
       throw e;
     }
-  }, [dispatch, id]);
-
-  // Al envolver la función getUser con useCallback,indica a React que la función debe mantenerse estable a lo largo de los renderizados, a menos que alguna de sus dependencias cambie (en este caso, dispatch y id).
+  };
 
   useEffect(() => {
+    const id = JSON.parse(localStorage.getItem("id"))
     if (id) {
-      getUser();
+      getUser(id);
     }
-  }, [id]);
+  }, [user]);
 }

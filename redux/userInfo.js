@@ -17,31 +17,22 @@ const initialState = {
 
 const reducer = createReducer(initialState, {
   [setUserInfo]: (state, action) => {
-    const {
-      name,
-      lastname,
-      DNI,
-      id,
-      email,
-      phoneNumber,
-      isOp,
-      isAdmin,
-      branchId,
-      branchName,
-    } = action.payload;
-    return {
-      ...state,
-      name,
-      lastname,
-      email,
-      phoneNumber,
-      DNI,
-      id,
-      isOp,
-      isAdmin,
-      branchId,
-      branchName,
-    };
+    // const {
+    //   name,
+    //   lastname,
+    //   DNI,
+    //   id,
+    //   email,
+    //   phoneNumber,
+    //   isOp,
+    //   isAdmin,
+    //   branchId,
+    //   branchName,
+    // } = action.payload;
+    return action.payload;
+    // {
+    //   ...state, ...action.payload
+    // };
   },
 });
 

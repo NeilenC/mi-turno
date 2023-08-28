@@ -20,7 +20,7 @@ const steps = ["Elegí tu sucursal", "Selleccioná el día", "Completá los dato
 
 const Reserva = () => {
   useBranchData();
-  useUserData();
+  // useUserData();
   const [selectedBranch, setSelectedBranch] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const [shifts, setShifts] = useState([]);
@@ -112,11 +112,11 @@ const Reserva = () => {
           branchName: selectedBranch.name,
           date: selectedDay,
           shift: selectedShift,
-          fullname: `${name} ${lastname}` || `${user.name} ${user.lastname}`,
-          email: email || user.email,
-          DNI: user.DNI || user.DNI,
-          userId: user.id,
-          phoneNumber: phoneNumber || user.phoneNumber,
+          fullname: `${name} ${lastname}` || `${user?.name} ${user?.lastname}`,
+          email: email || user?.email,
+          DNI: user?.DNI || user?.DNI,
+          userId: user?.id,
+          phoneNumber: phoneNumber || user?.phoneNumber,
           creatingDate: now,
         }
       );
@@ -249,7 +249,7 @@ const Reserva = () => {
                           variant="outlined"
                           fullWidth
                           required
-                          // value={user.name}
+                          // value={user?.name}
                           onChange={(e) => {
                             setName(e.target.value);
                           }}
@@ -261,7 +261,7 @@ const Reserva = () => {
                           name="lastname"
                           variant="outlined"
                           fullWidth
-                          // value={user.lastname}
+                          // value={user?.lastname}
                           onChange={(e) => {
                             setLastName(e.target.value);
                           }}
@@ -291,12 +291,12 @@ const Reserva = () => {
                             setEmail(e.target.value);
                           }}
                           fullWidth
-                          // value={user.email}
+                          // value={user?.email}
                         />
                       </Grid>
                       <Grid xs={12} sm={5} item sx={{ ml: 1 }}>
                         <StyledInputLabel sx={{}}>DNI</StyledInputLabel>
-                        <TextField id="branch" value={user.DNI} fullWidth />
+                        <TextField id="branch" value={user?.DNI} fullWidth />
                       </Grid>
                     </Grid>
 

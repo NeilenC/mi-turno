@@ -10,7 +10,7 @@ import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import Swal from "sweetalert2";
 
 const DetalleReserva = () => {
-  useUserData();
+  // useUserData();
   const user = useSelector((state) => state.user);
   const router = useRouter();
   const [booking, setBooking] = useState([]);
@@ -46,7 +46,7 @@ const DetalleReserva = () => {
             text: "Esperamos verte pronto",
             type: "success",
           });
-          router.push(`/users/reserva/${user.id}`);
+          router.push(`/users/reserva/${user?.id}`);
         } else {
           Swal.fire({
             title: "No se ha podido cancelar la reserva",
@@ -111,7 +111,7 @@ const DetalleReserva = () => {
               </Typography>
               <Typography variant="subtitle1" sx={{ pt: 2 }}>
                 Estaremos enviándote un correo electrónico de confirmación a{" "}
-                {user.email} con todos los detalles de tu reservación.
+                {user?.email} con todos los detalles de tu reservación.
               </Typography>
             </Grid>
           </Box>

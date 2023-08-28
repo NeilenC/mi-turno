@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import { StyledInputLabel } from "../../../components/LayOut";
 
 const EditProfile = () => {
-  useUserData();
+  // useUserData();
   const user = useSelector((state) => state.user);
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -73,12 +73,12 @@ const EditProfile = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: name || user.name,
-          lastname: lastName || user.lastname,
-          email: email || user.email,
-          DNI: DNI || user.DNI,
-          phoneNumber: phoneNumber || user.phoneNumber,
-          password: password || user.password,
+          name: name || user?.name,
+          lastname: lastName || user?.lastname,
+          email: email || user?.email,
+          DNI: DNI || user?.DNI,
+          phoneNumber: phoneNumber || user?.phoneNumber,
+          password: password || user?.password,
         }),
       });
       const data = response.json();
@@ -206,7 +206,7 @@ const EditProfile = () => {
         <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
           <StyledInputLabel>Teléfono</StyledInputLabel>
           <TextField
-            placeholder={user.phoneNumber}
+            placeholder={user?.phoneNumber}
             variant="outlined"
             // type="number"
             fullWidth
