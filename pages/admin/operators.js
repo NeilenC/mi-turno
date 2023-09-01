@@ -6,14 +6,16 @@ import Swal from "sweetalert2";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useRouter } from "next/router";
+import useUserData from "../../Hooks/useUserData";
 
 const Operators = () => {
+  useUserData()
   const router = useRouter();
   const [operators, setOperators] = useState([]);
 
   const handlerOperators = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/admin/findOp");
+      const response = await fetch("/api/admin/findOp");
       if (response.ok) {
         const operators = await response.json();
         setOperators(operators);
@@ -64,6 +66,7 @@ const Operators = () => {
           });
         }
       }
+
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }

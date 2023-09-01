@@ -157,6 +157,7 @@ const Reserva = () => {
             pt: "3%",
             m: "auto",
             display: "flex",
+            
             pb: "35%",
           }}
         >
@@ -173,6 +174,8 @@ const Reserva = () => {
                 sx={{
                   bgcolor: "#FFFFFF",
                   p: "40px",
+          // boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+
                   borderRadius: "10px",
                 }}
               >
@@ -183,7 +186,7 @@ const Reserva = () => {
                 <Stepper
                   activeStep={activeStep}
                   alternativeLabel
-                  sx={{ m: "auto", pt: 5 }}
+                  sx={{pt: 5 }}
                 >
                   {steps.map((label, index) => (
                     <Step
@@ -327,7 +330,8 @@ const Reserva = () => {
                     justifyContent: "center",
                     pt: 2,
                     bgcolor: "#FFFFFF",
-                    ml: 5,
+          // boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+          ml: 5,
                     height: "340px",
                     borderRadius: "10px",
                   }}

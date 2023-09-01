@@ -57,7 +57,7 @@ const Branches = () => {
 
   return (
     <>
-      {branches.length && user?.isAdmin ? (
+      {branches.length && user.isAdmin ? (
         <Box sx={{ pt: "90px" }}>
           <Box
             sx={{

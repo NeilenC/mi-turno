@@ -26,7 +26,7 @@ const Createbranch = () => {
   async function handlerNewBranch(e) {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/branches", {
+      const response = await axios.post("/api/branches", {
         name: name,
         email: email,
         phoneNumber: phtoneNumber,
