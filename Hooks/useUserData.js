@@ -13,6 +13,7 @@ export default function useUserData() {
         `/api/users/findUser/${id}`
       );
       const data = await response.data;
+      console.log("DATA", data)
       dispatch(
         setUserInfo({
           id: data._id,
@@ -27,6 +28,8 @@ export default function useUserData() {
           branchName: data.branchName,
         })
       );
+      // return data;
+      // dispatch(setUserInfo(data))
     } catch (e) {
       console.log("ERROR USUARIO", e);
       throw e;
@@ -38,5 +41,5 @@ export default function useUserData() {
     if (id) {
       getUser(id);
     }
-  }, [user]);
+  }, []);
 }

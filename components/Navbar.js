@@ -32,7 +32,7 @@ const StyledLink = styled(Link)(() => ({
 }));
 
 const Navbar = () => {
-  // useUserData();
+  useUserData();
   const [id, setId] = useState("");
   const router = useRouter();
   const user = useSelector((state) => state.user);

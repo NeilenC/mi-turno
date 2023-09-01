@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import Buscador from "../../../components/Search";
 
 const Shifts = () => {
-  // useUserData();
+  useUserData();
   const user = useSelector((state) => state.user);
   const router = useRouter();
   const [shifts, setShifts] = useState([]);

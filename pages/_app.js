@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import LayOut from "../components/LayOut";
 import store from "../redux/store";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { useEffect, useState } from "react";
 
 const theme = createTheme({
   components: {

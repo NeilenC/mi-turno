@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/router";
-import useUserData from "../Hooks/useUserData";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../redux/userInfo";
 
 const Logout = () => {
-  // useUserData();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();

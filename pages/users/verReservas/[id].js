@@ -15,11 +15,12 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
 const VerReserva = () => {
-  // useUserData();
+  useUserData();
   const user = useSelector((state) => state.user);
   const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const [id, setId] = useState("");
+  console.log("USER RESERVAS", user)
 
   useEffect(() => {
     setId(JSON.parse(localStorage.getItem("id")));
@@ -40,9 +41,9 @@ const VerReserva = () => {
   }, [id]);
 
   useEffect(() => {
-    getAllBookings();
-  }, [getAllBookings]);
-
+      getAllBookings();
+  }, [id,getAllBookings]);
+  
   const cancellBooking = async (id) => {
     try {
       const confirmed = await Swal.fire({
@@ -190,7 +191,8 @@ const VerReserva = () => {
           }}
         >
           <Box sx={{ m: "auto", pt: "300px" }}>
-            <Stack sx={{ color: "purple.500" }} spacing={2} direction="row">
+            Aún no hay reservas
+            <Stack sx={{ color: "purple.500", ml:"90px", mt:3 }} spacing={2} direction="row">
               <CircularProgress color="secondary" />
             </Stack>{" "}
           </Box>{" "}

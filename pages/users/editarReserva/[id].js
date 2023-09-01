@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import { StyledInputLabel } from "../../../components/LayOut";
 
 const Edit = () => {
-  // useUserData();
+  useUserData();
   useBranchData();
   const branches = useSelector((state) => state.branches);
   const user = useSelector((state) => state.user);

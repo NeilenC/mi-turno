@@ -20,7 +20,7 @@ const steps = ["Elegí tu sucursal", "Selleccioná el día", "Completá los dato
 
 const Reserva = () => {
   useBranchData();
-  // useUserData();
+  useUserData();
   const [selectedBranch, setSelectedBranch] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const [shifts, setShifts] = useState([]);
@@ -43,6 +43,8 @@ const Reserva = () => {
     setId(JSON.parse(localStorage.getItem("id")));
   }, []);
 
+  console.log("USER DATA", user)
+  
   const shouldDisableDate = (date) => {
     // Deshabilitar días anteriores al día actual
     if (date.isBefore(today, "day")) {

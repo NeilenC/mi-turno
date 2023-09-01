@@ -10,7 +10,7 @@ import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import Swal from "sweetalert2";
 
 const DetalleReserva = () => {
-  // useUserData();
+  useUserData();
   const user = useSelector((state) => state.user);
   const router = useRouter();
   const [booking, setBooking] = useState([]);

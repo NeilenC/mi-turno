@@ -21,7 +21,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Swal from "sweetalert2";
 import { StyledInputLabel } from "./LayOut";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { setUserInfo } from "../redux/userInfo";
 
 const Login = () => {
@@ -29,7 +29,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -46,21 +46,23 @@ const Login = () => {
       })
       .then((response) => {
         const user = response.data.user;
+
+        console.log("USUARIO LOGIN", user)
         if (response.status === 200) {
+          // dispatch(setUserInfo({
+          //   id: user._id,
+          //   name: user.name,
+          //   lastname: user.lastname,
+          //   email: user.email,
+          //   DNI: user.DNI,
+          //   isOp: user.isOp,
+          //   isAdmin: user.isAdmin,
+          //   phoneNumber: user.phoneNumber,
+          //   branchId: user.branchId,
+          //   branchName: user.branchName,
+          // }))
           localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
-          dispatch(setUserInfo({
-            id: user._id,
-            name: user.name,
-            lastname: user.lastname,
-            email: user.email,
-            DNI: user.DNI,
-            isOp: user.isOp,
-            isAdmin: user.isAdmin,
-            phoneNumber: user.phoneNumber,
-            branchId: user.branchId,
-            branchName: user.branchName,
-          }))
           !user.isOp && !user.isAdmin
             ? router.push(`/users/reserva/${user._id}`)
             : null;

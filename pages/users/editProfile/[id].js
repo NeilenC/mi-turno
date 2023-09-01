@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import { StyledInputLabel } from "../../../components/LayOut";
 
 const EditProfile = () => {
-  // useUserData();
+  useUserData();
   const user = useSelector((state) => state.user);
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -88,6 +88,7 @@ const EditProfile = () => {
         confirmButtonText: "Continuar",
       });
       window.location.reload();
+      // router.push(`/users/editProfile/${id}`)
       return data;
     } catch (e) {
       Swal.fire({
@@ -247,7 +248,7 @@ const EditProfile = () => {
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               sx={{
-                ...(isPasswordMismatch ? { color: "red" } : { color: "black" }),
+                ...(isPasswordMismatch ? { color: "purple" } : { color: "black" }),
               }}
               endAdornment={
                 <InputAdornment position="end">
@@ -260,7 +261,7 @@ const EditProfile = () => {
                 </InputAdornment>
               }
             />
-            <Typography sx={{ color: "red" }}>
+            <Typography sx={{ color: "purple" }}>
               {verifyPassword && isPasswordMismatch ? (
                 <small>*las contraseñas deben coincidir</small>
               ) : null}
