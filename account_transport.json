@@ -1,11 +1,11 @@
 {
-    "service": "gmail",
-    "auth": {
-      "type": "OAuth2",
-      "user": "neilen.monlezun@gmail.com",
-      "clientId": "413845440146-0pjhrpdbttcqtuopfnd2k9u7bg1bmj2p.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//04dfc5ISEVvjhCgYIARAAGAQSNwF-L9IrVTD1yn7IsyAJT-J4fPBUSlgB118BWmzq4PGQyVF4BEycZNjfx7BFhDTUjAT-WXIT-kc",
-      "accessToken": ""
-    }
+  "service": "gmail",
+  "auth": {
+    "type": "OAuth2",
+    "user": "neilen.monlezun@gmail.com",
+    "clientId": "413845440146-0pjhrpdbttcqtuopfnd2k9u7bg1bmj2p.apps.googleusercontent.com",
+    "clientSecret": "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",
+    "refreshToken": "1//04dfc5ISEVvjhCgYIARAAGAQSNwF-L9IrVTD1yn7IsyAJT-J4fPBUSlgB118BWmzq4PGQyVF4BEycZNjfx7BFhDTUjAT-WXIT-kc",
+    "accessToken": ""
   }
+}

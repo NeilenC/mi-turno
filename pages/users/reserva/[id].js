@@ -43,8 +43,6 @@ const Reserva = () => {
     setId(JSON.parse(localStorage.getItem("id")));
   }, []);
 
-  console.log("USER DATA", user)
-  
   const shouldDisableDate = (date) => {
     // Deshabilitar días anteriores al día actual
     if (date.isBefore(today, "day")) {
@@ -86,13 +84,10 @@ const Reserva = () => {
 
   const getAvailableShift = useCallback(async () => {
     try {
-      const availableShifts = await axios.post(
-        "/api/shift/check",
-        {
-          branchId: selectedBranch._id,
-          date: selectedDay,
-        }
-      );
+      const availableShifts = await axios.post("/api/shift/check", {
+        branchId: selectedBranch._id,
+        date: selectedDay,
+      });
       setShifts(availableShifts.data);
     } catch (e) {
       throw e;
@@ -107,21 +102,18 @@ const Reserva = () => {
 
   const createShift = async () => {
     try {
-      const response = await axios.post(
-        "/api/shift/create",
-        {
-          branchId: selectedBranch._id,
-          branchName: selectedBranch.name,
-          date: selectedDay,
-          shift: selectedShift,
-          fullname: `${name} ${lastname}` || `${user?.name} ${user?.lastname}`,
-          email: email || user?.email,
-          DNI: user?.DNI || user?.DNI,
-          userId: user?.id,
-          phoneNumber: phoneNumber || user?.phoneNumber,
-          creatingDate: now,
-        }
-      );
+      const response = await axios.post("/api/shift/create", {
+        branchId: selectedBranch._id,
+        branchName: selectedBranch.name,
+        date: selectedDay,
+        shift: selectedShift,
+        fullname: `${name} ${lastname}` || `${user?.name} ${user?.lastname}`,
+        email: email || user?.email,
+        DNI: user?.DNI || user?.DNI,
+        userId: user?.id,
+        phoneNumber: phoneNumber || user?.phoneNumber,
+        creatingDate: now,
+      });
 
       const newShift = response.data;
       setNewShift(newShift);
@@ -157,7 +149,7 @@ const Reserva = () => {
             pt: "3%",
             m: "auto",
             display: "flex",
-            
+
             pb: "35%",
           }}
         >
@@ -174,7 +166,7 @@ const Reserva = () => {
                 sx={{
                   bgcolor: "#FFFFFF",
                   p: "40px",
-          // boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+                  // boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
 
                   borderRadius: "10px",
                 }}
@@ -186,7 +178,7 @@ const Reserva = () => {
                 <Stepper
                   activeStep={activeStep}
                   alternativeLabel
-                  sx={{pt: 5 }}
+                  sx={{ pt: 5 }}
                 >
                   {steps.map((label, index) => (
                     <Step
@@ -330,8 +322,8 @@ const Reserva = () => {
                     justifyContent: "center",
                     pt: 2,
                     bgcolor: "#FFFFFF",
-          // boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-          ml: 5,
+                    // boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
+                    ml: 5,
                     height: "340px",
                     borderRadius: "10px",
                   }}

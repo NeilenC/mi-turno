@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import useUserData from "../../Hooks/useUserData";
 
 const Operators = () => {
-  useUserData()
+  useUserData();
   const router = useRouter();
   const [operators, setOperators] = useState([]);
 
@@ -46,12 +46,9 @@ const Operators = () => {
       });
 
       if (confirmed.isConfirmed) {
-        const response = await fetch(
-          `/api/admin/operators/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`/api/admin/operators/${id}`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           Swal.fire({
             title: "Operador eliminado",
@@ -66,7 +63,6 @@ const Operators = () => {
           });
         }
       }
-
     } catch (error) {
       console.error("Error en la solicitud:", error);
     }

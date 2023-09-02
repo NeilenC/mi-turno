@@ -30,16 +30,13 @@ const DetalleReserva = () => {
         closeOnCancel: false,
       });
       if (confirmed.isConfirmed) {
-        const response = await fetch(
-          `/api/shift/cancel/${id}`,
-          {
-            method: "PUT",
-            body: JSON.stringify({ newState: "cancelada" }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`/api/shift/cancel/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ newState: "cancelada" }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         if (response.ok) {
           Swal.fire({
             title: "Reserva cancelada",
@@ -67,9 +64,7 @@ const DetalleReserva = () => {
   const getBooking = useCallback(async () => {
     try {
       if (id) {
-        const response = await axios.get(
-          `/api/users/detalleReserva/${id}`
-        );
+        const response = await axios.get(`/api/users/detalleReserva/${id}`);
         setBooking(response.data);
       }
     } catch (e) {

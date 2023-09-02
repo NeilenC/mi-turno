@@ -29,12 +29,9 @@ const Branches = () => {
         closeOnCancel: false,
       });
       if (confirmed.isConfirmed) {
-        const response = await fetch(
-          `/api/admin/branches/${id}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`/api/admin/branches/${id}`, {
+          method: "DELETE",
+        });
         const data = await response.json();
         if (response.ok) {
           Swal.fire({

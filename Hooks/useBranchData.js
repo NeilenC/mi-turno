@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBranches } from "../redux/branchesInfo";
-import config from '../backend/config'
+import config from "../backend/config";
 
 export default function useBranchData() {
   const dispatch = useDispatch();

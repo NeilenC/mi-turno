@@ -45,7 +45,6 @@ const Navbar = () => {
   //   setId(JSON.parse(localStorage.getItem("id")));
   // }, []);
 
-  console.log("USER NAVBAR", user)
   const theme = createTheme({
     components: {
       MuiButton: {

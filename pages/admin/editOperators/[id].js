@@ -44,12 +44,9 @@ const EditOperators = () => {
 
   const getOp = async () => {
     try {
-      const response = await fetch(
-        `/api/admin/operators/${id}`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`/api/admin/operators/${id}`, {
+        method: "GET",
+      });
       const data = response.json();
       setSelectedOp(data);
     } catch (e) {
@@ -111,7 +108,6 @@ const EditOperators = () => {
           borderRadius: "12px",
           boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
           width: "980px",
-          height: "660px",
           left: "calc(50% - 980px/2)",
           top: "160px",
           pl: 5,
@@ -155,8 +151,10 @@ const EditOperators = () => {
           <Grid xs={12} item sx={{ pb: 1 }}>
             <StyledInputLabel>Email</StyledInputLabel>
             <TextField
+              disabled={true}
               sx={{ width: "97.4%" }}
               name="email"
+              placeholder={"Deshabilitado"}
               type="email"
               variant="outlined"
               fullWidth
@@ -207,6 +205,8 @@ const EditOperators = () => {
           <Grid item xs={12} sm={6}>
             <StyledInputLabel>Contraseña</StyledInputLabel>
             <OutlinedInput
+              disabled={true}
+              placeholder={"Deshabilitado"}
               fullWidth
               value={password}
               id="standard-adornment-password"
@@ -227,6 +227,8 @@ const EditOperators = () => {
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <StyledInputLabel>Repetir contraseña</StyledInputLabel>
             <OutlinedInput
+              placeholder={"Deshabilitado"}
+              disabled={true}
               fullWidth
               name="contraseña"
               value={verifyPassword}

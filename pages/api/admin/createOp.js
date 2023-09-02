@@ -4,14 +4,14 @@ import User from "../../../backend/models/users.js";
 export default async function handler(req, res) {
   await connectMongoDb();
   try {
-    const { password , ...datos} = req.body;
+    const { password, ...datos } = req.body;
 
     if (!isValidPassword(password)) {
       res.status(400).send("La contraseña no cumple con los requisitos.");
       return;
     }
 
-    const operator = await User.create({  password, ...datos});
+    const operator = await User.create({ password, ...datos });
 
     res.status(200).send(operator);
   } catch (e) {

@@ -42,20 +42,17 @@ const CreateOperator = () => {
   async function handleNewOperator(e) {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "/api/admin/createOp",
-        {
-          name: name,
-          lastname: lastName,
-          email: email,
-          DNI: DNI,
-          password: password,
-          branchId: branch._id,
-          branchName: branch.name,
-          phoneNumber: phoneNumber,
-          isOp: true,
-        }
-      );
+      const response = await axios.post("/api/admin/createOp", {
+        name: name,
+        lastname: lastName,
+        email: email,
+        DNI: DNI,
+        password: password,
+        branchId: branch._id,
+        branchName: branch.name,
+        phoneNumber: phoneNumber,
+        isOp: true,
+      });
       if (password === verifyPassword && response.status === 200) {
         router.push("/admin/operators");
       }
@@ -91,7 +88,7 @@ const CreateOperator = () => {
               top: "160px",
               padding: "40px 32px 32px",
               bgcolor: "#FFFFFF",
-              p: 5
+              p: 5,
             }}
           >
             <Box sx={{ fontSize: "21px", fontWeight: "bold", pb: 3 }}>
@@ -225,12 +222,38 @@ const CreateOperator = () => {
                     </InputAdornment>
                   }
                 />
-                {isPasswordMismatch ? (<Typography variant='body2'>*las contraseñas deben coincidir</Typography>) : null}
+                {isPasswordMismatch ? (
+                  <Typography variant="body2">
+                    *las contraseñas deben coincidir
+                  </Typography>
+                ) : null}
               </Grid>
-
             </Grid>
-              {/* <Divider/> */}
-                  <Box sx={{pl: "30px", bgcolor:"lightgray", p:2, mb:2 , borderRadius: "10px"}}> Recuerda las restricciones de contraseña</Box>
+            <Box
+              sx={{
+                pl: "30px",
+                bgcolor: "lightgray",
+                p: 2,
+                mb: 2,
+                borderRadius: "10px",
+              }}
+            >
+              <Typography sx={{ p: 0.5 }}>
+                {" "}
+                La contraseña debe contener:{" "}
+              </Typography>
+              <Divider />
+              <Grid container xs={12} spacing={2} sx={{ p: 0.5 }}>
+                <Grid item xs={6}>
+                  <Typography> ABC al menos una letra mayúscula </Typography>
+                  <Typography> abc al menos una letra minúscula </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography> 123 al menos un número </Typography>
+                  <Typography> *** al menos 8 caracteres </Typography>
+                </Grid>
+              </Grid>
+            </Box>
             <Button
               fullWidth
               onClick={handleNewOperator}

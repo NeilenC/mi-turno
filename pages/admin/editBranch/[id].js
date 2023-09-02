@@ -22,12 +22,9 @@ const EditBranch = () => {
   const getBranch = async () => {
     try {
       if (id) {
-        const response = await fetch(
-          `/api/admin/branches/${id}`,
-          {
-            method: "GET",
-          }
-        );
+        const response = await fetch(`/api/admin/branches/${id}`, {
+          method: "GET",
+        });
         const data = response.json();
         setSelectedBranch(data);
       }
@@ -43,21 +40,18 @@ const EditBranch = () => {
   const updateBranch = async () => {
     try {
       if (id) {
-        const response = await fetch(
-          `/api/admin/branches/${id}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: name || selectedBranch.name,
-              direction: address || selectedBranch.direction,
-              openingH: openingH || selectedBranch.openingH,
-              closingH: closingH || selectedBranch.closingH,
-              phoneNumber: phoneNumber || selectedBranch.phoneNumber,
-              email: email || selectedBranch.email,
-            }),
-          }
-        );
+        const response = await fetch(`/api/admin/branches/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name || selectedBranch.name,
+            direction: address || selectedBranch.direction,
+            openingH: openingH || selectedBranch.openingH,
+            closingH: closingH || selectedBranch.closingH,
+            phoneNumber: phoneNumber || selectedBranch.phoneNumber,
+            email: email || selectedBranch.email,
+          }),
+        });
         if (response.ok) {
           Swal.fire({
             title: "La sucursal se actualizó correctamente",

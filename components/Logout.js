@@ -19,7 +19,7 @@ const Logout = () => {
   const handleLogOut = async () => {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
-    dispatch(setUserInfo(null))
+    dispatch(setUserInfo(null));
     router.push("/");
   };
 

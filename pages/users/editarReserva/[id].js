@@ -54,10 +54,9 @@ const Edit = () => {
 
   const handlerFind = useCallback(async () => {
     try {
-      const response = await fetch(
-        `/api/shift/reserva/${id}`,
-        { method: "GET" }
-      );
+      const response = await fetch(`/api/shift/reserva/${id}`, {
+        method: "GET",
+      });
       const data = await response.json();
       setShiftData(data);
     } catch (e) {
@@ -73,22 +72,19 @@ const Edit = () => {
   const handlerUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `/api/shift/reserva/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            branchId: selectedBranch._id || shiftData.branchId,
-            branchName: selectedBranch.name || shiftData.branchName,
-            date: newDate || shiftData.date,
-            email: newEmail || shiftData.email,
-            phoneNumber: newPhoneNumber || shiftData.phoneNumber,
-            shift: newShift || shiftData.shift,
-            creatingDate: now,
-          }),
-        }
-      );
+      const response = await fetch(`/api/shift/reserva/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          branchId: selectedBranch._id || shiftData.branchId,
+          branchName: selectedBranch.name || shiftData.branchName,
+          date: newDate || shiftData.date,
+          email: newEmail || shiftData.email,
+          phoneNumber: newPhoneNumber || shiftData.phoneNumber,
+          shift: newShift || shiftData.shift,
+          creatingDate: now,
+        }),
+      });
       const data = await response.json();
       Swal.fire({
         title: "Cambiaste los datos de tu reserva",
@@ -115,13 +111,10 @@ const Edit = () => {
 
   const getAvailableShift = async () => {
     try {
-      const availableShifts = await axios.post(
-        "/api/shift/check",
-        {
-          branchId: selectedBranch._id,
-          date: newDate,
-        }
-      );
+      const availableShifts = await axios.post("/api/shift/check", {
+        branchId: selectedBranch._id,
+        date: newDate,
+      });
       const data = await availableShifts.data;
       setShifts(data);
     } catch (e) {

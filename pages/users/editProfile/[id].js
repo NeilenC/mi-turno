@@ -175,6 +175,7 @@ const EditProfile = () => {
             <StyledInputLabel>Apellido</StyledInputLabel>
             <TextField
               // placeholder={user.lastname}
+
               variant="outlined"
               fullWidth
               value={lastName}
@@ -193,17 +194,35 @@ const EditProfile = () => {
             onChange={(e) => setDNI(e.target.value)}
           />
         </Grid>
-        <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
-          <StyledInputLabel>Email</StyledInputLabel>
-          <TextField
-            // placeholder={user.email}
-            type="email"
-            variant="outlined"
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Grid>
+        {user?.isAdmin ? (
+          <>
+            <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
+              <StyledInputLabel>Email</StyledInputLabel>
+              <TextField
+                placeholder={"Deshabilitado "}
+                disabled={true}
+                type="email"
+                variant="outlined"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+          </>
+        ) : (
+          <>
+            <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
+              <StyledInputLabel>Email</StyledInputLabel>
+              <TextField
+                type="email"
+                variant="outlined"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+          </>
+        )}
         <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
           <StyledInputLabel>Teléfono</StyledInputLabel>
           <TextField
@@ -215,60 +234,125 @@ const EditProfile = () => {
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </Grid>
-        <Grid container xs={12} spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <StyledInputLabel>Contraseña</StyledInputLabel>
-            <OutlinedInput
-              fullWidth
-              value={password}
-              id="standard-adornment-password"
-              type={showPassword ? "text" : "password"}
-              onChange={(e) => {
-                setPassword(e.target.value), handlePassword(e.target.value);
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} sx={{ mb: 3 }}>
-            <StyledInputLabel>Repetir contraseña</StyledInputLabel>
-            <OutlinedInput
-              fullWidth
-              name="contraseña"
-              value={verifyPassword}
-              onChange={(e) => setVerifyPassword(e.target.value)}
-              id="standard-adornment-password"
-              type={showPassword ? "text" : "password"}
-              sx={{
-                ...(isPasswordMismatch ? { color: "purple" } : { color: "black" }),
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <Typography sx={{ color: "purple" }}>
-              {verifyPassword && isPasswordMismatch ? (
-                <small>*las contraseñas deben coincidir</small>
-              ) : null}
-            </Typography>
-          </Grid>
-        </Grid>
-
+        {user?.isAdmin ? (
+          <>
+            <Grid container xs={12} spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <StyledInputLabel>Contraseña</StyledInputLabel>
+                <OutlinedInput
+                  placeholder={"Deshabilitado "}
+                  disabled={true}
+                  fullWidth
+                  value={password}
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => {
+                    setPassword(e.target.value), handlePassword(e.target.value);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{ mb: 3 }}>
+                <StyledInputLabel>Repetir contraseña</StyledInputLabel>
+                <OutlinedInput
+                  placeholder={"Deshabilitado "}
+                  disabled={true}
+                  fullWidth
+                  name="contraseña"
+                  value={verifyPassword}
+                  onChange={(e) => setVerifyPassword(e.target.value)}
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{
+                    ...(isPasswordMismatch
+                      ? { color: "purple" }
+                      : { color: "black" }),
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <Typography sx={{ color: "purple" }}>
+                  {verifyPassword && isPasswordMismatch ? (
+                    <small>*las contraseñas deben coincidir</small>
+                  ) : null}
+                </Typography>
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <>
+            <Grid container xs={12} spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <StyledInputLabel>Contraseña</StyledInputLabel>
+                <OutlinedInput
+                  fullWidth
+                  value={password}
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => {
+                    setPassword(e.target.value), handlePassword(e.target.value);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{ mb: 3 }}>
+                <StyledInputLabel>Repetir contraseña</StyledInputLabel>
+                <OutlinedInput
+                  fullWidth
+                  name="contraseña"
+                  value={verifyPassword}
+                  onChange={(e) => setVerifyPassword(e.target.value)}
+                  id="standard-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{
+                    ...(isPasswordMismatch
+                      ? { color: "purple" }
+                      : { color: "black" }),
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <Typography sx={{ color: "purple" }}>
+                  {verifyPassword && isPasswordMismatch ? (
+                    <small>*las contraseñas deben coincidir</small>
+                  ) : null}
+                </Typography>
+              </Grid>
+            </Grid>
+          </>
+        )}
         <Grid item xs={10}>
           <Box sx={{ bgcolor: "#ECECEC", pt: 2, pb: 2, width: "96%" }}>
             <Box sx={{ ml: 3, fontSize: "16px" }}>

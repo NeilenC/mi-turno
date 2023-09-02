@@ -20,7 +20,6 @@ const VerReserva = () => {
   const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const [id, setId] = useState("");
-  console.log("USER RESERVAS", user)
 
   useEffect(() => {
     setId(JSON.parse(localStorage.getItem("id")));
@@ -29,9 +28,7 @@ const VerReserva = () => {
   const getAllBookings = useCallback(async () => {
     try {
       if (id) {
-        const response = await axios.get(
-          `/api/users/verReservas/${id}`
-        );
+        const response = await axios.get(`/api/users/verReservas/${id}`);
         const data = response.data;
         setBookings(data);
       }
@@ -41,9 +38,9 @@ const VerReserva = () => {
   }, [id]);
 
   useEffect(() => {
-      getAllBookings();
-  }, [id,getAllBookings]);
-  
+    getAllBookings();
+  }, [id, getAllBookings]);
+
   const cancellBooking = async (id) => {
     try {
       const confirmed = await Swal.fire({
@@ -58,16 +55,13 @@ const VerReserva = () => {
         closeOnCancel: false,
       });
       if (confirmed.isConfirmed) {
-        const response = await fetch(
-          `/api/shift/cancel/${id}`,
-          {
-            method: "PUT",
-            body: JSON.stringify({ newState: "cancelada" }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`/api/shift/cancel/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({ newState: "cancelada" }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         response.ok ? router.push(`/users/reserva/${user?.id}`) : null;
       }
     } catch (e) {
@@ -192,7 +186,11 @@ const VerReserva = () => {
         >
           <Box sx={{ m: "auto", pt: "300px" }}>
             Aún no hay reservas
-            <Stack sx={{ color: "purple.500", ml:"90px", mt:3 }} spacing={2} direction="row">
+            <Stack
+              sx={{ color: "purple.500", ml: "90px", mt: 3 }}
+              spacing={2}
+              direction="row"
+            >
               <CircularProgress color="secondary" />
             </Stack>{" "}
           </Box>{" "}

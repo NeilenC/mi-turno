@@ -33,7 +33,6 @@ const Register = () => {
   const router = useRouter();
   const isPasswordMismatch = password !== verifyPassword;
 
-
   // const passwordsMatchValidation = {
   //   id: 5,
   //   oracion: "Las contraseñas deben coincidir",

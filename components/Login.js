@@ -47,7 +47,7 @@ const Login = () => {
       .then((response) => {
         const user = response.data.user;
 
-        console.log("USUARIO LOGIN", user)
+        console.log("USUARIO LOGIN", user);
         if (response.status === 200) {
           // dispatch(setUserInfo({
           //   id: user._id,

@@ -17,9 +17,7 @@ const Shifts = () => {
 
   const getShifts = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `/api/operator/verReservas/${id}`
-      );
+      const response = await axios.get(`/api/operator/verReservas/${id}`);
       const data = response.data;
       const today = dayjs().format("DD-MM-YYYYY");
 
@@ -46,16 +44,13 @@ const Shifts = () => {
 
   const handleShiftChange = async (shiftId, status) => {
     try {
-      const response = await fetch(
-        `/api/shift/cancel/${shiftId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
+      const response = await fetch(`/api/shift/cancel/${shiftId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      });
       if (response.ok) {
         const newState = await response.json();
         setShifts((prevShifts) =>
@@ -73,8 +68,6 @@ const Shifts = () => {
       console.error("Error al actualizar el estado del turno:", error);
     }
   };
-
-  console.log("TURNOS", shifts)
 
   return (
     <>

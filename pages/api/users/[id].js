@@ -21,7 +21,12 @@ export default async function handler(req, res) {
         if (password) {
           const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/;
           if (!passwordRegex.test(password)) {
-            return res.status(400).json({ error: 'La contraseña debe contar con las características requeridas' });
+            return res
+              .status(400)
+              .json({
+                error:
+                  "La contraseña debe contar con las características requeridas",
+              });
           }
           const hashedPassword = await bcrypt.hash(password, user.salt);
           updates.password = hashedPassword;
