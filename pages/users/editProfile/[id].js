@@ -194,7 +194,7 @@ const EditProfile = () => {
             onChange={(e) => setDNI(e.target.value)}
           />
         </Grid>
-        {user?.isAdmin ? (
+        {user?.isAdmin || user?.isOp ? (
           <>
             <Grid xs={12} item sx={{ pb: 0.5, width: "96.5%" }}>
               <StyledInputLabel>Email</StyledInputLabel>
@@ -234,7 +234,7 @@ const EditProfile = () => {
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </Grid>
-        {user?.isAdmin ? (
+        {user?.isAdmin || user?.isOp ? (
           <>
             <Grid container xs={12} spacing={3}>
               <Grid item xs={12} sm={6}>
