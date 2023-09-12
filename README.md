@@ -11,3 +11,11 @@ Es una aplicación web que cuenta con tres flujos de usuario:
 - Usuario operador: Tiene la capacidad de controlar y modificar los turnos de su sucursal asignada.
 
 - Usuario común: Podrá reservar entre los turnos y sucursales disponibles, ver sus reservas y modificarlas.
+
+Link a deploy:
+
+https://mi-turno-taupe.vercel.app/
+
+Usuario administrador: 
+- Email: administrador@gmail.com
+- Contraseña: Contraseña123!
