@@ -184,7 +184,7 @@ const VerReserva = () => {
             display: "flex",
           }}
         >
-          <Box sx={{ m: "auto", pt: "300px" }}>
+          <Box sx={{ m: "auto", pt: "150px" }}>
             Aún no hay reservas
             <Stack
               sx={{ color: "purple.500", ml: "90px", mt: 3 }}
