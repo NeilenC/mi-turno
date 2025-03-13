@@ -33,11 +33,7 @@ const Register = () => {
   const router = useRouter();
   const isPasswordMismatch = password !== verifyPassword;
 
-  // const passwordsMatchValidation = {
-  //   id: 5,
-  //   oracion: "Las contraseñas deben coincidir",
-  //   color: isPasswordMismatch ? "red" : "grey",
-  // };
+
   const [validations, setValidations] = useState([
     {
       id: 1,
@@ -151,10 +147,9 @@ const Register = () => {
       sx={{
         borderRadius: "12px",
         boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.1)",
-        maxWidth: { xs: "90%", sm: "750px" },
-        width: "100%",
+        maxWidth: { xs: "90%", sm: "700px" },
         bgcolor: "#FFFFFF",
-        padding: { xs: 3, sm: 5 },
+        padding: { xs: 3, sm: 4 },
       }}
     >
       <Typography
@@ -288,9 +283,7 @@ const Register = () => {
             </Grid>
   
             <Grid item xs={12}>
-              <Typography sx={{ textAlign: "center", color: "#A442F1", fontWeight: "bold", mt: 2 }}>
-                ¿Olvidaste tu contraseña?
-              </Typography>
+           
               <Button
                 type="submit"
                 fullWidth

@@ -48,26 +48,20 @@ const Createbranch = () => {
   }
 
   return (
-    <Box sx={{ height: "100vh", bgcolor: "#ECECEC" }}>
+    <Box sx={{ height: "100vh", bgcolor: "#ECECEC" , pt:7 }}>
       <Grid container>
-        <Box
-          onSubmit={handlerNewBranch}
-          component="form"
-          noValidate
-          autoComplete="off"
-        >
           <Box
+            onSubmit={handlerNewBranch}
+            component="form"
+            noValidate
+            autoComplete="off"
             sx={{
               margin: "auto",
-              justifyContent: " center",
-              position: "absolute",
               borderRadius: "12px",
               boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-              width: "980px",
-              height: "644px",
+              padding: "20px 32px 32px",
+
               left: "calc(50% - 980px/2)",
-              top: "160px",
-              padding: "40px 32px 32px",
               bgcolor: "#FFFFFF",
             }}
           >
@@ -125,18 +119,7 @@ const Createbranch = () => {
                 }}
               />
             </Grid>
-            {/* <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 0 }}>
-                 <StyledInputLabel  >Capacidad máxima</StyledInputLabel>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  multiline
-                  fullWidth
-                  onChange={(e) => {
-                    setMaxCap(e.target.value);
-                  }}
-                />
-              </Grid> */}
-            {/* </Grid> */}
+         
             <Grid container spacing={2} sx={{ pb: 2 }}>
               <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 5 }}>
                 <StyledInputLabel>Horario de apertura</StyledInputLabel>
@@ -179,7 +162,6 @@ const Createbranch = () => {
               Crear
             </Button>
           </Box>
-        </Box>
       </Grid>
     </Box>
   );

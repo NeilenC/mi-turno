@@ -5,7 +5,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -68,59 +67,53 @@ const CreateOperator = () => {
   }
 
   return (
-    <Box sx={{ height: "100vh", bgcolor: "#ECECEC" }}>
+    <Box sx={{ height: "120vh", bgcolor: "#ECECEC", pt: 7 }}>
       <Grid container>
         <Box
           onSubmit={handleNewOperator}
           component="form"
           noValidate
           autoComplete="off"
+          sx={{
+            margin: "auto",
+            borderRadius: "12px",
+            boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12)",
+            padding: "20px 32px 32px",
+            bgcolor: "#FFFFFF",
+            display: "inline-block",
+          }}
         >
-          <Box
-            sx={{
-              margin: "auto",
-              justifyContent: " center",
-              position: "absolute",
-              borderRadius: "12px",
-              boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-              width: "980px",
-              left: "calc(50% - 980px/2)",
-              top: "160px",
-              padding: "40px 32px 32px",
-              bgcolor: "#FFFFFF",
-              p: 5,
-            }}
-          >
-            <Box sx={{ fontSize: "21px", fontWeight: "bold", pb: 3 }}>
-              Crear nuevo operador
-            </Box>
-            <Grid container spacing={2} sx={{ pb: 2 }}>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <StyledInputLabel>Nombre</StyledInputLabel>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  multiline
-                  fullWidth
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <StyledInputLabel>Apellido</StyledInputLabel>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  multiline
-                  fullWidth
-                  value={lastName}
-                  onChange={(e) => {
-                    setLastName(e.target.value);
-                  }}
-                />
-              </Grid>
+          <Box sx={{ fontSize: "21px", fontWeight: "bold", pb: 3 }}>
+            Crear nuevo operador
+          </Box>
+          <Grid container spacing={2} sx={{ pb: 2 }}>
+            <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
+              <StyledInputLabel>Nombre</StyledInputLabel>
+              <TextField
+                id="outlined-multiline-flexible"
+                multiline
+                fullWidth
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
             </Grid>
-            <Grid xs={12} item sx={{ pb: 2 }}>
+            <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
+              <StyledInputLabel>Apellido</StyledInputLabel>
+              <TextField
+                id="outlined-multiline-flexible"
+                multiline
+                fullWidth
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} sx={{ pb: 2 }}>
+            <Grid xs={6} item sx={{ pb: 2 }}>
               <StyledInputLabel>Email</StyledInputLabel>
               <TextField
                 id="outlined-multiline-flexible"
@@ -132,7 +125,7 @@ const CreateOperator = () => {
                 }}
               />
             </Grid>
-            <Grid xs={12} item sx={{ pb: 2 }}>
+            <Grid xs={6} item sx={{ pb: 2 }}>
               <StyledInputLabel>Teléfono</StyledInputLabel>
               <TextField
                 id="outlined-multiline-flexible"
@@ -144,130 +137,130 @@ const CreateOperator = () => {
                 }}
               />
             </Grid>
-            <Grid container spacing={2} sx={{ pb: 2 }}>
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <StyledInputLabel>DNI</StyledInputLabel>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  multiline
-                  fullWidth
-                  value={DNI}
-                  onChange={(e) => {
-                    setDNI(e.target.value);
-                  }}
-                />
-              </Grid>
-
-              <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
-                <StyledInputLabel>Sucursal</StyledInputLabel>
-                <Select
-                  fullWidth
-                  value={branch}
-                  onChange={(e) => {
-                    setBranch(e.target.value);
-                  }}
-                >
-                  {branches.map((branch) => (
-                    <MenuItem key={branch._id} value={branch}>
-                      {branch.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
+          </Grid>
+          <Grid container spacing={2} sx={{ pb: 2 }}>
+            <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
+              <StyledInputLabel>DNI</StyledInputLabel>
+              <TextField
+                id="outlined-multiline-flexible"
+                multiline
+                fullWidth
+                value={DNI}
+                onChange={(e) => {
+                  setDNI(e.target.value);
+                }}
+              />
             </Grid>
 
-            <Grid container spacing={2} sx={{ pb: 1 }}>
-              <Grid item xs={12} sm={6}>
-                <StyledInputLabel>Contraseña</StyledInputLabel>
-                <OutlinedInput
-                  fullWidth
-                  value={password}
-                  id="standard-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  onChange={(e) => setPassword(e.target.value)}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
+            <Grid xs={12} sm={6} item sx={{ pt: 2, pb: 1 }}>
+              <StyledInputLabel>Sucursal</StyledInputLabel>
+              <Select
+                fullWidth
+                value={branch}
+                onChange={(e) => {
+                  setBranch(e.target.value);
+                }}
+              >
+                {branches.map((branch) => (
+                  <MenuItem key={branch._id} value={branch}>
+                    {branch.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2} sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={6}>
+              <StyledInputLabel>Contraseña</StyledInputLabel>
+              <OutlinedInput
+                fullWidth
+                value={password}
+                id="standard-adornment-password"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} sx={{ mb: 1 }}>
+              <StyledInputLabel>Repetir contraseña</StyledInputLabel>
+              <OutlinedInput
+                fullWidth
+                name="contraseña"
+                value={verifyPassword}
+                onChange={(e) => setVerifyPassword(e.target.value)}
+                id="standard-adornment-password"
+                type={showPassword ? "text" : "password"}
+                sx={{
+                  ...(isPasswordMismatch
+                    ? { color: "purple" }
+                    : { color: "black" }),
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              {isPasswordMismatch ? (
+                <Typography variant="body2">
+                  *las contraseñas deben coincidir
+                </Typography>
+              ) : null}
+            </Grid>
+          </Grid>
+          <Box
+            sx={{
+              pl: "30px",
+              bgcolor: "lightgray",
+              p: 2,
+              mb: 2,
+              borderRadius: "10px",
+            }}
+          >
+            <Typography sx={{ p: 0.5 }}>
+              {" "}
+              La contraseña debe contener:{" "}
+            </Typography>
+            <Divider />
+            <Grid container xs={12} spacing={2} sx={{ p: 0.5 }}>
+              <Grid item xs={6}>
+                <Typography> ABC al menos una letra mayúscula </Typography>
+                <Typography> abc al menos una letra minúscula </Typography>
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ mb: 1 }}>
-                <StyledInputLabel>Repetir contraseña</StyledInputLabel>
-                <OutlinedInput
-                  fullWidth
-                  name="contraseña"
-                  value={verifyPassword}
-                  onChange={(e) => setVerifyPassword(e.target.value)}
-                  id="standard-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  sx={{
-                    ...(isPasswordMismatch
-                      ? { color: "purple" }
-                      : { color: "black" }),
-                  }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                {isPasswordMismatch ? (
-                  <Typography variant="body2">
-                    *las contraseñas deben coincidir
-                  </Typography>
-                ) : null}
+              <Grid item xs={6}>
+                <Typography> 123 al menos un número </Typography>
+                <Typography> *** al menos 8 caracteres </Typography>
               </Grid>
             </Grid>
-            <Box
-              sx={{
-                pl: "30px",
-                bgcolor: "lightgray",
-                p: 2,
-                mb: 2,
-                borderRadius: "10px",
-              }}
-            >
-              <Typography sx={{ p: 0.5 }}>
-                {" "}
-                La contraseña debe contener:{" "}
-              </Typography>
-              <Divider />
-              <Grid container xs={12} spacing={2} sx={{ p: 0.5 }}>
-                <Grid item xs={6}>
-                  <Typography> ABC al menos una letra mayúscula </Typography>
-                  <Typography> abc al menos una letra minúscula </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography> 123 al menos un número </Typography>
-                  <Typography> *** al menos 8 caracteres </Typography>
-                </Grid>
-              </Grid>
-            </Box>
-            <Button
-              fullWidth
-              onClick={handleNewOperator}
-              sx={{
-                bgcolor: "#A442F1",
-                color: "#ffffff",
-                p: 2,
-                borderRadius: "10px",
-                "&:hover": { bgcolor: "rgba(164, 66, 241, 0.6)" },
-              }}
-            >
-              Crear operador
-            </Button>
           </Box>
+          <Button
+            fullWidth
+            onClick={handleNewOperator}
+            sx={{
+              bgcolor: "#A442F1",
+              color: "#ffffff",
+              p: 1,
+              borderRadius: "10px",
+              "&:hover": { bgcolor: "rgba(164, 66, 241, 0.6)" },
+            }}
+          >
+            Crear operador
+          </Button>
         </Box>
       </Grid>
     </Box>

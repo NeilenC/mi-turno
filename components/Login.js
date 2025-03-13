@@ -111,15 +111,12 @@ const Login = () => {
           }
         />
 
-        <Box sx={{ textAlign: "center", color: "#A442F3", fontWeight: "bold", pt: 1 }}>
-          ¿Olvidaste tu contraseña?
-        </Box>
 
         <Button
           type="submit"
           fullWidth
           sx={{
-            mt: 2,
+            mt: 3,
             bgcolor: "#A442F1",
             color: "white",
             py: 1,
