@@ -138,275 +138,194 @@ const Register = () => {
 
   return (
     <Box
+    sx={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      bgcolor: "#F5F5F5",
+      p: { xs: 2, sm: 4 },
+    }}
+  >
+    <Box
       sx={{
-        height: "100vh",
-        display: "flex",
+        borderRadius: "12px",
+        boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.1)",
+        maxWidth: { xs: "90%", sm: "750px" },
+        width: "100%",
+        bgcolor: "#FFFFFF",
+        padding: { xs: 3, sm: 5 },
       }}
     >
-      <Box
+      <Typography
         sx={{
-          margin: "auto",
-          justifyContent: "center",
-          position: "absolute",
-          borderRadius: "12px",
-          boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-          maxWidth: "750px",
-          // height: "900px",
-          left: "calc(50% - 750px/2)",
-          top: "85px",
-          padding: "40px 32px 32px",
-          bgcolor: "#FFFFFF",
+          fontSize: "22px",
+          fontWeight: "bold",
+          textAlign: "center",
         }}
       >
-        <Box
-          sx={{
-            ml: 4,
-            color: "#A442F1",
-            display: "flex",
-            mr: 4,
-            fontWeight: "bold",
-            fontSize: "16px",
-          }}
-        ></Box>
-        <Box
-          sx={{
-            fontSize: "22px",
-            fontWeight: "bold",
-            textAlign: "center",
-            pt: 1.5,
-          }}
-        >
-          Crear cuenta
-        </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            p: "32px",
-            gap: "20px",
-          }}
-        >
-          <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
-            <Grid container spacing={1}>
-              <Grid item xs={12} sm={6}>
-                <StyledInputLabel>Nombre</StyledInputLabel>
-                <TextField
-                  name="name"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <StyledInputLabel>Apellido</StyledInputLabel>
-                <TextField
-                  name="lastname"
-                  variant="outlined"
-                  fullWidth
-                  value={lastname}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <StyledInputLabel>Email</StyledInputLabel>
-                <TextField
-                  name="email"
-                  type="email"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <StyledInputLabel>DNI</StyledInputLabel>
-                <TextField
-                  name="DNI"
-                  type="DNI"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  value={DNI}
-                  onChange={(e) => setDNI(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <StyledInputLabel>Contraseña</StyledInputLabel>
-                <OutlinedInput
-                  fullWidth
-                  value={password}
-                  name="contraseña"
-                  id="standard-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  onChange={(e) => {
-                    setPassword(e.target.value), handlePassword(e.target.value);
-                  }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} sx={{ pb: 2 }}>
-                <StyledInputLabel>Repetir contraseña</StyledInputLabel>
-                <OutlinedInput
-                  fullWidth
-                  name="contraseña"
-                  value={verifyPassword}
-                  onChange={(e) => setVerifyPassword(e.target.value)}
-                  id="standard-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  sx={{
-                    ...(isPasswordMismatch
-                      ? { color: "purple" }
-                      : { color: "black" }),
-                  }}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                <Typography sx={{ color: "grey" }}>
-                  {verifyPassword && isPasswordMismatch ? (
-                    <small>*las contraseñas deben coincidir</small>
-                  ) : null}
+        Crear cuenta
+      </Typography>
+  
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 3,
+        }}
+      >
+        <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={6} sm={6}>
+              <StyledInputLabel>Nombre</StyledInputLabel>
+              <TextField
+                name="name"
+                variant="outlined"
+                fullWidth
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <StyledInputLabel>Apellido</StyledInputLabel>
+              <TextField
+                name="lastname"
+                variant="outlined"
+                fullWidth
+                value={lastname}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <StyledInputLabel>Email</StyledInputLabel>
+              <TextField
+                name="email"
+                type="email"
+                variant="outlined"
+                required
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <StyledInputLabel>DNI</StyledInputLabel>
+              <TextField
+                name="DNI"
+                type="DNI"
+                variant="outlined"
+                required
+                fullWidth
+                value={DNI}
+                onChange={(e) => setDNI(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <StyledInputLabel>Contraseña</StyledInputLabel>
+              <OutlinedInput
+                fullWidth
+                value={password}
+                name="contraseña"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <StyledInputLabel>Repetir contraseña</StyledInputLabel>
+              <OutlinedInput
+                fullWidth
+                value={verifyPassword}
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setVerifyPassword(e.target.value)}
+                sx={{ color: isPasswordMismatch ? "red" : "black" }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClickShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              {isPasswordMismatch && (
+                <Typography sx={{ color: "red", fontSize: "12px" }}>
+                  *Las contraseñas deben coincidir
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sx={{ pt: 5 }}>
-                <Box sx={{ bgcolor: "#ECECEC", pt: 2, pb: 2 }}>
-                  <Box sx={{ ml: 3, fontSize: "16px" }}>
-                    La contraseña debe contener:
-                    <Divider sx={{ width: "400px" }} />
-                    <Grid container spacing={2} sm={10} sx={{ pt: 2 }}>
-                      <Grid item xs={6.5} sx={{ p: 2 }}>
-                        {validations.slice(0, 2).map((validation) => (
-                          <Box
-                            key={validation.id}
-                            style={{ color: validation.color }}
-                          >
-                            <Box sx={{ mb: 1 }}>
-                              {validation.color === "grey" ? (
-                                validation.oracion
-                              ) : (
-                                <>
-                                  {validation.color === "red" ? (
-                                    <CancelPresentationOutlined
-                                      sx={{ fontSize: "15px" }}
-                                    />
-                                  ) : (
-                                    <CheckBox
-                                      sx={{ color: "green", fontSize: "15px" }}
-                                    />
-                                  )}
-                                  &nbsp; {validation.oracion}
-                                </>
-                              )}
-                            </Box>
-                          </Box>
-                        ))}
-                      </Grid>
-
-                      <Grid item xs={5} sx={{}}>
-                        {validations.slice(2, 4).map((validation) => (
-                          <Box
-                            key={validation.id}
-                            style={{ color: validation.color }}
-                          >
-                            <Box sx={{ mb: 1, width: "150%" }}>
-                              {validation.color === "grey" ? (
-                                validation.oracion
-                              ) : (
-                                <>
-                                  {validation.color === "red" ? (
-                                    <CancelPresentationOutlined
-                                      sx={{ fontSize: "15px" }}
-                                    />
-                                  ) : (
-                                    <CheckBox
-                                      sx={{ color: "green", fontSize: "15px" }}
-                                    />
-                                  )}
-                                  &nbsp; {validation.oracion}
-                                </>
-                              )}
-                            </Box>
-                          </Box>
-                        ))}
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Grid
+              )}
+            </Grid>
+  
+            {/* Validaciones de contraseña */}
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  bgcolor: "#ECECEC",
+                  p: 2,
+                  borderRadius: "8px",
+                }}
+              >
+                <Typography sx={{ mb: 1 }}>La contraseña debe contener:</Typography>
+                <Divider sx={{ mb: 2 }} />
+                <Grid container spacing={1} sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" } }}>
+                  {validations.map((validation) => (
+                    <Box key={validation.id} sx={{ display: "flex", alignItems: "center", color: validation.color }}>
+                      {validation.color === "red" ? (
+                        <CancelPresentationOutlined sx={{ fontSize: "15px" }} />
+                      ) : (
+                        <CheckBox sx={{ color: "green", fontSize: "15px" }} />
+                      )}
+                      &nbsp; {validation.oracion}
+                    </Box>
+                  ))}
+                </Grid>
+              </Box>
+            </Grid>
+  
+            <Grid item xs={12}>
+              <Typography sx={{ textAlign: "center", color: "#A442F1", fontWeight: "bold", mt: 2 }}>
+                ¿Olvidaste tu contraseña?
+              </Typography>
+              <Button
+                type="submit"
+                fullWidth
+                sx={{
+                  color: "white",
+                  bgcolor: "#A442F1",
+                  padding: "10px 22px",
+                  borderRadius: "10px",
+                  mt: 2,
+                  "&:hover": { color: "#A442F1", bgcolor: "white", border: "1px solid #A442F1" },
+                }}
+              >
+                Registrarme
+              </Button>
+              <Divider sx={{ my: 3 }} />
+              <Link href="/">
+                <Button
+                  fullWidth
                   sx={{
                     color: "#A442F1",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                    textAlign: "center",
-                    p: 2,
+                    bgcolor: "rgba(164, 66, 241, 0.1)",
+                    padding: "10px 22px",
+                    borderRadius: "10px",
                   }}
                 >
-                  ¿Olvidaste tu contraseña?
-                </Grid>
-                <Box>
-                  <Button
-                    type="submit"
-                    sx={{
-                      color: "white",
-                      bgcolor: "#A442F1",
-                      padding: "10px 22px",
-                      borderRadius: "10px",
-
-                      "&:hover": { color: "#A442F1" },
-                    }}
-                    fullWidth
-                  >
-                    Registrarme
-                  </Button>
-                </Box>
-                <Box sx={{ p: 3 }}>
-                  <Divider />
-                </Box>
-                <Link href="/">
-                  <Box>
-                    <Button
-                      sx={{
-                        color: "#A442F1",
-                        bgcolor: "rgba(164, 66, 241, 0.1)",
-                        padding: "10px 22px",
-                        borderRadius: "10px",
-                      }}
-                      fullWidth
-                    >
-                      Ya tienes cuenta? Iniciar sesión
-                    </Button>
-                  </Box>
-                </Link>
-              </Grid>
+                  ¿Ya tienes cuenta? Iniciar sesión
+                </Button>
+              </Link>
             </Grid>
-          </Box>
+          </Grid>
         </Box>
       </Box>
     </Box>
+  </Box>
+  
   );
 };
 export default Register;

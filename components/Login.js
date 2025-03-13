@@ -2,40 +2,29 @@ import {
   Box,
   Button,
   Divider,
-  FormGroup,
-  InputLabel,
   IconButton,
-  Input,
   InputAdornment,
   Link,
   OutlinedInput,
-  createTheme,
   TextField,
-  ThemeProvider,
+  Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Swal from "sweetalert2";
-import { StyledInputLabel } from "./LayOut";
-// import { useDispatch } from "react-redux";
-import { setUserInfo } from "../redux/userInfo";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  // const dispatch = useDispatch()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (e) => {
-    e.preventDefault();
-  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,20 +36,8 @@ const Login = () => {
       .then((response) => {
         const user = response.data.user;
 
-        console.log("USUARIO LOGIN", user);
         if (response.status === 200) {
-          // dispatch(setUserInfo({
-          //   id: user._id,
-          //   name: user.name,
-          //   lastname: user.lastname,
-          //   email: user.email,
-          //   DNI: user.DNI,
-          //   isOp: user.isOp,
-          //   isAdmin: user.isAdmin,
-          //   phoneNumber: user.phoneNumber,
-          //   branchId: user.branchId,
-          //   branchName: user.branchName,
-          // }))
+         
           localStorage.setItem("token", JSON.stringify(response.data.token));
           localStorage.setItem("id", JSON.stringify(response.data.user._id));
           !user.isOp && !user.isAdmin
@@ -85,118 +62,92 @@ const Login = () => {
 
   return (
     <Box
+    sx={{
+      display:'flex',
+      height:'100vh',
+      alignItems: "center",
+      justifyContent: "center",
+      bgcolor: "#f4f4f4",
+    }}
+  >
+    <Box
       sx={{
-        height: "100vh",
-        display: " flex",
+        minWidth:'500px',
+        borderRadius: "12px",
+        boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.12)",
+        bgcolor: "white",
+        padding: { xs: 3, md: 3},
       }}
     >
-      <Box
-        sx={{
-          margin: "auto",
-          justifyContent: " center",
-          position: "absolute",
-          borderRadius: "12px",
-          boxShadow: "0px 0px 24px rgba(0, 0, 0, 0.12);",
-          width: "700px",
-          // height: "560px",
-          left: "calc(50% - 700px/2)",
-          top: "160px",
-          padding: "40px 32px 32px",
-          bgcolor: "#FFFFFF",
-        }}
-      >
-        <Box
+      <Typography variant="h5" fontWeight="bold" textAlign="center" pb={2}>
+        Iniciar sesión
+      </Typography>
+      <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
+        <Typography >
+          Email
+        </Typography>
+        <TextField
+          name="email"
+          fullWidth
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+
+        <Typography  >
+          Contraseña
+        </Typography>
+        <OutlinedInput
+          fullWidth
+          type={showPassword ? "text" : "password"}
+          placeholder="******"
+          onChange={(e) => setPassword(e.target.value)}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickShowPassword}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+
+        <Box sx={{ textAlign: "center", color: "#A442F3", fontWeight: "bold", pt: 1 }}>
+          ¿Olvidaste tu contraseña?
+        </Box>
+
+        <Button
+          type="submit"
+          fullWidth
           sx={{
-            paddingBottom: 5,
-            textAlign: "center",
-            fontWeight: "bold",
-            fontSize: "20px",
+            mt: 2,
+            bgcolor: "#A442F1",
+            color: "white",
+            py: 1,
             borderRadius: "10px",
+            "&:hover": { bgcolor: "#8a32d1" },
           }}
         >
-          Iniciar sesión
-        </Box>
-        <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
-          <StyledInputLabel>Email</StyledInputLabel>
+          Ingresar
+        </Button>
 
-          <TextField
-            name="email"
-            // value={email}
-            fullWidth
-            focused={false}
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            sx={{ paddingBottom: 3 }}
-          />
+        <Divider sx={{ my: 2 }} />
 
-          <StyledInputLabel>Contraseña</StyledInputLabel>
-          <OutlinedInput
+        <Link href="/register" sx={{ textDecoration: "none" }}>
+          <Button
             fullWidth
-            focused={false}
-            id="standard-adornment-password"
-            type={showPassword ? "text" : "password"}
-            // value={password}
-            placeholder="******"
-            onChange={(e) => setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          <Box
             sx={{
-              textAlign: "center",
-              color: "#A442F3",
-              fontWeight: "bold",
-              p: 2,
+              color: "#A442F1",
+              bgcolor: "rgba(164, 66, 241, 0.1)",
+              py: 1,
+              borderRadius: "10px",
             }}
           >
-            ¿Olvidaste tu contraseña?
-          </Box>
-          <Box sx={{ paddingBottom: 3, paddingTop: 1.5 }}>
-            <Button
-              type="submit"
-              sx={{
-                color: "white",
-                bgcolor: "#A442F1",
-                padding: "12px 24px",
-                "&:hover": { color: "#A442F1" },
-                borderRadius: "10px",
-              }}
-              fullWidth
-            >
-              Ingresar
-            </Button>
-          </Box>
-          <Box sx={{ paddingBottom: 3 }}>
-            <Divider />
-          </Box>
-          <Box>
-            <Link href="/register">
-              <Button
-                sx={{
-                  color: "#A442F1",
-                  bgcolor: "rgba(164, 66, 241, 0.1)",
-                  padding: "12px 24px",
-                  borderRadius: "10px",
-                }}
-                fullWidth
-              >
-                {" "}
-                No tienes cuenta? Regístrate
-              </Button>
-            </Link>
-          </Box>
-        </Box>
+            No tienes cuenta? Regístrate
+          </Button>
+        </Link>
       </Box>
     </Box>
+  </Box>
   );
 };
 

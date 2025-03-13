@@ -9,7 +9,6 @@ export const StyledInputLabel = styled(InputLabel)(() => ({
 }));
 
 const LayOut = () => {
-  // useUserData();
   const user = useSelector((state) => state.user);
 
   return <> {user?.id != "" ? <Navbar /> : null} </>;
